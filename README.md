@@ -1,2 +1,3 @@
-# Android
-당신의 발자취 안드로이드 소스코드 레포입니다.
+# android-kotlin
+
+Kotlin ver
