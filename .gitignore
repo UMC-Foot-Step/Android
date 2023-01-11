@@ -25,3 +25,17 @@ hs_err_pid*
 
 # Gavage Mac file
 *.DS_store
+
+
+# 처음 깃 클론하고 실행했을 때 생긴 파일들 커밋에서 무시하기 (android sdk 경로도 바뀌었음)
+.idea/codeStyles/Project.xml
+.idea/codeStyles/codeStyleConfig.xml
+.gradle/7.2/fileHashes/fileHashes.bin
+.gradle/7.2/fileHashes/fileHashes.lock
+.gradle/buildOutputCleanup/buildOutputCleanup.lock
+.gradle/buildOutputCleanup/outputFiles.bin
+.gradle/checksums/checksums.lock
+.idea/gradle.xml
+local.properties
+.gradle/checksums/md5-checksums.bin
+.gradle/checksums/sha1-checksums.bin
