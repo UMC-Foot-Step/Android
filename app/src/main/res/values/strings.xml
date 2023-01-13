@@ -23,4 +23,17 @@
     <string name="my_page_tv_counter">%1d 번 눌렀습니다.</string>
     <string name="my_page_btn_counting_number">숫자 세기</string>
 
+
+
+
+    <!-- Gallery -->
+    <string name="gallery_tv_title">갤러리</string>
+    <string name="gallery_tv_feature_1">모아보기</string>
+    <string name="gallery_tv_day">1월 13일</string>
+    <string name="gallery_tv_post_title">발자취 제목</string>
+    <string name="gallery_tv_post_like_cnt">1</string>
+    <string name="gallery_tv_post_position">발자취 위치</string>
+
+
+
 </resources>

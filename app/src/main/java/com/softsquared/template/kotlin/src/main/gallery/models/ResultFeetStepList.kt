@@ -23,11 +23,8 @@ data class ResultFeetStepList(
     // @SerializedName("message") val message: String
 
     @SerializedName("day") val day: String,
-    // 이미지 데이터 저정하는 법은 Bitmap으로 이미지 객체 저장 후
-    // Bitmap을 해석해서 앱 뷰에 표시한다.
-    @SerializedName("img") val img: ImageView,
+    @SerializedName("img") val img: Int,
     @SerializedName("title") val title: String,
-    @SerializedName("des") val des: String,
     @SerializedName("like_cnt") val like_cnt: Int,
     @SerializedName("position") val position: String,
     @SerializedName("post_cnt") val post_cnt: Int,
