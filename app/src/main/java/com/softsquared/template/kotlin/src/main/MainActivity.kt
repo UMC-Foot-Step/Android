@@ -30,7 +30,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                             .commitAllowingStateLoss()
                     }
 
-                    // 갤러리
+                    // 갤러리 (GalleryService에서 더미데이터를 생성하고, GalleryFragment에 더미데이터 전달)
                     R.id.menu_main_btm_nav_gallary -> {
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_frm, GalleryFragment())
