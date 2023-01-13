@@ -11,7 +11,6 @@ import android.widget.TextView
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.databinding.ActivitySplashBinding
-import com.softsquared.template.kotlin.src.main.MainActivity
 import com.softsquared.template.kotlin.src.onboarding.OnboardingActivity
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {
