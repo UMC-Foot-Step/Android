@@ -3,6 +3,7 @@ package com.softsquared.template.kotlin.src.main.gallery
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.softsquared.template.kotlin.databinding.ItemGallerySectionBinding
@@ -21,12 +22,14 @@ class GalleryFragmentAdater(
 
             binding.galleryItemRvSectionList.apply {
                 setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(binding.root.context)
+                layoutManager = GridLayoutManager(binding.root.context,2)
                 adapter = GalleryFragmentSubAdater(sectionModel.day_post_list)
-                addItemDecoration(
-                    DividerItemDecoration(binding.root.context,
-                        DividerItemDecoration.VERTICAL)
-                )
+
+                // RecyclerView Item 구분선 넣기
+//                addItemDecoration(
+//                    DividerItemDecoration(binding.root.context,
+//                        DividerItemDecoration.VERTICAL)
+//                )
             }
         }
 

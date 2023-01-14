@@ -19,6 +19,9 @@ import kotlin.math.log
 
 class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
 
+    // 전역변수 - 날짜별 카테고리 게시글 리스트 저장
+    private val mSectionFeetStepList = ArrayList<ResultFeetStepList>()
+
 
     /*
         To Do 1. 발자취 리스트 조회 API의
@@ -88,6 +91,35 @@ class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
                 "독곶리 해변",
                 2,
                 false))
+
+
+
+            add(ResultFeetStepList(
+                "5월 1일",
+                R.drawable.sample_post_img_2_2,
+                "독곶리의 므찐 일몰",
+                0,
+                "독곶리 해변",
+                3,
+                false))
+
+            add(ResultFeetStepList(
+                "5월 1일",
+                R.drawable.sample_post_img_2_2,
+                "독곶리의 므찐 일몰",
+                0,
+                "독곶리 해변",
+                3,
+                false))
+
+            add(ResultFeetStepList(
+                "5월 1일",
+                R.drawable.sample_post_img_2_2,
+                "독곶리의 므찐 일몰",
+                0,
+                "독곶리 해변",
+                3,
+                false))
         }
 
 
@@ -97,59 +129,94 @@ class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
          */
         val daySectionFeetStepList = ArrayList<SectionModel>()
 
-        var day_cnt: Int
-        day_cnt = resultFeetStepList[0].post_cnt
+//        var day_cnt: Int
+//        day_cnt = resultFeetStepList[0].post_cnt
 
             // 날짜별 카테고리 게시글 리스트 저장
-        val sectionFeetStepList = ArrayList<ResultFeetStepList>()
+//        val sectionFeetStepList = ArrayList<ResultFeetStepList>()
 
-        for (i: Int in 1..resultFeetStepList.size) {
-            if (day_cnt == 0) {
-                Log.d("데이터 객체가 잘 저장되었는지 확인", "data list cnt = " + sectionFeetStepList.size)
-                daySectionFeetStepList.add(
-                    SectionModel(
-                        resultFeetStepList[i - 2].day,
-                        sectionFeetStepList
-                    )
-                )
-                day_cnt = resultFeetStepList[i - 1].post_cnt
+//        for (i: Int in 1..resultFeetStepList.size) {
+//            if (day_cnt == 0) {
+//                Log.d("데이터 객체가 잘 저장되었는지 확인", "data list cnt = " + sectionFeetStepList.size)
+//                daySectionFeetStepList.add(
+//                    SectionModel(
+//                        resultFeetStepList[i - 2].day,
+//                        sectionFeetStepList
+//                    )
+//                )
+//                day_cnt = resultFeetStepList[i - 1].post_cnt
+//
+//                // 동일한 객체를 초기화해서, 저장된 값도 변경됨 - 얕은 복사
+//                sectionFeetStepList.clear()
+//
+//                sectionFeetStepList.add(
+//                    resultFeetStepList[i - 1]
+//                )
+//
+//            } else {
+//
+//                sectionFeetStepList.add(
+//                    resultFeetStepList[i - 1]
+//                )
+//
+//                day_cnt--
+//            }
+//        }
+//
+//        // 마지막 날짜별 카테고리 게시글 리스트 저장
+//        daySectionFeetStepList.add(
+//            SectionModel(
+//                resultFeetStepList[resultFeetStepList.size - 1].day,
+//                sectionFeetStepList
+//            )
+//        )
 
-                // 동일한 객체를 초기화해서, 저장된 값도 변경됨 - 얕은 복사
-                sectionFeetStepList.clear()
+        var idx: Int = 0
+
+
+        // 백엔드 API에서 날짜별 카테고리 갯수가 몇개인지 받기
+        // 숫자 2를 API에서 받아오기
+        for(i: Int in 1..3){
+
+
+            // 카테고리 별 게시글 리스트 데이터 - ArrayList 객체 생성
+            val sectionFeetStepList = ArrayList<ResultFeetStepList>()
+
+            var z: Int = resultFeetStepList[idx].post_cnt
+            while(z > 0){
 
                 sectionFeetStepList.add(
-                    resultFeetStepList[i - 1]
+                    resultFeetStepList[idx]
                 )
-
-            } else {
-
-                sectionFeetStepList.add(
-                    resultFeetStepList[i - 1]
-                )
-
-                day_cnt--
+                idx ++
+                z--
             }
-        }
 
-        // 마지막 날짜별 카테고리 게시글 리스트 저장
-        daySectionFeetStepList.add(
-            SectionModel(
-                resultFeetStepList[resultFeetStepList.size - 1].day,
-                sectionFeetStepList
+            daySectionFeetStepList.add(
+                SectionModel(
+                    resultFeetStepList[idx - 1].day,
+                    sectionFeetStepList
+                )
             )
-        )
+
+        }
 
         Log.d("더미데이터 리스트 사이즈 체크", "data_size = " + daySectionFeetStepList.size)
         Log.d("더미데이터 카테고리 리스트 체크", "data_size = " + daySectionFeetStepList[0].day_post_list.size)
         Log.d("더미데이터 카테고리 리스트 체크_2", "data_size = " + daySectionFeetStepList[1].day_post_list.size)
 
-            for(z: Int in 1..2){
+            for(z: Int in 1..3){
                 Log.d("더미데이터 체크", "data_Title" + daySectionFeetStepList[0].day_post_list[z-1].title)
             }
             for(y: Int in 1..2){
                 Log.d("더미데이터 체크", "data_Title" + daySectionFeetStepList[1].day_post_list[y-1].title)
 
             }
+            for(x: Int in 1..3){
+                Log.d("더미데이터 체크", "data_Title" + daySectionFeetStepList[2].day_post_list[x-1].title)
+
+             }
+
 
 
         // GalleryFragemnt로 발자취 게시글 데이터 전달 - 날짜별 카테고리 게시글 리스트 Data

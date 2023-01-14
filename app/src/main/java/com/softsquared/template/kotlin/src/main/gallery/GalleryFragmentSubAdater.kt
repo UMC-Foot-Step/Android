@@ -36,6 +36,7 @@ class GalleryFragmentSubAdater(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        Log.d("포지션 값 체크", "Postion = $position")
         holder.bind(resultFeetStepList[position])
     }
 
