@@ -1,13 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <fragment
-        android:id="@+id/map_fragment"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="com.naver.maps.map.MapFragment" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent">
+        <com.naver.maps.map.MapView
+            android:id="@+id/map_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <LinearLayout
+            android:id="@+id/two_btn_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="40dp"
+            >
+            <Button
+                android:id="@+id/btn_menu"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:layout_gravity="right"
+                android:background="@drawable/menu_btn_background"
+                tools:ignore="SpeakableTextPresentCheck"/>
+
+            <Button
+                android:id="@+id/btn_search"
+                android:layout_width="58dp"
+                android:layout_height="58dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/search_btn_background"
+                tools:ignore="SpeakableTextPresentCheck"/>
+        </LinearLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/sub_btn_layout"
+            android:layout_toLeftOf="@id/two_btn_layout"
+            android:layout_alignTop="@id/two_btn_layout"
+            android:layout_marginTop="5dp"
+            android:visibility="gone"
+            >
+
+            <Button
+                android:id="@+id/btn_location_check"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/category_btn_background"
+                android:text="지역별 조회"
+                android:textColor="@color/orange"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+            <Button
+                android:id="@+id/btn_time"
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:background="@drawable/time_btn_background"
+                tools:ignore="SpeakableTextPresentCheck"
+                android:layout_toRightOf="@id/btn_location_check"
+                android:layout_marginLeft="5dp"/>
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_position"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/tracking_btn_background"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/place_info"
+            android:layout_width="match_parent"
+            android:layout_height="107dp"
+            android:layout_above="@+id/btn_position"
+            android:visibility="gone"
+            />
+    </RelativeLayout>
+
+</FrameLayout>
