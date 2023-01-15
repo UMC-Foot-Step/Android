@@ -30,6 +30,16 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
+
+
+
+        <!--Gallery Activity 추가-->
+        <activity
+            android:name=".src.main.gallery.info.GalleryInfoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

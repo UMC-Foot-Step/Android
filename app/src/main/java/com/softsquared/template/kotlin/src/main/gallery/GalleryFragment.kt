@@ -1,16 +1,15 @@
 package com.softsquared.template.kotlin.src.main.gallery
 
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseFragment
 import com.softsquared.template.kotlin.databinding.FragmentGallaryBinding
-import com.softsquared.template.kotlin.src.main.Example.HomeFragmentInterface
-import com.softsquared.template.kotlin.src.main.Example.models.UserResponse
-import com.softsquared.template.kotlin.src.main.gallery.models.FeetStepListResponse
+import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoActivity
 import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
+
 
 class GalleryFragment :
     BaseFragment<FragmentGallaryBinding>(FragmentGallaryBinding::bind, R.layout.fragment_gallary),
@@ -42,7 +41,7 @@ class GalleryFragment :
     1. 받은 응답 더미 데이터를 가지고 RecyclerView로 구현한다.
     */
     override fun onGetPostListSuccess(response: List<SectionModel>) {
-        setupRecyclerView(response)
+        setupRecyclerView(response, this)
     }
 
     
@@ -62,12 +61,24 @@ class GalleryFragment :
     /*
         To DO 3. RecyclerView 구현
      */
-    private fun setupRecyclerView(response: List<SectionModel>){
+    private fun setupRecyclerView(response: List<SectionModel>, galleryFragmentInterface: GalleryFragmentInterface){
         binding.galleryRvFeetstepList.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
-            adapter = GalleryFragmentAdater(response)
+            adapter = GalleryFragmentAdater(response, galleryFragmentInterface)
         }
+    }
+
+
+
+    /*
+        To DO 4. 프래그먼트 -> GalleryInfoActivity로 전환
+        리사이클러 뷰의 특정 Item 클릭 후
+        특정 Item 조회 Activity
+     */
+    override fun changeGalleryInfoActivity(){
+        val intent = Intent(activity, GalleryInfoActivity::class.java)
+        startActivity(intent)
     }
 
 

@@ -125,7 +125,7 @@ class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
 
 
         /*
-            날짜별 카테고리로 게시글 그룹화
+            날짜별 카테고리로 게시글 그룹화 - 데이터 전처리?
          */
         val daySectionFeetStepList = ArrayList<SectionModel>()
 
@@ -201,21 +201,22 @@ class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
 
         }
 
-        Log.d("더미데이터 리스트 사이즈 체크", "data_size = " + daySectionFeetStepList.size)
-        Log.d("더미데이터 카테고리 리스트 체크", "data_size = " + daySectionFeetStepList[0].day_post_list.size)
-        Log.d("더미데이터 카테고리 리스트 체크_2", "data_size = " + daySectionFeetStepList[1].day_post_list.size)
 
-            for(z: Int in 1..3){
-                Log.d("더미데이터 체크", "data_Title" + daySectionFeetStepList[0].day_post_list[z-1].title)
-            }
-            for(y: Int in 1..2){
-                Log.d("더미데이터 체크", "data_Title" + daySectionFeetStepList[1].day_post_list[y-1].title)
-
-            }
-            for(x: Int in 1..3){
-                Log.d("더미데이터 체크", "data_Title" + daySectionFeetStepList[2].day_post_list[x-1].title)
-
-             }
+//        Log.d("더미데이터 리스트 사이즈 체크", "data_size = " + daySectionFeetStepList.size)
+//        Log.d("더미데이터 카테고리 리스트 체크", "data_size = " + daySectionFeetStepList[0].day_post_list.size)
+//        Log.d("더미데이터 카테고리 리스트 체크_2", "data_size = " + daySectionFeetStepList[1].day_post_list.size)
+//
+//            for(z: Int in 1..3){
+//                Log.d("더미데이터 체크", "data_Title" + daySectionFeetStepList[0].day_post_list[z-1].title)
+//            }
+//            for(y: Int in 1..2){
+//                Log.d("더미데이터 체크", "data_Title" + daySectionFeetStepList[1].day_post_list[y-1].title)
+//
+//            }
+//            for(x: Int in 1..3){
+//                Log.d("더미데이터 체크", "data_Title" + daySectionFeetStepList[2].day_post_list[x-1].title)
+//
+//             }
 
 
 

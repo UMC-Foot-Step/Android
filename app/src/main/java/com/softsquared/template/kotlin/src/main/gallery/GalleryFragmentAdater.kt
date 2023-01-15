@@ -10,11 +10,13 @@ import com.softsquared.template.kotlin.databinding.ItemGallerySectionBinding
 import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
 
 class GalleryFragmentAdater(
-    private val daySectionFeetStepList: List<SectionModel>
+    private val daySectionFeetStepList: List<SectionModel>,
+    private val galleryFragmentInterface: GalleryFragmentInterface
 ) : RecyclerView.Adapter<GalleryFragmentAdater.MyViewHolder>() {
 
     class MyViewHolder(
-        private val binding: ItemGallerySectionBinding
+        private val binding: ItemGallerySectionBinding,
+        val galleryFragmentInterface: GalleryFragmentInterface
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(sectionModel: SectionModel) {
@@ -23,7 +25,7 @@ class GalleryFragmentAdater(
             binding.galleryItemRvSectionList.apply {
                 setHasFixedSize(true)
                 layoutManager = GridLayoutManager(binding.root.context,2)
-                adapter = GalleryFragmentSubAdater(sectionModel.day_post_list)
+                adapter = GalleryFragmentSubAdater(sectionModel.day_post_list, galleryFragmentInterface)
 
                 // RecyclerView Item 구분선 넣기
 //                addItemDecoration(
@@ -37,7 +39,7 @@ class GalleryFragmentAdater(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(ItemGallerySectionBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false))
+            parent, false), galleryFragmentInterface)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {

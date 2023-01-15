@@ -12,4 +12,5 @@ interface GalleryFragmentInterface {
 
     fun onGetPostListFailure(message: String)
 
+    fun changeGalleryInfoActivity()
 }
