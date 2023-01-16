@@ -65,4 +65,9 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // viewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    // livedata - 데이터 변경 사항 파악 가능능
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
 }
