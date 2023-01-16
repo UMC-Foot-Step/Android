@@ -67,5 +67,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     //naver map api
-    implementation 'com.naver.maps:map-sdk:3.16.0'
+    implementation 'com.naver.maps:map-sdk:3.16.1'
+    implementation("com.google.android.gms:play-services-location:16.0.0")
+
+
 }

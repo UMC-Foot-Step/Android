@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginStart="30dp"
-    android:layout_marginEnd="30dp"
+    android:layout_marginStart="20dp"
+    android:layout_marginEnd="20dp"
     android:backgroundTint="@color/white"
     app:cardCornerRadius="16dp"
     tools:layout_height="100dp">
@@ -45,11 +45,12 @@
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+
             tools:text="장소 이름" />
 
         <TextView
             android:id="@+id/priceTextView"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="12dp"
             android:maxLines="1"
@@ -58,7 +59,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@id/cardview_member"
             app:layout_constraintTop_toBottomOf="@id/titleTextView"
-            app:layout_constraintVertical_bias= "0.88"
+            app:layout_constraintVertical_bias="0.88"
             tools:text="내 발자취 1개" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
