@@ -43,7 +43,7 @@
     <string name="galleryinfo_tv_post_day">2022.01.15</string>
     <string name="galleryinfo_tv_post_username">김다미</string>
     <string name="galleryinfo_tv_post_comment_cnt">3</string>
-    <string name="galleryinfo_tv_post_comment">그해 우리는 많은 관심 부탁드러요~!</string>
+    <string name="galleryinfo_tv_post_des">그해 우리는 많은 관심 부탁드러요~!</string>
     <string name= "galleryinfo_et_comment_hint">좋은 댓글은 힘이 됩니다 :)</string>
     <string name= "galleryinfo_btn_comment_check">작성</string>
 

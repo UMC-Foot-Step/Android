@@ -1,29 +1,25 @@
-package com.softsquared.template.kotlin.src.main.gallery
+package com.softsquared.template.kotlin.src.main.gallery.map
 
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.softsquared.template.kotlin.databinding.ItemGallerySubSectionBinding
-import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoActivity
+import com.softsquared.template.kotlin.databinding.ItemMapgallerySubSectionBinding
+import com.softsquared.template.kotlin.src.main.gallery.GalleryFragmentInterface
+import com.softsquared.template.kotlin.src.main.gallery.GalleryFragmentSubAdater
 import com.softsquared.template.kotlin.src.main.gallery.info.models.FeetStepInfoResponse
 import com.softsquared.template.kotlin.src.main.gallery.info.models.ResultCommentList
 import com.softsquared.template.kotlin.src.main.gallery.models.ResultFeetStepList
 
-
-/*
-    날짜별 카테고리로 게시글 리스트 갯수만큼 조회
- */
-class GalleryFragmentSubAdater(
+class MapGalleryActivitySubAdapter(
     private val resultFeetStepList: ArrayList<ResultFeetStepList>,
-    val galleryFragmentInterface: GalleryFragmentInterface
-) : RecyclerView.Adapter<GalleryFragmentSubAdater.MyViewHolder>() {
+    val mapGalleryActivityInterface: MapGalleryActivityInterface
+) : RecyclerView.Adapter<MapGalleryActivitySubAdapter.MyViewHolder>() {
 
     class MyViewHolder(
-        private val binding: ItemGallerySubSectionBinding,
-        private val galleryFragmentInterface: GalleryFragmentInterface
+        private val binding: ItemMapgallerySubSectionBinding,
+        private val mapGalleryActivityInterface: MapGalleryActivityInterface
     ) : RecyclerView.ViewHolder(binding.root) {
 
 
@@ -35,6 +31,8 @@ class GalleryFragmentSubAdater(
                 galleryTvPostPosition.text = resultFeetStep.position
             }
 
+
+            // RecyclerView의 특정 발자취 게시글 클릭
             binding.root.setOnClickListener{
                 val pos: Int = getAdapterPosition()
                 Log.d("리사이클러 뷰 포지션 값 체크", "position = "+pos)
@@ -54,22 +52,24 @@ class GalleryFragmentSubAdater(
                 val resultCommentList = ArrayList<ResultCommentList>()
 
                 resultCommentList.apply {
-                    add(ResultCommentList(
-                        "김다미",
-                    "역시, 1950 갬성 카페가 최고임 ㅋㅋ"))
-
                     add(
                         ResultCommentList(
                         "김다미",
-                        "여기에서, 그해 우리는 촬영해도 좋았겠다.."
-                    )
+                        "역시, 1950 갬성 카페가 최고임 ㅋㅋ")
                     )
 
                     add(
                         ResultCommentList(
-                        "김다미",
-                        "좋은 사람들과 좋은 시간"
+                            "김다미",
+                            "여기에서, 그해 우리는 촬영해도 좋았겠다.."
+                        )
                     )
+
+                    add(
+                        ResultCommentList(
+                            "김다미",
+                            "좋은 사람들과 좋은 시간"
+                        )
                     )
 
                     add(
@@ -104,21 +104,20 @@ class GalleryFragmentSubAdater(
 
                 // GalleryFragment -> GalleryInfoActivity 전환
                 // 더미데이터 객체 함께 넘겨주기
-
-                /*
-                    RecyclerView의 특정 발자취 게시글 클릭시,
-                    동일 장소별 발자취 게시글 리스트 조회 액티비티로 전환 (태스팅 용)
-                 */
-//                galleryFragmentInterface.changeGalleryInfoActivity(feetStepInfoResponse)
-                galleryFragmentInterface.testChangeMapGalleryActivity()
+                mapGalleryActivityInterface.changeGalleryInfoActivity(feetStepInfoResponse)
             }
         }
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(ItemGallerySubSectionBinding.inflate(LayoutInflater.from(parent.context),
-            parent, false), galleryFragmentInterface)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MapGalleryActivitySubAdapter.MyViewHolder {
+        return MapGalleryActivitySubAdapter.MyViewHolder(
+            ItemMapgallerySubSectionBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent, false
+            ), mapGalleryActivityInterface
+        )
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -127,5 +126,4 @@ class GalleryFragmentSubAdater(
     }
 
     override fun getItemCount() = resultFeetStepList.size
-
 }

@@ -1,5 +1,6 @@
 package com.softsquared.template.kotlin.src.main.gallery
 
+import com.softsquared.template.kotlin.src.main.gallery.info.models.FeetStepInfoResponse
 import com.softsquared.template.kotlin.src.main.gallery.models.FeetStepListResponse
 import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
 
@@ -12,5 +13,12 @@ interface GalleryFragmentInterface {
 
     fun onGetPostListFailure(message: String)
 
-    fun changeGalleryInfoActivity()
+    fun changeGalleryInfoActivity(feetStepInfoResponse: FeetStepInfoResponse)
+
+
+    // 테스팅 메소드
+    /*
+        동일 장소별 발자취 게시글 리스트 조회 Activity를 테스팅하기 위한 메소드
+     */
+    fun testChangeMapGalleryActivity()
 }

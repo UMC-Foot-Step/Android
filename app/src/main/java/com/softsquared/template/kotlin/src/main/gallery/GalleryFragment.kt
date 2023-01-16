@@ -8,6 +8,9 @@ import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseFragment
 import com.softsquared.template.kotlin.databinding.FragmentGallaryBinding
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoActivity
+import com.softsquared.template.kotlin.src.main.gallery.info.models.FeetStepInfoResponse
+import com.softsquared.template.kotlin.src.main.gallery.map.MapGalleryActivity
+import com.softsquared.template.kotlin.src.main.gallery.map.MapGalleryActivityInterface
 import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
 
 
@@ -76,8 +79,16 @@ class GalleryFragment :
         리사이클러 뷰의 특정 Item 클릭 후
         특정 Item 조회 Activity
      */
-    override fun changeGalleryInfoActivity(){
+    override fun changeGalleryInfoActivity(feetStepInfoResponse: FeetStepInfoResponse){
         val intent = Intent(activity, GalleryInfoActivity::class.java)
+        val bundle = Bundle()
+//        bundle.putSerializable("feetStepInfoResponse", feetStepInfoResponse)
+        intent.putExtra("feetStepInfoResponse", feetStepInfoResponse)
+        startActivity(intent)
+    }
+
+    override fun testChangeMapGalleryActivity(){
+        val intent = Intent(activity, MapGalleryActivity::class.java)
         startActivity(intent)
     }
 
@@ -85,3 +96,4 @@ class GalleryFragment :
 
 
 }
+

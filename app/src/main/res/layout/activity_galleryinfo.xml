@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="43dp"
@@ -28,9 +28,10 @@
             android:id="@+id/gallery_tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12.4dp"
-            android:layout_marginTop="9dp"
+            android:layout_marginStart="12.4dp"
 
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/galleryinfo_btn_back"
             android:text="@string/gallery_tv_post_title"
             android:textColor="#000000"
             android:textSize="20sp"
@@ -40,25 +41,26 @@
             android:id="@+id/galleryinfo_btn_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="220dp"
+            android:layout_marginStart="310dp"
+
+
             android:layout_marginTop="13dp"
+            android:layout_marginEnd="173dp"
+            android:layout_toEndOf="@+id/galleryinfo_btn_back"
             android:background="@color/white"
-
-
             app:srcCompat="@drawable/ic_galleryinfo_main_option" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
     <FrameLayout
         android:id="@+id/galleryinfo_frm"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:layout_marginTop="43dp"
-        />
+        >
 
-
+    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

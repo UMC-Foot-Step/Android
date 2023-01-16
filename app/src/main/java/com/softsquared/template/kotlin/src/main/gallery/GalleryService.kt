@@ -231,4 +231,5 @@ class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
 
 
     }
+
 }
