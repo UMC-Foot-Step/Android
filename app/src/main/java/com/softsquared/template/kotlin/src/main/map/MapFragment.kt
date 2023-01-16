@@ -234,6 +234,7 @@ class MapFragment :
 
             v1.findViewById<TextView>(R.id.feetTextView).text = spannable
             v1.findViewById<TextView>(R.id.titleTextView).text = locationList[marker_num]
+
             if(marker_num<3){
                 v1.findViewById<ImageView>(R.id.thumbnailImageView).setImageResource(imageList[marker_num])
             }
