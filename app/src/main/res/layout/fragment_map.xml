@@ -18,7 +18,7 @@
             android:orientation="vertical"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:layout_marginRight="17dp"
+            android:layout_marginRight="18dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="40dp"
             >
@@ -75,7 +75,7 @@
             android:layout_height="58dp"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginRight="17dp"
+            android:layout_marginRight="18dp"
             android:layout_marginBottom="15dp"
             android:background="@drawable/tracking_btn_background"
             tools:ignore="SpeakableTextPresentCheck" />
