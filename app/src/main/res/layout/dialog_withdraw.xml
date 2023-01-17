@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="319dp"
+            android:layout_height="52dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="15sp"
+
+            android:text="회원탈퇴를 진행하시겠습니까?"
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="11dp"
+            android:layout_marginBottom="11dp">
+
+            <Button
+                android:id="@+id/btn_no_with"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:background="@color/white"
+                android:text="취소"
+                android:textColor="@color/orange" />
+
+            <Button
+                android:id="@+id/btn_ok_with"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:background="@color/white"
+
+                android:text="확인"
+                android:textColor="@color/orange" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

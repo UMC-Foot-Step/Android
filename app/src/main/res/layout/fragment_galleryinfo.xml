@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/galleryinfo_iv_post_img"
+        android:layout_width="328dp"
+        android:layout_height="328dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/galleryinfo_tv_day"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/galleryinfo_tv_post_day"
+
+
+        android:layout_marginTop="8dp"
+        android:textStyle="normal"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        app:layout_constraintStart_toStartOf="@+id/galleryinfo_iv_post_img"
+        app:layout_constraintTop_toBottomOf="@+id/galleryinfo_iv_post_img" />
+
+    <ImageButton
+        android:id="@+id/gallery_btn_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginRight="4.3dp"
+        app:layout_constraintBottom_toBottomOf="@+id/galleryinfo_tv_day"
+        app:layout_constraintEnd_toStartOf="@+id/galleryinfo_tv_like_cnt"
+        app:layout_constraintTop_toTopOf="@+id/galleryinfo_tv_day"
+        app:srcCompat="@drawable/ic_postlike_btn_selected" />
+
+    <TextView
+        android:id="@+id/galleryinfo_tv_like_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="@string/gallery_tv_post_like_cnt"
+        android:textColor="#fd346e"
+        android:textSize="12sp"
+        android:textStyle="normal"
+
+
+        app:layout_constraintBottom_toBottomOf="@+id/gallery_btn_like"
+        app:layout_constraintEnd_toEndOf="@+id/galleryinfo_iv_post_img"
+        app:layout_constraintTop_toTopOf="@+id/gallery_btn_like" />
+
+    <ImageView
+        android:id="@+id/galleryinfo_iv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/galleryinfo_tv_comment_cnt"
+        app:layout_constraintEnd_toStartOf="@+id/galleryinfo_tv_comment_cnt"
+        app:layout_constraintTop_toTopOf="@+id/galleryinfo_tv_comment_cnt"
+        app:srcCompat="@drawable/ic_galleryinfo_comments_icon"
+        android:layout_marginRight="4.3dp"/>
+
+    <TextView
+        android:id="@+id/galleryinfo_tv_comment_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/galleryinfo_tv_post_comment_cnt"
+        android:textStyle="normal"
+        android:textSize="12sp"
+        android:textColor="#000000"
+
+        android:layout_marginTop="7dp"
+        app:layout_constraintEnd_toEndOf="@+id/galleryinfo_tv_like_cnt"
+        app:layout_constraintTop_toBottomOf="@+id/galleryinfo_tv_like_cnt" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginLeft="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/galleryinfo_tv_day"
+        app:layout_constraintStart_toEndOf="@+id/galleryinfo_tv_day"
+        app:layout_constraintTop_toTopOf="@+id/galleryinfo_tv_day"
+        app:srcCompat="@drawable/ic_post_position_img" />
+
+    <TextView
+        android:id="@+id/galleryinfo_post_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gallery_tv_post_position"
+        android:textStyle="normal"
+        android:textSize="12sp"
+        android:textColor="#ff7b31"
+
+
+        android:layout_marginLeft="3dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
+        app:layout_constraintStart_toEndOf="@+id/imageView3"
+        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/galleryinfo_rv_comment"
+        android:layout_width="match_parent"
+        android:layout_height="230dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/galleryinfo_tv_post_des" />
+
+
+    <EditText
+        android:id="@+id/galleryinfo_et_comment"
+        android:layout_width="370dp"
+        android:layout_height="wrap_content"
+        android:width="200dp"
+        android:background="@drawable/shape_et_comment"
+        android:hint="@string/galleryinfo_et_comment_hint"
+        android:scrollHorizontally="true"
+        android:textColor="@color/black"
+        android:textColorHint="#d9d9d9"
+        android:textSize="14sp"
+
+        android:layout_marginBottom="12dp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/galleryinfo_rv_comment"
+        app:layout_constraintStart_toStartOf="@+id/galleryinfo_rv_comment">
+
+    </EditText>
+
+    <Button
+        android:id="@+id/galleryinfo_btn_comment"
+        android:layout_width="56.9dp"
+        android:layout_height="30dp"
+        android:layout_marginRight="9.1dp"
+        android:background="@drawable/shape_btn_comment"
+        android:text="@string/galleryinfo_btn_comment_check"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/galleryinfo_et_comment"
+        app:layout_constraintEnd_toEndOf="@+id/galleryinfo_et_comment"
+        app:layout_constraintTop_toTopOf="@+id/galleryinfo_et_comment" />
+
+    <TextView
+        android:id="@+id/galleryinfo_tv_post_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/galleryinfo_tv_post_username"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textColor="#000000"
+
+        android:layout_marginTop="7dp"
+
+        app:layout_constraintStart_toStartOf="@+id/galleryinfo_tv_day"
+        app:layout_constraintTop_toBottomOf="@+id/galleryinfo_tv_day" />
+
+    <TextView
+        android:id="@+id/galleryinfo_tv_post_des"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/galleryinfo_tv_post_des"
+        android:fontFamily="sans-serif-medium"
+        android:textStyle="normal"
+        android:textSize="14sp"
+        android:textColor="#000000"
+
+        android:layout_marginTop="6dp"
+        app:layout_constraintStart_toStartOf="@+id/galleryinfo_tv_post_username"
+        app:layout_constraintTop_toBottomOf="@+id/galleryinfo_tv_post_username" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
