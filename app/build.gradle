@@ -70,4 +70,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
     // livedata - 데이터 변경 사항 파악 가능능
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
+    //glide
+    implementation 'com.github.bumptech.glide:glide:4.14.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.14.1'
 }
