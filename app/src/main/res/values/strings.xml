@@ -23,6 +23,7 @@
     <string name="my_page_tv_counter">%1d 번 눌렀습니다.</string>
     <string name="my_page_btn_counting_number">숫자 세기</string>
 
+
     <!-- Post -->
     <string name="post_tv_fragment_title">기록하기</string>
     <string name="post_tv_location_hint">어디에서 찍은 사진인가요?</string>
@@ -43,5 +44,30 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+
+
+    <!-- Gallery -->
+    <string name="gallery_tv_title">갤러리</string>
+    <string name="gallery_tv_feature_1">모아보기</string>
+    <string name="gallery_tv_day">1월 13일</string>
+    <string name="gallery_tv_post_title">발자취 제목</string>
+    <string name="gallery_tv_post_like_cnt">1</string>
+    <string name="gallery_tv_post_position">발자취 위치</string>
+
+    <!-- Gallery - Info-->
+    <string name="gallery_toolbar_title">갤러리 발자취 타이틀</string>
+    <string name="gallery_toolbar_option_1">신고하기</string>
+    <string name="gallery_toolbar_option_2">수정하기</string>
+    <string name="gallery_toolbar_option_3">삭제하기</string>
+
+    <string name="galleryinfo_tv_post_day">2022.01.15</string>
+    <string name="galleryinfo_tv_post_username">김다미</string>
+    <string name="galleryinfo_tv_post_comment_cnt">3</string>
+    <string name="galleryinfo_tv_post_des">그해 우리는 많은 관심 부탁드러요~!</string>
+    <string name= "galleryinfo_et_comment_hint">좋은 댓글은 힘이 됩니다 :)</string>
+    <string name= "galleryinfo_btn_comment_check">작성</string>
+
 
 </resources>
