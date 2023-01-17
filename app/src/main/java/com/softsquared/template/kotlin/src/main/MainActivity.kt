@@ -39,7 +39,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
                     // 발자취 기록하기
                     R.id.menu_main_btm_nav_post -> {
-
+                        val intent = Intent(this@MainActivity, PostActivity::class.java)
+                        startActivity(intent)
                     }
 
                     // 피드

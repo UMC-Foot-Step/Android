@@ -18,6 +18,9 @@
         tools:ignore="AllowBackup">
 
         <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
             android:name=".src.splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
@@ -34,6 +37,19 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
+
+        <!--Post Activity 추가-->
+        <activity
+            android:name=".src.main.post.PostActivity"
+            android:exported="false"
+            android:parentActivityName=".src.main.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".src.main.post.PostSearchPositionActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
 
 
@@ -62,7 +78,7 @@
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="phlxzodw8d" />
-
+            
     </application>
 
 </manifest>

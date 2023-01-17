@@ -24,6 +24,28 @@
     <string name="my_page_btn_counting_number">숫자 세기</string>
 
 
+    <!-- Post -->
+    <string name="post_tv_fragment_title">기록하기</string>
+    <string name="post_tv_location_hint">어디에서 찍은 사진인가요?</string>
+    <string name="post_tv_title_hint">제목</string>
+    <string name="post_tv_content_hint">내용</string>
+    <string name="post_sw_text">공개</string>
+    <string name="post_btn_text">작성하기</string>
+
+    <!-- Calender -->
+    <string name="cal_tv_fragment_title">날짜 선택</string>
+    <string name="cal_btn_text">확인</string>
+
+    <!-- Search Location -->
+    <string name="search_loc_tv_fragment_title">검색</string>
+    <string name="search_loc_et_search_hint">장소 검색</string>
+    <string name="search_loc_tv_detail">검색 시 지역명을 함께 입력해주세요 (예: 투썸플레이스 강남)</string>
+    <string name="search_loc_tv_result">검색결과</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
 
 
     <!-- Gallery -->
@@ -46,8 +68,6 @@
     <string name="galleryinfo_tv_post_des">그해 우리는 많은 관심 부탁드러요~!</string>
     <string name= "galleryinfo_et_comment_hint">좋은 댓글은 힘이 됩니다 :)</string>
     <string name= "galleryinfo_btn_comment_check">작성</string>
-
-
 
 
 </resources>

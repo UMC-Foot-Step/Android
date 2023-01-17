@@ -14,5 +14,10 @@
 
     <color name="orange">#FF7B31</color>
 
+    <color name="light_grey">#E2DADA</color>
+    <color name="grey">#988D8D</color>
+    <color name="searchLocationEt">#F1F0F0</color>
+
+
 
 </resources>
