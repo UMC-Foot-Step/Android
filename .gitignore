@@ -180,6 +180,7 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+
 ### AndroidStudio Patch ###
 !/gradle/wrapper/gradle-wrapper.jar
 
