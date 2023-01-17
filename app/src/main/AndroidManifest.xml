@@ -37,6 +37,13 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <!--OnBoarding Activity 추가-->
+        <activity
+            android:name=".src.onboarding.OnboardingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
 
         <!--Post Activity 추가-->
         <activity
