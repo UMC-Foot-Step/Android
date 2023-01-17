@@ -12,4 +12,7 @@
     <color name="blackForText">#efefef</color>
     <color name="redForText">#d9534f</color>
 
+    <color name="orange">#FF7B31</color>
+
+
 </resources>
