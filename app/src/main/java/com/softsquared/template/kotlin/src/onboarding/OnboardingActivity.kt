@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.databinding.ActivityMainPostBinding
+import com.softsquared.template.kotlin.src.login.LoginProcessActivity
 import com.softsquared.template.kotlin.src.main.MainActivity
 
 class OnboardingActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBinding::inflate) {
@@ -40,7 +41,7 @@ class OnboardingActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPos
                 onboarding3txt.visibility = View.VISIBLE
                 onboarding_btn.text = "시작하기"
             } else{
-                startActivity(Intent(this, MainActivity::class.java))
+                startActivity(Intent(this, LoginProcessActivity::class.java))
             }
         }
 
