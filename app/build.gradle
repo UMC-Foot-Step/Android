@@ -72,4 +72,18 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+
+    // 기록하기 - Post
+    // viewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    // livedata - 데이터 변경 사항 파악 가능능
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
+    
+    // 지도 - Map
+    //naver map api
+    implementation 'com.naver.maps:map-sdk:3.16.1'
+    implementation("com.google.android.gms:play-services-location:16.0.0")
+
+
+
 }
