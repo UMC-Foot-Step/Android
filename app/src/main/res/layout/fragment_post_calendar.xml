@@ -3,19 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
+    android:background="@drawable/post_cal_dialog"
     android:padding="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal">
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="horizontal"
+        >
 
         <TextView
             android:id="@+id/calTv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/cal_tv_fragment_title"
@@ -28,7 +31,8 @@
             android:id="@+id/calBtnQuit"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
             android:src="@drawable/post_cal_close" />
     </LinearLayout>
 
@@ -36,11 +40,12 @@
         android:id="@+id/calDatePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_gravity="center"
-        android:calendarTextColor="@color/blackForText"
+        android:layout_marginTop="10dp"
         android:background="@color/whiteForBackground"
-        android:maxDate=""/>
+        android:calendarTextColor="@color/blackForText"
+        android:maxDate="" />
+
     <Button
         android:id="@+id/calBtnCheck"
         android:layout_width="match_parent"

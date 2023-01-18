@@ -9,7 +9,6 @@ class PositionViewHolder(private val binding: SearchPositionItemListBinding) : R
     fun bind(item: PositionData){
         binding.searchPosTvItemTitle.text = item.pos_title
         binding.searchPosTvItemAddress.text = item.pos_address
-        binding.searchPosTvDistance.text = item.pos_distance.toString()
     }
 }
 

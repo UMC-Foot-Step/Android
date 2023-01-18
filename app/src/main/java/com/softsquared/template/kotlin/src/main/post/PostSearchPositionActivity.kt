@@ -62,10 +62,10 @@ class PostSearchPositionActivity : BaseActivity<ActivitySearchPositionBinding>(A
 
     private fun initializePositionlist(){
         with(positionDatas){
-            add(PositionData("투썸플레이스 인천인하대후문점", "인천 미추홀구 인하로 75 2-3층", 23))
-            add(PositionData("투썸플레이스 인천독정이삼거리점", "인천 미추홀구 독정이로 3", 100))
-            add(PositionData("투썸플레이스 인천숭의점", "인천 미추홀구 인주대로 51", 123))
-            add(PositionData("투썸플레이스인천용현점", "인천 미추홀구 아암대로 87 서해관광호텔", 200))
+            add(PositionData("투썸플레이스 인천인하대후문점", "인천 미추홀구 인하로 75 2-3층"))
+            add(PositionData("투썸플레이스 인천독정이삼거리점", "인천 미추홀구 독정이로 3"))
+            add(PositionData("투썸플레이스 인천숭의점", "인천 미추홀구 인주대로 51"))
+            add(PositionData("투썸플레이스인천용현점", "인천 미추홀구 아암대로 87 서해관광호텔"))
         }
     }
 

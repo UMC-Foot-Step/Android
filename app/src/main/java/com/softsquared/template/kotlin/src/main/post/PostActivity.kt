@@ -1,15 +1,11 @@
 package com.softsquared.template.kotlin.src.main.post
 
-import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
@@ -42,7 +38,7 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
 
         binding.postIbCalendar.setOnClickListener {
             val bottomSheet = layoutInflater.inflate(R.layout.fragment_post_calendar, null)
-            val bottomSheetDialog = BottomSheetDialog(this)
+            val bottomSheetDialog = BottomSheetDialog(this, R.style.calTheme_Custom)
             val btnClose = bottomSheet.findViewById<ImageButton>(R.id.calBtnQuit)
             val btnDateCheck = bottomSheet.findViewById<Button>(R.id.calBtnCheck)
             val calView = bottomSheet.findViewById<CalendarView>(R.id.calDatePicker)

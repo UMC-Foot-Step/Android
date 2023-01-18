@@ -32,20 +32,6 @@
             android:textColor="@color/blackForText"
             android:ellipsize="end"/>
 
-        <TextView
-            android:id="@+id/searchPosTvDistance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="67"
-            android:textColor="@color/blackForText"/>
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="m"
-            android:textColor="@color/blackForText" />
-
     </LinearLayout>
 
 
