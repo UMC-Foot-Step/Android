@@ -10,6 +10,9 @@ import android.widget.Button
 import android.widget.CalendarView
 import android.widget.ImageButton
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
@@ -25,6 +28,9 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
 
     // 갤러리 앱 열기
     private val OPEN_GALLERY = 1
+
+    // registerForActivityResult API 구현
+    private lateinit var getResultPosition: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,10 +73,16 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
         dataSet(tvYear, tvMonth, tvDay)
 
         // 위치 검색 activity 전환
+        getResultPosition = registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()) { result ->
+                if(result.resultCode == RESULT_OK){
+                    val getPosTitle = result.data?.getStringExtra("positionTitle")
+                    binding.postBtnLoc.text = getPosTitle }
+        }
+
         binding.postBtnLoc.setOnClickListener{
             val intent = Intent(this, PostSearchPositionActivity::class.java)
-            startActivity(intent)
-            finish()
+            getResultPosition.launch(intent)
         }
 
         // 갤러리 열기
@@ -102,14 +114,28 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
         binding.postTvDate.text = date
     }
 
+    // 갤러리 열기
     private fun openGallery(){
-        val intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.setType("image/*")
-        @Suppress("DEPRECATION")
-        startActivityForResult(intent, OPEN_GALLERY)
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        activityResult.launch(intent)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    // 갤러리 이미지 결과 가져오기 - Glide
+    private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+        // 결과 코드 Ok, 결과값 null 아니면
+        if(it.resultCode == RESULT_OK && it.data != null){
+            // 값 담기
+            val uri = it.data!!.data
+
+            // 화면에 보여주기
+            Glide.with(this)
+                .load(uri)
+                .into(binding.postIbGallery)
+        }
+    }
+
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if(resultCode == Activity.RESULT_OK){
@@ -127,6 +153,6 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
         else{
             Log.d("ActivityResult", "something wrong")
         }
-    }
+    }*/
 
 }

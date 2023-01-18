@@ -35,10 +35,11 @@ class PostSearchPositionActivity : BaseActivity<ActivitySearchPositionBinding>(A
         adapter.setItemClickListener(object : PositionListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 val item = positionDatas[position]
-                val intent = Intent(binding.root.context, PostActivity::class.java)
-                intent.putExtra("positionTitle", item.pos_title)
-                startActivity(intent)
-                finish()
+                val intent = Intent(binding.root.context, PostActivity::class.java).apply{
+                    putExtra("positionTitle", item.pos_title)
+                }
+                setResult(RESULT_OK, intent)
+                if(!isFinishing) finish()
             }
         })
 
