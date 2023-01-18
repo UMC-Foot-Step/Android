@@ -1,17 +1,261 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:focusableInTouchMode="true"
+    android:focusable="true">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="마이페이지 프래그먼트"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:id="@+id/xtx_my_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:textColor="@color/black"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_gravity="left"
+            android:text="마이페이지" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <ImageView
+            android:id="@+id/img_bell"
+            android:layout_width="16dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_gravity="center|right"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bell" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="17dp">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_my_profile"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:background="@drawable/circle_button"/>
+
+            <ImageButton
+                android:id="@+id/img_btn_profile"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"/>
+
+            <ImageButton
+                android:id="@+id/img_btn_profile_plus"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="right|bottom"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/plus" />
+        </FrameLayout>
+
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/txt_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:text="닉네임"
+                android:background="@android:color/transparent"
+                android:textSize="20sp"
+                android:visibility="visible"/>
+
+            <EditText
+                android:id="@+id/edt_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="31dp"
+                android:layout_gravity="center"
+                android:background="@drawable/namespace"
+                android:gravity="center"
+                android:hint="닉네임"
+                android:textColorHint="#d9d9d9"
+                android:textColor="@color/black"
+                android:maxLength="20"
+                android:maxLines="1"
+                android:paddingLeft="60dp"
+                android:paddingRight="60dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
+
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_modify"
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:background="@android:color/transparent"
+                android:layout_gravity="center"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="@color/orange"
+                android:text="닉네임 수정"
+                android:visibility="visible"/>
+
+            <Button
+                android:id="@+id/btn_modify_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="17dp"
+                android:textSize="14sp"
+                android:background="@android:color/transparent"
+                android:layout_gravity="center"
+                android:textStyle="normal"
+                android:textColor="@color/orange"
+                android:text="확인"
+                android:visibility="invisible"/>
+
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="5dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <Button
+                android:id="@+id/btn_friend"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:paddingLeft="8dp"
+                android:background="@drawable/top_stroke"
+                android:gravity="center|left"
+                android:text="친구"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/txt_friend_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:layout_marginLeft="61dp"
+                android:text="999"
+                android:textColor="@color/orange"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btn_my_footprint"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:textSize="16sp"
+                android:textStyle="normal"
+                android:paddingLeft="8dp"
+                android:textColor="@color/black"
+                android:background="@drawable/top_stroke"
+                android:gravity="center|left"
+                android:text="내 발자취"/>
+            <TextView
+                android:id="@+id/txt_footprint_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|left"
+                android:textStyle="bold"
+                android:textColor="@color/orange"
+                android:layout_marginLeft="95dp"
+                android:textSize="16sp"
+                android:text="999"/>
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/top_stroke"
+            android:gravity="center|left"
+            android:paddingLeft="8dp"
+            android:text="로그아웃"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:id="@+id/btn_withdraw"
+            android:layout_width="match_parent"
+            android:textSize="16sp"
+            android:paddingLeft="8dp"
+            android:textStyle="normal"
+            android:background="@drawable/top_stroke"
+            android:layout_height="39dp"
+            android:gravity="center|left"
+            android:textColor="@color/black"
+            android:text="회원 탈퇴"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/top_stroke"/>
+
+
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
