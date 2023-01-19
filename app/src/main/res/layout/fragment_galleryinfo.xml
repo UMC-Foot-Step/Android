@@ -31,10 +31,10 @@
 
     <ImageButton
         android:id="@+id/gallery_btn_like"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
         android:layout_marginRight="4.3dp"
+        android:background="@color/not_visible"
         app:layout_constraintBottom_toBottomOf="@+id/galleryinfo_tv_day"
         app:layout_constraintEnd_toStartOf="@+id/galleryinfo_tv_like_cnt"
         app:layout_constraintTop_toTopOf="@+id/galleryinfo_tv_day"
@@ -121,6 +121,7 @@
         android:width="200dp"
         android:background="@drawable/shape_et_comment"
         android:hint="@string/galleryinfo_et_comment_hint"
+        android:paddingLeft="14dp"
         android:scrollHorizontally="true"
         android:textColor="@color/black"
         android:textColorHint="#d9d9d9"
