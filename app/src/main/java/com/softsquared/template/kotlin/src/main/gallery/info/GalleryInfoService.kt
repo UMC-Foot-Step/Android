@@ -1,6 +1,6 @@
 package com.softsquared.template.kotlin.src.main.gallery.info
 
-class GalleryInfoService (val galleryInfoActivityInterface: GalleryInfoActivity) {
+class GalleryInfoService (val galleryInfoActivityInterface: GalleryInfoActivityInterface) {
 
 
     /*

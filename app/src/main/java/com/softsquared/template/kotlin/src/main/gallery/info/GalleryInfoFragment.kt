@@ -2,6 +2,7 @@ package com.softsquared.template.kotlin.src.main.gallery.info
 
 import android.os.Bundle
 import android.view.View
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseFragment
@@ -11,7 +12,10 @@ import com.softsquared.template.kotlin.src.main.gallery.GalleryFragmentInterface
 import com.softsquared.template.kotlin.src.main.gallery.info.models.FeetStepInfoResponse
 
 // GalleryInfoFragment 생성자 = 발자취 게시글 상세 정보 (게시글 정보 & 댓글 리스트)
-class GalleryInfoFragment (val feetStepInfoResponse: FeetStepInfoResponse) :
+class GalleryInfoFragment (
+    val galleryInfoActivity: GalleryInfoActivity,
+    val feetStepInfoResponse: FeetStepInfoResponse
+) :
     BaseFragment<FragmentGalleryinfoBinding>(FragmentGalleryinfoBinding::bind, R.layout.fragment_galleryinfo)
     {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -37,7 +41,13 @@ class GalleryInfoFragment (val feetStepInfoResponse: FeetStepInfoResponse) :
         binding.galleryinfoRvComment.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
-            adapter = GalleryInfoFragmentAdapter(feetStepInfoResponse.comment_list)
+            adapter = GalleryInfoFragmentAdapter(galleryInfoActivity,feetStepInfoResponse.comment_list)
+
+            // RecyclerView Item 구분선 넣기
+                addItemDecoration(
+                    DividerItemDecoration(binding.root.context,
+                        DividerItemDecoration.VERTICAL)
+                )
         }
 
 

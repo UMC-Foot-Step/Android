@@ -109,8 +109,8 @@ class GalleryFragmentSubAdater(
                     RecyclerView의 특정 발자취 게시글 클릭시,
                     동일 장소별 발자취 게시글 리스트 조회 액티비티로 전환 (태스팅 용)
                  */
-//                galleryFragmentInterface.changeGalleryInfoActivity(feetStepInfoResponse)
-                galleryFragmentInterface.testChangeMapGalleryActivity()
+                galleryFragmentInterface.changeGalleryInfoActivity(feetStepInfoResponse)
+//                galleryFragmentInterface.testChangeMapGalleryActivity()
             }
         }
 

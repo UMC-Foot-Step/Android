@@ -104,6 +104,15 @@
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toTopOf="@+id/imageView3" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3px"
+        android:background="@color/black"
+
+        app:layout_constraintBottom_toTopOf="@+id/galleryinfo_rv_comment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/galleryinfo_rv_comment"
         android:layout_width="match_parent"
