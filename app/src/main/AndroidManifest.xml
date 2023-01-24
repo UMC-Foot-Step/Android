@@ -36,8 +36,8 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-            
-            
+
+
 
         <!--OnBoarding Activity 추가-->
         <activity
@@ -45,8 +45,8 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
-            
-            
+
+
 
         <!--Login Activity 추가-->
         <activity
@@ -60,8 +60,8 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
-            
-            
+
+
 
         <!--Post Activity 추가-->
         <activity
@@ -85,8 +85,8 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-            
-            
+
+
 
         <!--Gallery Activity 추가-->
         <activity
@@ -94,8 +94,13 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-            
-            
+        <activity
+            android:name=".src.main.map.area.AreaActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+
 
         <!--MapGallery Activity 추가-->
         <activity
@@ -103,13 +108,13 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-            
-            
+
+
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="phlxzodw8d" />
-            
+
     </application>
 
 </manifest>

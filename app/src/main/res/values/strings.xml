@@ -70,4 +70,6 @@
     <string name= "galleryinfo_btn_comment_check">작성</string>
 
 
+    <!--map-->
+    <string name="mapTimeSettingTitle">기간 선택</string>
 </resources>

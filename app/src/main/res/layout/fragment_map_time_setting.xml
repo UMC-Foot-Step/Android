@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/top_radius_white_background"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/periodTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="@string/mapTimeSettingTitle"
+                android:textColor="@color/black"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <ImageButton
+                android:id="@+id/periodBtnQuit"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:background="@android:color/transparent"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/post_cal_close"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="18dp"
+                >
+                <RadioGroup
+                    android:id="@+id/radioGroup"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radioBtn"
+                        android:layout_weight="0.2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/selector_center_period_button"
+                        android:button="@null"
+                        android:paddingLeft="11dp"
+                        android:paddingTop="6dp"
+                        android:paddingRight="11dp"
+                        android:paddingBottom="6dp"
+                        android:text="오늘"
+                        android:textAlignment="center"
+                        android:textColor="@drawable/selector_period_text"
+                        android:textSize="16sp"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <RadioButton
+                        android:id="@+id/radioBtn2"
+                        android:layout_weight="0.2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/selector_period_button"
+                        android:button="@null"
+                        android:paddingLeft="13dp"
+                        android:paddingTop="6dp"
+                        android:paddingRight="13dp"
+                        android:paddingBottom="6dp"
+                        android:text="일주일"
+                        android:textAlignment="center"
+                        android:textColor="@drawable/selector_period_text"
+                        android:textSize="16sp"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <RadioButton
+                        android:id="@+id/radioBtn3"
+                        android:layout_weight="0.2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/selector_center_period_button"
+                        android:button="@null"
+                        android:paddingLeft="13dp"
+                        android:paddingRight="13dp"
+                        android:text="1개월"
+                        android:textAlignment="center"
+                        android:textColor="@drawable/selector_period_text"
+                        android:textSize="16sp"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <RadioButton
+                        android:id="@+id/radioBtn4"
+                        android:layout_weight="0.2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/selector_period_button"
+                        android:button="@null"
+                        android:paddingLeft="13dp"
+                        android:paddingRight="13dp"
+                        android:text="3개월"
+                        android:textAlignment="center"
+                        android:textColor="@drawable/selector_period_text"
+                        android:textSize="16sp"
+                        tools:ignore="TouchTargetSizeCheck" />
+
+                    <RadioButton
+                        android:id="@+id/radioBtn5"
+                        android:layout_weight="0.2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/selector_center_period_button"
+                        android:button="@null"
+                        android:paddingLeft="13dp"
+                        android:paddingRight="13dp"
+                        android:text="직접선택"
+                        android:textAlignment="center"
+                        android:textColor="@drawable/selector_period_text"
+                        android:textSize="16sp"
+                        tools:ignore="TouchTargetSizeCheck" />
+                </RadioGroup>
+
+            </LinearLayout>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/direct_select_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="22dp"
+                android:layout_gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:id="@+id/dateText1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TextView"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/dateText1" />
+
+                <ImageButton
+                    android:id="@+id/calBtn1"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="2dp"
+
+                    android:background="@android:color/transparent"
+                    app:layout_constraintEnd_toStartOf="@id/waveText"
+                    app:layout_constraintStart_toEndOf="@id/dateText1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+
+                    app:srcCompat="@drawable/bs_calendar_icon"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+
+                    />
+
+                <TextView
+                    android:id="@+id/waveText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+                    android:text="~"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/dateText2"
+                    app:layout_constraintStart_toEndOf="@id/calBtn1" />
+
+                <TextView
+                    android:id="@+id/dateText2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="30dp"
+
+                    android:text="TextView"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toStartOf="@id/calBtn2"
+                    app:layout_constraintStart_toEndOf="@id/waveText"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <ImageButton
+                    android:id="@+id/calBtn2"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="2dp"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/dateText2"
+                    app:srcCompat="@drawable/bs_calendar_icon"
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

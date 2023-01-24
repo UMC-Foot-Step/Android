@@ -4,17 +4,20 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
+import android.system.Os.bind
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
+import android.view.ViewGroup
+import android.widget.*
 import androidx.annotation.NonNull
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.NaverMap
@@ -25,11 +28,20 @@ import com.naver.maps.map.util.FusedLocationSource
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseFragment
 import com.softsquared.template.kotlin.databinding.FragmentMapBinding
+import com.softsquared.template.kotlin.src.main.map.area.AreaActivity
 import com.softsquared.template.kotlin.src.main.map.search.SearchActivity
+import java.time.LocalDate
+import java.time.Year
 
 class MapFragment :
     BaseFragment<FragmentMapBinding>(FragmentMapBinding::bind, R.layout.fragment_map),
     OnMapReadyCallback {
+    // datepicker
+    private val today = LocalDate.now()
+    private var tvYear = today.year
+    private var tvMonth = today.monthValue
+    private var tvDay = today.dayOfMonth
+
     private val LOCATION_PERMISSTION_REQUEST_CODE: Int = 1000
     private lateinit var locationSource: FusedLocationSource // 위치를 반환하는 구현체
     private lateinit var naverMap: NaverMap
@@ -37,13 +49,25 @@ class MapFragment :
     //private val markerList:ArrayList<Marker> = ArrayList()
     //private val latlngList=Array<Array<Double>>(3){Array<Double>(3){0.0} }
     //private val latlngList=Array(4){DoubleArray(2){0.0} }
-    val latlngList=arrayOf(arrayOf(37.56661,126.97839), arrayOf(37.56590, 126.98223), arrayOf(37.56905, 126.97767),
-       arrayOf(37.33986, 126.74655),arrayOf(37.55946, 126.97514),arrayOf(37.57174, 126.97644))
-    val locationList=arrayOf("서울특별시청","을지로입구역","청계광장","왕동","숭례문","광화문역")
-    val imageList=arrayOf(R.drawable.cat_dummy, R.drawable.im2_dummy, R.drawable.google_dummy)
+    val latlngList=arrayOf(arrayOf(37.56661,126.97839), arrayOf(37.56590, 126.98223), arrayOf(37.56905, 126.97767), arrayOf(37.33986, 126.74655),arrayOf(37.55946, 126.97514),arrayOf(37.57174, 126.97644),
+                    arrayOf(37.38167,128.66018),arrayOf(37.38763,128.67408),arrayOf(37.62885,128.67582),arrayOf(38.11586,128.46362),arrayOf(37.86820,127.74334),arrayOf(36.95689,129.37683),
+                    arrayOf(36.06576,126.82136),arrayOf(36.01980,126.73644),arrayOf(36.30994,126.51339),arrayOf(36.31697,127.43115),
+                    arrayOf(36.56874,128.77939),arrayOf(35.83425,129.21927),arrayOf(35.78965,128.99677),arrayOf(35.14209,128.68822),
+                    arrayOf(34.74621,127.65659),arrayOf(34.69562,127.18420),arrayOf(35.40832,127.36980),arrayOf(35.86321,127.06523),
+                    arrayOf(33.42795,126.68450))
+    val locationList=arrayOf("서울특별시청","을지로입구역","청계광장","왕동","숭례문","광화문역",
+                    "정선군청","정선역","용평리조트 스키장","설악산","강원대학교 춘천캠퍼스","울진종합운동장",
+                    "달고개 모시마을","금강하굿둑 관광지","대천 해수욕장","한밭 종합운동장",
+                    "안동문화 관광단지","첨성대","장육산","소죽도 공원",
+                    "소호항","비봉공룡알 화석지","왕정동 행정복지센터","전주월드컵 골프장",
+                    "제주 마방목지")
+    val imageList=arrayOf(R.drawable.cat_dummy, R.drawable.im2_dummy, R.drawable.google_dummy, R.drawable.chimchakman)
 
     private lateinit var mContext: Context
     private lateinit var v1:View
+
+    private lateinit var bottomSheet:View
+    private lateinit var bottomSheet2:View
 
 
     override fun onAttach(context: Context) {
@@ -61,6 +85,8 @@ class MapFragment :
        onCreate, onDestory가 호출되지 않고 재사용된다.->현재는 mvvm패턴의 viewModel써서 하라는데 몰라서 저거 일단 둠
         */
         v1 = layoutInflater.inflate(R.layout.feetstep_info, binding.placeInfo, true)
+        bottomSheet = layoutInflater.inflate(R.layout.fragment_map_time_setting, null)
+        bottomSheet2 = layoutInflater.inflate(R.layout.fragment_map_calendar, null)
 
         binding.mapView?.onCreate(savedInstanceState)
         binding.mapView?.getMapAsync(this)
@@ -85,34 +111,71 @@ class MapFragment :
 
                 binding.btnMenu.isSelected = false
                 binding.subBtnLayout.visibility = View.GONE
-                binding.btnTime.isSelected = false
+                binding.btnTime.isChecked = false
+                binding.btnLocationCheck.isChecked = false
             }
         }
 
         binding.btnTime.setOnClickListener {
-            if (!binding.btnTime.isSelected) {
-                binding.btnTime.background =
-                    ContextCompat.getDrawable(mContext, R.drawable.time_btn_selected_background)
-                binding.btnTime.isSelected = true
-            } else {
-                binding.btnTime.background =
-                    ContextCompat.getDrawable(mContext, R.drawable.time_btn_background)
-                binding.btnTime.isSelected = false
+            val bottomSheetDialog = BottomSheetDialog(mContext)
+            val btnClose = bottomSheet.findViewById<ImageButton>(R.id.periodBtnQuit)
+            val btnCal1 = bottomSheet.findViewById<ImageButton>(R.id.calBtn1)
+            val btnCal2 = bottomSheet.findViewById<ImageButton>(R.id.calBtn2)
+            val btnR=bottomSheet.findViewById<RadioButton>(R.id.radioBtn)
+            val btnR2=bottomSheet.findViewById<RadioButton>(R.id.radioBtn2)
+            val btnR3=bottomSheet.findViewById<RadioButton>(R.id.radioBtn3)
+            val btnR4=bottomSheet.findViewById<RadioButton>(R.id.radioBtn4)
+            val btnR5=bottomSheet.findViewById<RadioButton>(R.id.radioBtn5)
+            val date1=bottomSheet.findViewById<TextView>(R.id.dateText1)
+            val date2=bottomSheet.findViewById<TextView>(R.id.dateText2)
+
+            val dsl=bottomSheet.findViewById<ConstraintLayout>(R.id.direct_select_layout)
+
+            // date bottomsheetdialog 설정
+            if(bottomSheet.parent!=null) {
+                var p=bottomSheet.parent as ViewGroup
+                p.removeView(bottomSheet)
             }
+            bottomSheetDialog.setContentView(bottomSheet)
+            bottomSheetDialog.show()
+
+            var date = "$tvYear / $tvMonth / $tvDay"
+            date1.text=date
+            date2.text=date
+
+            btnClose.setOnClickListener {
+                bottomSheetDialog.dismiss()
+            }
+
+
+            btnR.setOnClickListener {
+                dsl.visibility=View.GONE
+            }
+            btnR2.setOnClickListener {
+                dsl.visibility=View.GONE
+            }
+            btnR3.setOnClickListener {
+                dsl.visibility=View.GONE
+            }
+            btnR4.setOnClickListener {
+                dsl.visibility=View.GONE
+            }
+            btnR5.setOnClickListener {
+                dsl.visibility=View.VISIBLE
+            }
+
+            btnCal1.setOnClickListener{
+                setCalBtnClickEnent(1)
+            }
+            btnCal2.setOnClickListener{
+                setCalBtnClickEnent(2)
+            }
+
         }
 
         binding.btnLocationCheck.setOnClickListener {
-            if (!binding.btnLocationCheck.isSelected) {
-                binding.btnLocationCheck.background =
-                    ContextCompat.getDrawable(mContext, R.drawable.category_btn_selected_background)
-                binding.btnLocationCheck.setTextColor(ContextCompat.getColor(mContext, R.color.white))
-                binding.btnLocationCheck.isSelected = true
-            } else {
-                binding.btnLocationCheck.background =
-                    ContextCompat.getDrawable(mContext, R.drawable.category_btn_background)
-                binding.btnLocationCheck.setTextColor(ContextCompat.getColor(mContext, R.color.orange))
-                binding.btnLocationCheck.isSelected = false
-            }
+            val intent= Intent(requireContext(), AreaActivity::class.java)
+            startActivity(intent)
         }
 
         binding.btnSearch.setOnClickListener{
@@ -126,6 +189,54 @@ class MapFragment :
         }
     }
 
+    fun setCalBtnClickEnent(
+        btn_type:Int){
+        val bottomSheetDialog = BottomSheetDialog(mContext)
+        val btnClose = bottomSheet2.findViewById<ImageButton>(R.id.dateBtnQuit)
+        val btnDateCheck = bottomSheet2.findViewById<Button>(R.id.dateBtnCheck)
+        val calView = bottomSheet2.findViewById<CalendarView>(R.id.calenderView)
+
+        calView.maxDate = System.currentTimeMillis()
+
+        // calendar bottomsheetdialog 설정
+
+        if(bottomSheet2.parent!=null) {
+            var p=bottomSheet2.parent as ViewGroup
+            p.removeView(bottomSheet2)
+        }
+        bottomSheetDialog.setContentView(bottomSheet2)
+        bottomSheetDialog.show()
+
+        btnClose.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+
+        calView.setOnDateChangeListener { calView, year, month, dayOfMonth ->
+            tvYear = year
+            tvMonth = month + 1
+            tvDay = dayOfMonth
+        }
+
+        btnDateCheck.setOnClickListener{
+            setData(tvYear, tvMonth, tvDay,btn_type)
+            bottomSheetDialog.dismiss()
+        }
+    }
+
+    private fun setData(
+        year: Int,
+        month: Int,
+        day: Int,
+        btn_type: Int):String{
+
+        var date = "$year / $month / $day"
+        if(btn_type==1)
+            bottomSheet.findViewById<TextView>(R.id.dateText1).text = date
+        else
+            bottomSheet.findViewById<TextView>(R.id.dateText2).text = date
+
+        return date
+    }
 
     override fun onStart() {
         super.onStart()
@@ -160,7 +271,7 @@ class MapFragment :
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
         for((i,value) in latlngList.withIndex()) {
-            if(i<4) {
+            if(i<4||i>5) {
                 Marker().apply {
                     position = LatLng(value[0], value[1])
                     map = naverMap
@@ -199,6 +310,8 @@ class MapFragment :
 /*더미데이터 상에서는 marker_type이 굳이 필요하지않지만
  나중에 진짜 데이터 받았을땐 marker_num이 무쓸모&marker_type은 쓸모
  */
+
+
     fun setMarkerClickEvent(
         marker_type:Boolean,
         marker: Marker,
@@ -206,7 +319,7 @@ class MapFragment :
         marker_num:Int
     ) {
         if(tag==false){
-            desplayFeetStepInfoView(marker_type,marker_num)
+            displayFeetStepInfoView(marker_type,marker_num)
             marker.tag = true
         }
         else{
@@ -215,7 +328,7 @@ class MapFragment :
         }
     }
 
-    fun desplayFeetStepInfoView(
+    fun displayFeetStepInfoView(
         marker_type:Boolean,
         marker_num:Int
     ) {
@@ -228,16 +341,31 @@ class MapFragment :
 
             val spannable = SpannableStringBuilder(textData)
             val boldSpan = StyleSpan(Typeface.BOLD)
-            spannable.setSpan(boldSpan, 6, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-            val colorSpan = ForegroundColorSpan( ContextCompat.getColor(mContext, R.color.orange))
-            spannable.setSpan(colorSpan, 6, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+            if((marker_num+1)/10==0) {
+                spannable.setSpan(boldSpan, 6, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                Log.d("ddd","marker_num%10==0 -> $marker_num 의 결과 :  ${marker_num%10}")
+            }
+            else if((marker_num+1)/10>0) {
+                spannable.setSpan(boldSpan, 6, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                Log.d("ddd","marker_num%10>0 : $marker_num 의 결과 : ${marker_num%10}")
+
+            }
+
+            val colorSpan = ForegroundColorSpan(ContextCompat.getColor(mContext, R.color.orange))
+
+            if((marker_num+1)/10==0)
+                spannable.setSpan(colorSpan, 6, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            else if((marker_num+1)/10>0)
+                spannable.setSpan(colorSpan, 6, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
 
             v1.findViewById<TextView>(R.id.feetTextView).text = spannable
             v1.findViewById<TextView>(R.id.titleTextView).text = locationList[marker_num]
 
-            if(marker_num<3){
-                v1.findViewById<ImageView>(R.id.thumbnailImageView).setImageResource(imageList[marker_num])
-            }
+           // if(marker_num<3){
+            v1.findViewById<ImageView>(R.id.thumbnailImageView).setImageResource(imageList[marker_num%4])
+           // }
 
         }
 
