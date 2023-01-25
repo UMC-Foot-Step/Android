@@ -1,5 +1,6 @@
 package com.softsquared.template.kotlin.config
 
+import android.util.Log
 import com.softsquared.template.kotlin.config.ApplicationClass.Companion.X_ACCESS_TOKEN
 import com.softsquared.template.kotlin.config.ApplicationClass.Companion.sSharedPreferences
 import okhttp3.Interceptor
@@ -13,8 +14,17 @@ class XAccessTokenInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder: Request.Builder = chain.request().newBuilder()
         val jwtToken: String? = sSharedPreferences.getString(X_ACCESS_TOKEN, null)
+
+        // JWT 삽입 확인 (API 연결 테스팅)
+//        if (jwtToken != null) {
+//            Log.d("jwt 들어왔니?", jwtToken)
+//        }
+//        else{
+//            Log.d("NOPE...", "NOOOOOO")
+//        }
+
         if (jwtToken != null) {
-            builder.addHeader("X-ACCESS-TOKEN", jwtToken)
+            builder.addHeader("Authorization", jwtToken)
         }
         return chain.proceed(builder.build())
     }

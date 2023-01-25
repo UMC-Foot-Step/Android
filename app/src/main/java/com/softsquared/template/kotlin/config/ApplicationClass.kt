@@ -11,13 +11,12 @@ import java.util.concurrent.TimeUnit
 
 // 앱이 실행될때 1번만 실행이 됩니다.
 class ApplicationClass : Application() {
-    val API_URL = "https://edu-api-test.softsquared.com/"
 
-    // 테스트 서버 주소
-    // val API_URL = "http://dev-api.test.com/"
+    // 안드 템플릿 예시 URL
+    // val API_URL = "https://edu-api-test.softsquared.com/"
 
-    // 실 서버 주소
-    // val API_URL = "http://api.test.com/"
+    // 당신의 발자취 서버 URL 주소
+    val API_URL = "http://52.78.49.35:8080"
 
     // 코틀린의 전역변수 문법
     companion object {
@@ -25,7 +24,7 @@ class ApplicationClass : Application() {
         lateinit var sSharedPreferences: SharedPreferences
 
         // JWT Token Header 키 값
-        val X_ACCESS_TOKEN = "X-ACCESS-TOKEN"
+        const val X_ACCESS_TOKEN = "accessToken"
 
         // Retrofit 인스턴스, 앱 실행시 한번만 생성하여 사용합니다.
         lateinit var sRetrofit: Retrofit
