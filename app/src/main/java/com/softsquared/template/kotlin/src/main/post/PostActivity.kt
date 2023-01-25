@@ -1,15 +1,12 @@
 package com.softsquared.template.kotlin.src.main.post
 
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.ImageButton
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
@@ -28,12 +25,25 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
 
     // 갤러리 앱 열기
     private val OPEN_GALLERY = 1
+    private var uri: Uri? = null
 
     // registerForActivityResult API 구현
     private lateinit var getResultPosition: ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // 사진 삭제 imageButton
+        if (uri==null) {
+            binding.postIbPhotoCancel.visibility = View.INVISIBLE
+        }
+
+        // 사진 삭제 imageButton 클릭시
+        binding.postIbPhotoCancel.setOnClickListener {
+            binding.postIbGallery.setImageResource(R.drawable.post_iv_unselected)
+            uri = null
+            binding.postIbPhotoCancel.visibility = View.INVISIBLE
+        }
+
 
         // 뒤로가기 버튼 누르면 뒤로가기..!
         binding.postIbBack.setOnClickListener {
@@ -42,7 +52,7 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
 
         binding.postIbCalendar.setOnClickListener {
             val bottomSheet = layoutInflater.inflate(R.layout.fragment_post_calendar, null)
-            val bottomSheetDialog = BottomSheetDialog(this)
+            val bottomSheetDialog = BottomSheetDialog(this, R.style.calTheme_Custom)
             val btnClose = bottomSheet.findViewById<ImageButton>(R.id.calBtnQuit)
             val btnDateCheck = bottomSheet.findViewById<Button>(R.id.calBtnCheck)
             val calView = bottomSheet.findViewById<CalendarView>(R.id.calDatePicker)
@@ -126,13 +136,15 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
         // 결과 코드 Ok, 결과값 null 아니면
         if(it.resultCode == RESULT_OK && it.data != null){
             // 값 담기
-            val uri = it.data!!.data
+            uri = it.data!!.data
 
             // 화면에 보여주기
             Glide.with(this)
                 .load(uri)
                 .into(binding.postIbGallery)
         }
+
+        binding.postIbPhotoCancel.visibility = View.VISIBLE
     }
 
     /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
