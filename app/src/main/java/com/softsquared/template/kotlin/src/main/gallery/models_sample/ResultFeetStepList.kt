@@ -1,6 +1,5 @@
-package com.softsquared.template.kotlin.src.main.gallery.models
+package com.softsquared.template.kotlin.src.main.gallery.models_sample
 
-import android.widget.ImageView
 import com.google.gson.annotations.SerializedName
 import com.softsquared.template.kotlin.config.BaseResponse
 

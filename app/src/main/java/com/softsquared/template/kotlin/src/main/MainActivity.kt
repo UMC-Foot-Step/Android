@@ -19,6 +19,11 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
         supportFragmentManager.beginTransaction().replace(R.id.main_frm, MapFragment()).commitAllowingStateLoss()
 
+        binding.mainBtmFab.setOnClickListener {
+            val intent = Intent(this@MainActivity, PostActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.mainBtmNav.run {
             setOnItemSelectedListener { item ->
                 when (item.itemId) {
@@ -35,12 +40,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_frm, GalleryFragment())
                             .commitAllowingStateLoss()
-                    }
-
-                    // 발자취 기록하기
-                    R.id.menu_main_btm_nav_post -> {
-                        val intent = Intent(this@MainActivity, PostActivity::class.java)
-                        startActivity(intent)
                     }
 
                     // 피드

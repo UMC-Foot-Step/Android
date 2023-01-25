@@ -4,13 +4,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.softsquared.template.kotlin.databinding.ItemGallerySubSectionBinding
 import com.softsquared.template.kotlin.databinding.ItemMapgallerySubSectionBinding
-import com.softsquared.template.kotlin.src.main.gallery.GalleryFragmentInterface
-import com.softsquared.template.kotlin.src.main.gallery.GalleryFragmentSubAdater
 import com.softsquared.template.kotlin.src.main.gallery.info.models.FeetStepInfoResponse
 import com.softsquared.template.kotlin.src.main.gallery.info.models.ResultCommentList
-import com.softsquared.template.kotlin.src.main.gallery.models.ResultFeetStepList
+import com.softsquared.template.kotlin.src.main.gallery.models_sample.ResultFeetStepList
 
 class MapGalleryActivitySubAdapter(
     private val resultFeetStepList: ArrayList<ResultFeetStepList>,

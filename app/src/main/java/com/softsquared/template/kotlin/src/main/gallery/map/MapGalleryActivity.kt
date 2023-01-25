@@ -5,10 +5,9 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.databinding.ActivityMapgalleryBinding
-import com.softsquared.template.kotlin.src.main.gallery.GalleryFragmentAdater
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoActivity
 import com.softsquared.template.kotlin.src.main.gallery.info.models.FeetStepInfoResponse
-import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
+import com.softsquared.template.kotlin.src.main.gallery.models_sample.SectionModel
 
 class MapGalleryActivity: BaseActivity<ActivityMapgalleryBinding>(ActivityMapgalleryBinding::inflate),
     MapGalleryActivityInterface {

@@ -1,16 +1,13 @@
 package com.softsquared.template.kotlin.src.main.gallery
 
-import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.softsquared.template.kotlin.databinding.ItemGallerySubSectionBinding
-import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoActivity
 import com.softsquared.template.kotlin.src.main.gallery.info.models.FeetStepInfoResponse
 import com.softsquared.template.kotlin.src.main.gallery.info.models.ResultCommentList
-import com.softsquared.template.kotlin.src.main.gallery.models.ResultFeetStepList
+import com.softsquared.template.kotlin.src.main.gallery.models_sample.ResultFeetStepList
 
 
 /*
