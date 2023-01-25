@@ -2,15 +2,10 @@ package com.softsquared.template.kotlin.src.main.gallery.map
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.softsquared.template.kotlin.databinding.ItemGallerySectionBinding
 import com.softsquared.template.kotlin.databinding.ItemMapgallerySectionBinding
-import com.softsquared.template.kotlin.src.main.gallery.GalleryFragmentInterface
-import com.softsquared.template.kotlin.src.main.gallery.GalleryFragmentSubAdater
-import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
+import com.softsquared.template.kotlin.src.main.gallery.models_sample.SectionModel
 
 class MapGalleryActivityAdapter(
     private val daySectionFeetStepList: List<SectionModel>,

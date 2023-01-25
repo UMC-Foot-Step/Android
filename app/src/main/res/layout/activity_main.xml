@@ -12,16 +12,43 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="?attr/actionBarSize" />
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/main_btm_nav"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:itemBackground="@color/white"
-        app:itemIconTint="@drawable/main_btm_nav_item_color"
-        app:itemTextColor="@drawable/main_btm_nav_item_color"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/menu_main_bottom_nav" />
+        android:layout_height="match_parent" >
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/main_btm_nav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="@color/whiteForBackground"
+            android:paddingBottom="5dp"
+            app:elevation="0dp"
+            app:itemBackground="@color/white"
+            app:itemHorizontalTranslationEnabled="true"
+            app:itemIconTint="@drawable/main_btm_nav_item_color"
+            app:itemTextColor="@drawable/main_btm_nav_item_color"
+            app:labelVisibilityMode="labeled"
+            app:layout_anchorGravity="bottom"
+            app:menu="@menu/menu_main_bottom_nav" >
+
+        </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/main_btm_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="34dp"
+            android:backgroundTint="@color/black"
+            android:elevation="0dp"
+            android:src="@drawable/ic_menu_post_add"
+            app:borderWidth="0dp"
+            app:elevation="0dp"
+            app:fabCustomSize="52dp"
+            app:maxImageSize="30dp"
+            app:layout_anchor="@id/main_btm_nav"
+            app:layout_anchorGravity="center_horizontal|center"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

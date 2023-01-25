@@ -115,6 +115,11 @@
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="phlxzodw8d" />
 
+
+        <!--kakaoMap api-->
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="	c794bd7db8862f135dd6387c9606bee0" />
     </application>
 
 </manifest>

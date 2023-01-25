@@ -1,8 +1,8 @@
 package com.softsquared.template.kotlin.src.main.gallery
 
 import com.softsquared.template.kotlin.src.main.gallery.info.models.FeetStepInfoResponse
-import com.softsquared.template.kotlin.src.main.gallery.models.FeetStepListResponse
-import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
+import com.softsquared.template.kotlin.src.main.gallery.models.PostListResponse
+import com.softsquared.template.kotlin.src.main.gallery.models_sample.SectionModel
 
 // Service에서 API 요청에 대한 응답 값을 Fragment에 전달하기 위한 "중간 인터페이스"
 // Service에서 Fragment를 참조받기 위한 파일
@@ -15,6 +15,11 @@ interface GalleryFragmentInterface {
 
     fun changeGalleryInfoActivity(feetStepInfoResponse: FeetStepInfoResponse)
 
+
+    /*
+        To DO 1. 서버 API 연결
+     */
+    fun onGetGalleryPostListSuccess(response: PostListResponse)
 
     // 테스팅 메소드
     /*

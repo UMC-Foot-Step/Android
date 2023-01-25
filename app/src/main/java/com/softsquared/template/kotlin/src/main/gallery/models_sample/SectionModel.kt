@@ -1,4 +1,4 @@
-package com.softsquared.template.kotlin.src.main.gallery.models
+package com.softsquared.template.kotlin.src.main.gallery.models_sample
 
 data class SectionModel(
 
