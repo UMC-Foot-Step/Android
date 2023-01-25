@@ -1,10 +1,7 @@
 package com.softsquared.template.kotlin.src.main.gallery.info.models
 
-import androidx.versionedparcelable.ParcelField
-import androidx.versionedparcelable.VersionedParcelize
 import com.google.gson.annotations.SerializedName
 import com.softsquared.template.kotlin.config.BaseResponse
-import com.softsquared.template.kotlin.src.main.gallery.models.ResultFeetStepList
 import java.io.Serializable
 
 data class FeetStepInfoResponse(

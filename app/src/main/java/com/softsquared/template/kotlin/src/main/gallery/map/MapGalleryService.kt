@@ -1,8 +1,8 @@
 package com.softsquared.template.kotlin.src.main.gallery.map
 
 import com.softsquared.template.kotlin.R
-import com.softsquared.template.kotlin.src.main.gallery.models.ResultFeetStepList
-import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
+import com.softsquared.template.kotlin.src.main.gallery.models_sample.ResultFeetStepList
+import com.softsquared.template.kotlin.src.main.gallery.models_sample.SectionModel
 
 class MapGalleryService(val mapGalleryActivityInterface: MapGalleryActivityInterface) {
 

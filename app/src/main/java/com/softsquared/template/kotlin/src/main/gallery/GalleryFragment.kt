@@ -2,6 +2,7 @@ package com.softsquared.template.kotlin.src.main.gallery
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softsquared.template.kotlin.R
@@ -10,8 +11,8 @@ import com.softsquared.template.kotlin.databinding.FragmentGallaryBinding
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoActivity
 import com.softsquared.template.kotlin.src.main.gallery.info.models.FeetStepInfoResponse
 import com.softsquared.template.kotlin.src.main.gallery.map.MapGalleryActivity
-import com.softsquared.template.kotlin.src.main.gallery.map.MapGalleryActivityInterface
-import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
+import com.softsquared.template.kotlin.src.main.gallery.models.PostListResponse
+import com.softsquared.template.kotlin.src.main.gallery.models_sample.SectionModel
 
 
 class GalleryFragment :
@@ -87,12 +88,22 @@ class GalleryFragment :
         startActivity(intent)
     }
 
+
+
+
     override fun testChangeMapGalleryActivity(){
         val intent = Intent(activity, MapGalleryActivity::class.java)
         startActivity(intent)
     }
 
 
+
+    /*
+        To DO 5. 갤러리 게시글 리스트 조회 API 연결
+    */
+    override fun onGetGalleryPostListSuccess(response: PostListResponse) {
+        showCustomToast("API 연결 셋팅완료~~~~~")
+    }
 
 
 }

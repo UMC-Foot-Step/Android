@@ -2,10 +2,14 @@ package com.softsquared.template.kotlin.src.main.gallery
 
 import android.util.Log
 import com.softsquared.template.kotlin.R
-import com.softsquared.template.kotlin.src.main.gallery.models.FeetStepListResponse
-import com.softsquared.template.kotlin.src.main.gallery.models.ResultFeetStepList
-import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
-import kotlin.math.log
+import com.softsquared.template.kotlin.config.ApplicationClass
+import com.softsquared.template.kotlin.config.ApplicationClass.Companion.X_ACCESS_TOKEN
+import com.softsquared.template.kotlin.src.main.gallery.models.PostListResponse
+import com.softsquared.template.kotlin.src.main.gallery.models_sample.ResultFeetStepList
+import com.softsquared.template.kotlin.src.main.gallery.models_sample.SectionModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 // 메인 화면의 이벤트에 따른 API 요청을 보내는 "서비스 클래스"
@@ -28,6 +32,45 @@ class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
         응답 더미데이터 생성
      */
     fun GetPostList() {
+
+
+        /*
+            To Do 1. 갤러리 발자취 조회 API 연결 테스팅
+         */
+
+        // ApplicationClass에서 선언해둔 SharedPreferences에 Jwt 토큰 값 임시로 저장
+        ApplicationClass.sSharedPreferences.edit().putString(X_ACCESS_TOKEN, "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDY2MDA5MSwiZXhwIjoxNjc0OTYyNDkxfQ.W7MNMFI43SPbcw5pLhpbsuic0_nCDRcqHKPgEipV9ko").apply()
+
+        val galleryRetrofitInterFace = ApplicationClass.sRetrofit.create(GalleryRetrofitInterface::class.java)
+        galleryRetrofitInterFace.getGalleryPostList().enqueue(object : Callback<PostListResponse>{
+            override fun onResponse(call: Call<PostListResponse>, response: Response<PostListResponse>) {
+
+                // 요청 객체 예외처리
+                if(response.body() != null) {
+                    galleryFragmentInterface.onGetGalleryPostListSuccess(response.body() as PostListResponse)
+                }
+                else{
+                    Log.d("요청 객체 받기실패", response.body().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<PostListResponse>, t: Throwable) {
+                galleryFragmentInterface.onGetPostListFailure(t.message?: "통신 오류")
+            }
+
+        })
+
+
+
+
+
+
+
+
+
+
+
+
 
         // 발자취 리스트 응답 더미데이터 객체 생성
         // val postListResponse: FeetStepListResponse
