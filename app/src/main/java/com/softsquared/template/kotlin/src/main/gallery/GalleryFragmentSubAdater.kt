@@ -6,8 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.softsquared.template.kotlin.databinding.ItemGallerySubSectionBinding
-import com.softsquared.template.kotlin.src.main.gallery.info.models.FeetStepInfoResponse
-import com.softsquared.template.kotlin.src.main.gallery.info.models.ResultCommentList
 import com.softsquared.template.kotlin.src.main.gallery.models.PostList
 
 
@@ -37,6 +35,12 @@ class GalleryFragmentSubAdater(
                 val pos: Int = getAdapterPosition()
                 Log.d("리사이클러 뷰 포지션 값 체크", "position = "+pos)
                 Log.d("리사이클러 Item 체크", "data = "+ resultFeetStep)
+
+                // 게시글 인덱스
+                val post_idx: Int = resultFeetStep.postingId
+                galleryFragmentInterface.changeGalleryInfoActivity(post_idx)
+
+
 
                 /*
                     To Do. 발자취 상세 정보 API 더미데이터 구성

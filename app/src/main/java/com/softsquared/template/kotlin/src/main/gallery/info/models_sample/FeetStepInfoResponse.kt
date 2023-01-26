@@ -1,4 +1,4 @@
-package com.softsquared.template.kotlin.src.main.gallery.info.models
+package com.softsquared.template.kotlin.src.main.gallery.info.models_sample
 
 import com.google.gson.annotations.SerializedName
 import com.softsquared.template.kotlin.config.BaseResponse

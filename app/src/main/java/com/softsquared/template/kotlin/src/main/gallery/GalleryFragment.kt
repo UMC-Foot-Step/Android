@@ -9,13 +9,10 @@ import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseFragment
 import com.softsquared.template.kotlin.databinding.FragmentGallaryBinding
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoActivity
-import com.softsquared.template.kotlin.src.main.gallery.info.models.FeetStepInfoResponse
 import com.softsquared.template.kotlin.src.main.gallery.map.MapGalleryActivity
 import com.softsquared.template.kotlin.src.main.gallery.models.PostList
 import com.softsquared.template.kotlin.src.main.gallery.models.PostListResponse
-import com.softsquared.template.kotlin.src.main.gallery.models_sample.ResultFeetStepList
 import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
-import java.time.format.DateTimeFormatter
 
 
 class GalleryFragment :
@@ -84,11 +81,11 @@ class GalleryFragment :
         리사이클러 뷰의 특정 Item 클릭 후
         특정 Item 조회 Activity
      */
-    override fun changeGalleryInfoActivity(feetStepInfoResponse: FeetStepInfoResponse){
+    override fun changeGalleryInfoActivity(post_idx: Int){
         val intent = Intent(activity, GalleryInfoActivity::class.java)
-        val bundle = Bundle()
+//        val bundle = Bundle()
 //        bundle.putSerializable("feetStepInfoResponse", feetStepInfoResponse)
-        intent.putExtra("feetStepInfoResponse", feetStepInfoResponse)
+        intent.putExtra("posting-id", post_idx)
         startActivity(intent)
     }
 
@@ -109,8 +106,6 @@ class GalleryFragment :
         To DO 5. 갤러리 게시글 리스트 조회 API 연결
     */
     override fun onGetGalleryPostListSuccess(response: PostListResponse) {
-        showCustomToast("API 연결 셋팅완료~~~~~")
-
         /*
         날짜별 카테고리로 게시글 그룹화 - 데이터 전처리?
         */

@@ -6,17 +6,16 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.softsquared.template.kotlin.R
-import com.softsquared.template.kotlin.databinding.ItemGallerySubSectionBinding
 import com.softsquared.template.kotlin.databinding.ItemGalleryinfoCommentBinding
-import com.softsquared.template.kotlin.src.main.gallery.info.models.ResultCommentList
-
+import com.softsquared.template.kotlin.src.main.gallery.info.models.CommentList
+import com.softsquared.template.kotlin.src.main.gallery.info.models_sample.ResultCommentList
 
 /*
     특정 발자취 게시글 댓글 리스트 조회
  */
 class GalleryInfoFragmentAdapter(
     private val galleryInfoActivity: GalleryInfoActivity,
-    private val resultCommentList: ArrayList<ResultCommentList>
+    private val commentList: ArrayList<CommentList>
 ) : RecyclerView.Adapter<GalleryInfoFragmentAdapter.MyViewHolder>() {
 
     class MyViewHolder(
@@ -25,17 +24,18 @@ class GalleryInfoFragmentAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
 
-        fun bind(resultCommentList: ResultCommentList) {
+        fun bind(commentList: CommentList) {
             with(binding) {
-                galleryinfoTvCommentUsername.text = resultCommentList.username
-                galleryinfoTvCommentDes.text = resultCommentList.des
+                galleryinfoTvCommentUsername.text = commentList.nickName
+                galleryinfoTvCommentDes.text = commentList.content
             }
 
 
             // 댓글 Item 클릭 이벤트
             binding.root.setOnClickListener{
-                Log.d("리사이클러 Item 체크", "data = "+ resultCommentList)
+                Log.d("리사이클러 Item 체크", "data = "+ commentList)
             }
+
 
             binding.galleryinfoBtnCommentOption.setOnClickListener {
 
@@ -75,9 +75,9 @@ class GalleryInfoFragmentAdapter(
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         Log.d("포지션 값 체크", "Postion = $position")
-        holder.bind(resultCommentList[position])
+        holder.bind(commentList[position])
     }
 
-    override fun getItemCount() = resultCommentList.size
+    override fun getItemCount() = commentList.size
 
 }

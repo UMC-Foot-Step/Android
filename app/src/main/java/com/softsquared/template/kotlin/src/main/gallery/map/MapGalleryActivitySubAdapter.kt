@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.softsquared.template.kotlin.databinding.ItemMapgallerySubSectionBinding
-import com.softsquared.template.kotlin.src.main.gallery.info.models.FeetStepInfoResponse
-import com.softsquared.template.kotlin.src.main.gallery.info.models.ResultCommentList
+import com.softsquared.template.kotlin.src.main.gallery.info.models_sample.FeetStepInfoResponse
+import com.softsquared.template.kotlin.src.main.gallery.info.models_sample.ResultCommentList
 import com.softsquared.template.kotlin.src.main.gallery.models_sample.ResultFeetStepList
 
 class MapGalleryActivitySubAdapter(

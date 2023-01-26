@@ -4,17 +4,18 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseFragment
-import com.softsquared.template.kotlin.databinding.FragmentGallaryBinding
 import com.softsquared.template.kotlin.databinding.FragmentGalleryinfoBinding
-import com.softsquared.template.kotlin.src.main.gallery.GalleryFragmentInterface
-import com.softsquared.template.kotlin.src.main.gallery.info.models.FeetStepInfoResponse
+import com.softsquared.template.kotlin.src.main.gallery.info.models.PostInfoResponse
+import com.softsquared.template.kotlin.src.main.gallery.info.models.ResultPostInfo
+import com.softsquared.template.kotlin.src.main.gallery.info.models_sample.FeetStepInfoResponse
 
 // GalleryInfoFragment 생성자 = 발자취 게시글 상세 정보 (게시글 정보 & 댓글 리스트)
 class GalleryInfoFragment (
     val galleryInfoActivity: GalleryInfoActivity,
-    val feetStepInfoResponse: FeetStepInfoResponse
+    val resultPostInfo: ResultPostInfo
 ) :
     BaseFragment<FragmentGalleryinfoBinding>(FragmentGalleryinfoBinding::bind, R.layout.fragment_galleryinfo)
     {
@@ -26,13 +27,13 @@ class GalleryInfoFragment (
          */
 
         // To DO 1. 발자취 게시글 상세 정보 뿌리기
-        binding.galleryinfoIvPostImg.setImageResource(feetStepInfoResponse.img)
-        binding.galleryinfoTvDay.text = feetStepInfoResponse.day
-        binding.galleryinfoPostPosition.text = feetStepInfoResponse.position
-        binding.galleryinfoTvLikeCnt.text = feetStepInfoResponse.like_cnt.toString()
-        binding.galleryinfoTvCommentCnt.text = feetStepInfoResponse.coment_cnt.toString()
-        binding.galleryinfoTvPostUsername.text = feetStepInfoResponse.post_username
-        binding.galleryinfoTvPostDes.text = feetStepInfoResponse.des
+        Glide.with(binding.root.context).load(resultPostInfo.imageUrl).into(binding.galleryinfoIvPostImg)
+        binding.galleryinfoTvDay.text = resultPostInfo.postingDate
+        binding.galleryinfoPostPosition.text = resultPostInfo.placeName
+        binding.galleryinfoTvLikeCnt.text = resultPostInfo.likeNum.toString()
+        binding.galleryinfoTvCommentCnt.text = resultPostInfo.commentNum.toString()
+        binding.galleryinfoTvPostUsername.text = resultPostInfo.nickName
+        binding.galleryinfoTvPostDes.text = resultPostInfo.content
 
 
 
@@ -41,7 +42,7 @@ class GalleryInfoFragment (
         binding.galleryinfoRvComment.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
-            adapter = GalleryInfoFragmentAdapter(galleryInfoActivity,feetStepInfoResponse.comment_list)
+            adapter = GalleryInfoFragmentAdapter(galleryInfoActivity,resultPostInfo.commentList)
 
             // RecyclerView Item 구분선 넣기
                 addItemDecoration(

@@ -1,21 +1,13 @@
 package com.softsquared.template.kotlin.src.main.gallery.info
 
-import android.app.AlertDialog
-import android.app.Dialog
-import android.content.DialogInterface
-import android.content.Intent
 import android.os.Bundle
-import android.view.ContextMenu
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.Button
+import android.util.Log
 import android.widget.PopupMenu
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.databinding.ActivityGalleryinfoBinding
-import com.softsquared.template.kotlin.src.main.gallery.info.models.FeetStepInfoResponse
-import com.softsquared.template.kotlin.src.main.map.MapFragment
+import com.softsquared.template.kotlin.src.main.gallery.info.models.PostInfoResponse
+import com.softsquared.template.kotlin.src.main.gallery.info.models_sample.FeetStepInfoResponse
 
 
 class GalleryInfoActivity()
@@ -26,18 +18,36 @@ class GalleryInfoActivity()
         super.onCreate(savedInstanceState)
 
 
-        // GalleryFragment 에서 전달 받은 데이터객체 받기
-        val intent = intent
-        val feetStepInfoResponse: FeetStepInfoResponse
-        feetStepInfoResponse = intent.getSerializableExtra("feetStepInfoResponse") as FeetStepInfoResponse
-
+        /*
+            To Do  1.
+            GalleryFragment 에서 전달 받은 데이터객체 받기
+         */
+//        val intent = intent
+//        val feetStepInfoResponse: FeetStepInfoResponse
+//        feetStepInfoResponse = intent.getSerializableExtra("feetStepInfoResponse") as FeetStepInfoResponse
+//        onGetPostInfoSuccess(feetStepInfoResponse)
         // 전달받은 데이터객체에서 게시글 Idx로 특정 발자취 게시글 조회
-            // 프론트 리소스 상 API 요청은 생략
-            // 로직만 비슷하게 설계해둠
-        // GalleryInfoService(this).getPostInfo(postIdx)
-        onGetPostInfoSuccess(feetStepInfoResponse)
+        // 프론트 리소스 상 API 요청은 생략
+        // 로직만 비슷하게 설계해둠
 
-        supportFragmentManager.beginTransaction().replace(com.softsquared.template.kotlin.R.id.galleryinfo_frm, GalleryInfoFragment(this, feetStepInfoResponse)).commitAllowingStateLoss()
+        /*
+            To  Do 2.
+            GalleryFragment 에서 전달받은 게시글 Idx 받기 & 발자취 게시글 상세조회 API 엮기
+         */
+
+        // 상세 조회 게시글 idx 받기
+        val intent = intent
+        val posting_id: Int
+        posting_id = intent.getIntExtra("posting-id",0)
+
+
+        // 게시글 상세 조회 API 요청 값 서비스에 전달
+        // 요청객체 = Path variable
+//        val postInfoRequest =  PostInfoRequest(posting_id = posting_id )
+         GalleryInfoService(this).getPostInfo(posting_id)
+
+
+//        supportFragmentManager.beginTransaction().replace(com.softsquared.template.kotlin.R.id.galleryinfo_frm, GalleryInfoFragment(this, feetStepInfoResponse)).commitAllowingStateLoss()
 
         // 뒤로가기 버튼
         binding.galleryinfoBtnBack.setOnClickListener {
@@ -102,19 +112,19 @@ class GalleryInfoActivity()
 
     // 게시글 Idx로 특정 발자취 게시글 정보 상세 조회 API 요청 값 받아서,
     // Activity View 구현
-    override fun onGetPostInfoSuccess(response: FeetStepInfoResponse) {
-        binding.galleryTvTitle.text = response.title
+    // 정보 상세  조회 API 요청 & 응답 성공
+    override fun onGetPostInfoSuccess(response: PostInfoResponse) {
+        binding.galleryTvTitle.text = response.result.placeName
 
         // Fragment에서 뿌릴 데이터 전달
+        supportFragmentManager.beginTransaction().replace(com.softsquared.template.kotlin.R.id.galleryinfo_frm, GalleryInfoFragment(this, response.result)).commitAllowingStateLoss()
+
     }
 
+    // 정보 상세 조회 API 요청 실패
     override fun onGetPostInfoFailure(message: String) {
-    }
-
-
-    // Fragment로 API 응답 데이터 전달
-    private fun setupFragemntLayout(response: FeetStepInfoResponse){
-        supportFragmentManager.beginTransaction().replace(com.softsquared.template.kotlin.R.id.galleryinfo_frm, GalleryInfoFragment(this, response)).commitAllowingStateLoss()
+        showCustomToast(message)
+        Log.d("왜 실패 했니?", message)
     }
 
 
