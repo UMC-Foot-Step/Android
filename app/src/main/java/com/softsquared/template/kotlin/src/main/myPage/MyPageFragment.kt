@@ -50,6 +50,8 @@ class MyPageFragment :
 
         }
 
+
+
         binding.edtNickname.addTextChangedListener (object : TextWatcher{
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -213,8 +215,7 @@ class MyPageFragment :
 }
 
 //사용자 구별=토큰
-//어디에든 똑같은 키 code=키값을 관리하는곳 jwt나 auth 는 문자열(key값)
-//로그아웃 로직에 대해 설명하고 말 나누기
+//어디에든 똑같은 키 code=키값을 관리하는곳 jwt나 auth는 문자열(key값)
 //
 //페이지에 들어 왔을때 api요청
 //
