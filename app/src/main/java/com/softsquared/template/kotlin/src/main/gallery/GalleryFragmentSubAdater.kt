@@ -4,17 +4,18 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.softsquared.template.kotlin.databinding.ItemGallerySubSectionBinding
 import com.softsquared.template.kotlin.src.main.gallery.info.models.FeetStepInfoResponse
 import com.softsquared.template.kotlin.src.main.gallery.info.models.ResultCommentList
-import com.softsquared.template.kotlin.src.main.gallery.models_sample.ResultFeetStepList
+import com.softsquared.template.kotlin.src.main.gallery.models.PostList
 
 
 /*
     날짜별 카테고리로 게시글 리스트 갯수만큼 조회
  */
 class GalleryFragmentSubAdater(
-    private val resultFeetStepList: ArrayList<ResultFeetStepList>,
+    private val resultFeetStepList: ArrayList<PostList>,
     val galleryFragmentInterface: GalleryFragmentInterface
 ) : RecyclerView.Adapter<GalleryFragmentSubAdater.MyViewHolder>() {
 
@@ -24,12 +25,12 @@ class GalleryFragmentSubAdater(
     ) : RecyclerView.ViewHolder(binding.root) {
 
 
-        fun bind(resultFeetStep: ResultFeetStepList) {
+        fun bind(resultFeetStep: PostList) {
             with(binding) {
-                galleryIvPostimg.setImageResource(resultFeetStep.img)
+                Glide.with(binding.root.context).load(resultFeetStep.imageUrl).into(galleryIvPostimg)
                 galleryTvPostTitle.text = resultFeetStep.title
-                galleryTvPostlikeCnt.text = resultFeetStep.like_cnt.toString()
-                galleryTvPostPosition.text = resultFeetStep.position
+                galleryTvPostlikeCnt.text = resultFeetStep.likes_cnt.toString()
+                galleryTvPostPosition.text = resultFeetStep.placeName
             }
 
             binding.root.setOnClickListener{
@@ -48,55 +49,55 @@ class GalleryFragmentSubAdater(
 
                 // 게시글 상세 정보 조회 데이터객체의 내부 데이터객체인,
                 // 댓글 데이터객체 생성
-                val resultCommentList = ArrayList<ResultCommentList>()
-
-                resultCommentList.apply {
-                    add(ResultCommentList(
-                        "김다미",
-                    "역시, 1950 갬성 카페가 최고임 ㅋㅋ"))
-
-                    add(
-                        ResultCommentList(
-                        "김다미",
-                        "여기에서, 그해 우리는 촬영해도 좋았겠다.."
-                    )
-                    )
-
-                    add(
-                        ResultCommentList(
-                        "김다미",
-                        "좋은 사람들과 좋은 시간"
-                    )
-                    )
-
-                    add(
-                        ResultCommentList(
-                            "김다미",
-                            "오늘은 날씨가 상쾌했다."
-                        )
-                    )
-
-                    add(
-                        ResultCommentList(
-                            "김다미",
-                            "오랜만에 즐기는 일상에 여유"
-                        )
-                    )
-                }
-
-                // 댓글 데이터객체 게시글 사엣 정보 조회 데이터객체에 삽입
-                // 게시글 상세 정보 조회 데이터객체 생성 후 삽입 진행
-                val feetStepInfoResponse = FeetStepInfoResponse(
-                    resultFeetStep.day,
-                    resultFeetStep.img,
-                    resultFeetStep.title,
-                    "테스팅 설명 데이터입니다. 곧있으면 API 엮을 거에용",
-                    resultFeetStep.like_cnt,
-                    resultFeetStep.position,
-                    "김다미",
-                    3,
-                    resultCommentList
-                )
+//                val resultCommentList = ArrayList<ResultCommentList>()
+//
+//                resultCommentList.apply {
+//                    add(ResultCommentList(
+//                        "김다미",
+//                    "역시, 1950 갬성 카페가 최고임 ㅋㅋ"))
+//
+//                    add(
+//                        ResultCommentList(
+//                        "김다미",
+//                        "여기에서, 그해 우리는 촬영해도 좋았겠다.."
+//                    )
+//                    )
+//
+//                    add(
+//                        ResultCommentList(
+//                        "김다미",
+//                        "좋은 사람들과 좋은 시간"
+//                    )
+//                    )
+//
+//                    add(
+//                        ResultCommentList(
+//                            "김다미",
+//                            "오늘은 날씨가 상쾌했다."
+//                        )
+//                    )
+//
+//                    add(
+//                        ResultCommentList(
+//                            "김다미",
+//                            "오랜만에 즐기는 일상에 여유"
+//                        )
+//                    )
+//                }
+//
+//                // 댓글 데이터객체 게시글 사엣 정보 조회 데이터객체에 삽입
+//                // 게시글 상세 정보 조회 데이터객체 생성 후 삽입 진행
+//                val feetStepInfoResponse = FeetStepInfoResponse(
+//                    resultFeetStep.day,
+//                    resultFeetStep.img,
+//                    resultFeetStep.title,
+//                    "테스팅 설명 데이터입니다. 곧있으면 API 엮을 거에용",
+//                    resultFeetStep.like_cnt,
+//                    resultFeetStep.position,
+//                    "김다미",
+//                    3,
+//                    resultCommentList
+//                )
 
 
                 // GalleryFragment -> GalleryInfoActivity 전환
@@ -106,8 +107,14 @@ class GalleryFragmentSubAdater(
                     RecyclerView의 특정 발자취 게시글 클릭시,
                     동일 장소별 발자취 게시글 리스트 조회 액티비티로 전환 (태스팅 용)
                  */
-                galleryFragmentInterface.changeGalleryInfoActivity(feetStepInfoResponse)
+//                galleryFragmentInterface.changeGalleryInfoActivity(feetStepInfoResponse)
 //                galleryFragmentInterface.testChangeMapGalleryActivity()
+
+
+                /*
+                    게시글 상세 조회 API 연결
+                 */
+
             }
         }
 

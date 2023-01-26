@@ -32,8 +32,6 @@ class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
         응답 더미데이터 생성
      */
     fun GetPostList() {
-
-
         /*
             To Do 1. 갤러리 발자취 조회 API 연결 테스팅
          */
@@ -42,8 +40,10 @@ class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
         ApplicationClass.sSharedPreferences.edit().putString(X_ACCESS_TOKEN, "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDY2MDA5MSwiZXhwIjoxNjc0OTYyNDkxfQ.W7MNMFI43SPbcw5pLhpbsuic0_nCDRcqHKPgEipV9ko").apply()
 
         val galleryRetrofitInterFace = ApplicationClass.sRetrofit.create(GalleryRetrofitInterface::class.java)
-        galleryRetrofitInterFace.getGalleryPostList().enqueue(object : Callback<PostListResponse>{
+        galleryRetrofitInterFace.getGalleryPostList().clone().enqueue(object : Callback<PostListResponse>{
             override fun onResponse(call: Call<PostListResponse>, response: Response<PostListResponse>) {
+
+                Log.d("지나가니?", "어? 지나가?")
 
                 // 요청 객체 예외처리
                 if(response.body() != null) {
@@ -264,7 +264,7 @@ class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
 
 
         // GalleryFragemnt로 발자취 게시글 데이터 전달 - 날짜별 카테고리 게시글 리스트 Data
-        galleryFragmentInterface.onGetPostListSuccess(daySectionFeetStepList)
+//        galleryFragmentInterface.onGetPostListSuccess(daySectionFeetStepList)
 
 
 

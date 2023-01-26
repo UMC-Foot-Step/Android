@@ -9,7 +9,7 @@ import com.softsquared.template.kotlin.src.main.gallery.models_sample.SectionMod
 interface GalleryFragmentInterface {
 
 
-    fun onGetPostListSuccess(response: List<SectionModel>)
+//    fun onGetPostListSuccess(response: List<SectionModel>)
 
     fun onGetPostListFailure(message: String)
 

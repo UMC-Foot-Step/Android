@@ -11,8 +11,11 @@ import com.softsquared.template.kotlin.databinding.FragmentGallaryBinding
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoActivity
 import com.softsquared.template.kotlin.src.main.gallery.info.models.FeetStepInfoResponse
 import com.softsquared.template.kotlin.src.main.gallery.map.MapGalleryActivity
+import com.softsquared.template.kotlin.src.main.gallery.models.PostList
 import com.softsquared.template.kotlin.src.main.gallery.models.PostListResponse
-import com.softsquared.template.kotlin.src.main.gallery.models_sample.SectionModel
+import com.softsquared.template.kotlin.src.main.gallery.models_sample.ResultFeetStepList
+import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
+import java.time.format.DateTimeFormatter
 
 
 class GalleryFragment :
@@ -44,9 +47,9 @@ class GalleryFragment :
 
     1. 받은 응답 더미 데이터를 가지고 RecyclerView로 구현한다.
     */
-    override fun onGetPostListSuccess(response: List<SectionModel>) {
-        setupRecyclerView(response, this)
-    }
+//    override fun onGetPostListSuccess(response: List<SectionModel>) {
+//        setupRecyclerView(response, this)
+//    }
 
     
     /*
@@ -55,7 +58,8 @@ class GalleryFragment :
         API 요청 실패에 대한 예외처리
      */
     override fun onGetPostListFailure(response: String) {
-
+        showCustomToast(response)
+        Log.d("API 연결 에러", response)
 
     }
 
@@ -91,6 +95,9 @@ class GalleryFragment :
 
 
 
+    /*
+        특정 장소 발자취 게시글 리스트 조회 액티비티 전환 메소드
+     */
     override fun testChangeMapGalleryActivity(){
         val intent = Intent(activity, MapGalleryActivity::class.java)
         startActivity(intent)
@@ -103,6 +110,41 @@ class GalleryFragment :
     */
     override fun onGetGalleryPostListSuccess(response: PostListResponse) {
         showCustomToast("API 연결 셋팅완료~~~~~")
+
+        /*
+        날짜별 카테고리로 게시글 그룹화 - 데이터 전처리?
+        */
+        val daySectionFeetStepList = ArrayList<SectionModel>()
+
+        var idx: Int = 0
+
+        // 날짜별 카테고리  갯수만큼 반복
+        for(i: Int in 1..response.result.upload_date){
+
+            // 카테고리 별 게시글 리스트 데이터 - ArrayList 객체 생성
+            val sectionFeetStepList = ArrayList<PostList>()
+
+            var z: Int = response.result.post_list[idx].posting_cnt
+            while(z > 0){
+
+                sectionFeetStepList.add(
+                    response.result.post_list[idx]
+                )
+                idx ++
+                z--
+            }
+
+            daySectionFeetStepList.add(
+                SectionModel(
+                    response.result.post_list[idx - 1].recordDate,
+                    sectionFeetStepList
+                )
+            )
+
+        }
+
+        setupRecyclerView(daySectionFeetStepList, this)
+
     }
 
 

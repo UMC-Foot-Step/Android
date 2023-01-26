@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.softsquared.template.kotlin.databinding.ItemGallerySectionBinding
-import com.softsquared.template.kotlin.src.main.gallery.models_sample.SectionModel
+import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
 
 class GalleryFragmentAdater(
     private val daySectionFeetStepList: List<SectionModel>,
