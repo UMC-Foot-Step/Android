@@ -88,7 +88,7 @@
 
 
 
-        <!--Gallery Activity 추가-->
+        <!--Map Activity 추가-->
         <activity
             android:name=".src.main.map.search.SearchActivity"
             android:exported="false"
@@ -99,6 +99,12 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".src.main.map.search.SearchResultActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
 
 
 

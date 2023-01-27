@@ -30,6 +30,7 @@ import com.softsquared.template.kotlin.config.BaseFragment
 import com.softsquared.template.kotlin.databinding.FragmentMapBinding
 import com.softsquared.template.kotlin.src.main.map.area.AreaActivity
 import com.softsquared.template.kotlin.src.main.map.search.SearchActivity
+import com.softsquared.template.kotlin.src.main.map.search.SearchResultActivity
 import java.time.LocalDate
 import java.time.Year
 
@@ -80,7 +81,7 @@ class MapFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setRetainInstance(true);
+        //setRetainInstance(true);
         /* Activity가 onDestroy되고 재생성될 때 Fragment도 같이 재생성된다. 하지만 setRetainInstance(true)를 설정하면
        onCreate, onDestory가 호출되지 않고 재사용된다.->현재는 mvvm패턴의 viewModel써서 하라는데 몰라서 저거 일단 둠
         */
@@ -170,7 +171,6 @@ class MapFragment :
             btnCal2.setOnClickListener{
                 setCalBtnClickEnent(2)
             }
-
         }
 
         binding.btnLocationCheck.setOnClickListener {
@@ -180,6 +180,8 @@ class MapFragment :
 
         binding.btnSearch.setOnClickListener{
             val intent= Intent(requireContext(), SearchActivity::class.java)
+            //val intent= Intent(requireContext(), SearchResultActivity::class.java)
+
             startActivity(intent)
         }
 
@@ -191,7 +193,9 @@ class MapFragment :
 
     fun setCalBtnClickEnent(
         btn_type:Int){
+        //val bottomSheetDialog = BottomSheetDialog(mContext,R.style.calTheme_Custom)
         val bottomSheetDialog = BottomSheetDialog(mContext)
+
         val btnClose = bottomSheet2.findViewById<ImageButton>(R.id.dateBtnQuit)
         val btnDateCheck = bottomSheet2.findViewById<Button>(R.id.dateBtnCheck)
         val calView = bottomSheet2.findViewById<CalendarView>(R.id.calenderView)
@@ -375,5 +379,8 @@ class MapFragment :
             v1.findViewById<TextView>(R.id.feetTextView).text = "방문하지 않은 곳"
             v1.findViewById<TextView>(R.id.titleTextView).text = locationList[marker_num]
         }
+        v1.setOnClickListener {
+            Toast.makeText(mContext, "뷰 클릭됨", Toast.LENGTH_SHORT).show() }
+
     }
 }

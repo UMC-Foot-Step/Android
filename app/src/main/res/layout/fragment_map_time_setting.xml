@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/top_radius_white_background"
+    android:background="@drawable/post_cal_dialog"
     android:orientation="vertical">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -33,11 +31,12 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
-                android:background="@android:color/transparent"
                 android:layout_marginRight="16dp"
+                android:background="@android:color/transparent"
                 android:src="@drawable/post_cal_close"
                 tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,8 +47,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:layout_marginEnd="15dp"
-                android:layout_marginBottom="18dp"
-                >
+                android:layout_marginBottom="18dp">
+
                 <RadioGroup
                     android:id="@+id/radioGroup"
                     android:layout_width="match_parent"
@@ -59,9 +58,9 @@
 
                     <RadioButton
                         android:id="@+id/radioBtn"
-                        android:layout_weight="0.2"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_weight="0.2"
                         android:background="@drawable/selector_center_period_button"
                         android:button="@null"
                         android:paddingLeft="11dp"
@@ -76,9 +75,9 @@
 
                     <RadioButton
                         android:id="@+id/radioBtn2"
-                        android:layout_weight="0.2"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_weight="0.2"
                         android:background="@drawable/selector_period_button"
                         android:button="@null"
                         android:paddingLeft="13dp"
@@ -93,9 +92,9 @@
 
                     <RadioButton
                         android:id="@+id/radioBtn3"
-                        android:layout_weight="0.2"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_weight="0.2"
                         android:background="@drawable/selector_center_period_button"
                         android:button="@null"
                         android:paddingLeft="13dp"
@@ -108,9 +107,9 @@
 
                     <RadioButton
                         android:id="@+id/radioBtn4"
-                        android:layout_weight="0.2"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_weight="0.2"
                         android:background="@drawable/selector_period_button"
                         android:button="@null"
                         android:paddingLeft="13dp"
@@ -123,9 +122,9 @@
 
                     <RadioButton
                         android:id="@+id/radioBtn5"
-                        android:layout_weight="0.2"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:layout_weight="0.2"
                         android:background="@drawable/selector_center_period_button"
                         android:button="@null"
                         android:paddingLeft="13dp"
@@ -138,15 +137,15 @@
                 </RadioGroup>
 
             </LinearLayout>
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/direct_select_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="22dp"
                 android:layout_gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/radioGroup"
+                android:layout_marginBottom="22dp"
                 android:visibility="gone"
-                >
+                app:layout_constraintTop_toBottomOf="@id/radioGroup">
 
                 <TextView
                     android:id="@+id/dateText1"
@@ -154,10 +153,10 @@
                     android:layout_height="wrap_content"
                     android:text="TextView"
                     android:textSize="16sp"
-                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/dateText1" />
+                    app:layout_constraintEnd_toStartOf="@id/dateText1"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/calBtn1"
@@ -166,9 +165,9 @@
                     android:layout_marginStart="2dp"
 
                     android:background="@android:color/transparent"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/waveText"
                     app:layout_constraintStart_toEndOf="@id/dateText1"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
 
                     app:srcCompat="@drawable/bs_calendar_icon"
@@ -184,9 +183,9 @@
                     android:text="~"
                     android:textSize="16sp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/dateText2"
-                    app:layout_constraintStart_toEndOf="@id/calBtn1" />
+                    app:layout_constraintStart_toEndOf="@id/calBtn1"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/dateText2"
@@ -196,10 +195,10 @@
 
                     android:text="TextView"
                     android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/calBtn2"
                     app:layout_constraintStart_toEndOf="@id/waveText"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageButton
                     android:id="@+id/calBtn2"
@@ -208,14 +207,12 @@
                     android:layout_marginStart="2dp"
                     android:background="@android:color/transparent"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/dateText2"
+                    app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/bs_calendar_icon"
-                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
-                    />
+                    tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
-    </LinearLayout>
-</androidx.cardview.widget.CardView>
+</LinearLayout>

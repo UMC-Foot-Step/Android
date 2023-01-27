@@ -86,7 +86,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="18dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/tracking_btn_background"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -98,7 +98,7 @@
         android:layout_height="107dp"
         android:layout_above="@+id/btn_position"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="40dp"
         android:visibility="gone"
         />
 </FrameLayout>
