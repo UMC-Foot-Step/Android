@@ -1,10 +1,10 @@
-package com.softsquared.template.kotlin.src.main.myPage.mypageDataFile
+package com.softsquared.template.kotlin.src.main.myPage.mypageResponseFile
 
 import com.google.gson.annotations.SerializedName
 
-class NicknameResponse (
+data class ProfileResult(
     @SerializedName("isSuccess") val isSuccess: Boolean,
     @SerializedName("code") val code: Int,
     @SerializedName("message") val message: String,
-    @SerializedName("Result") val result: com.softsquared.template.kotlin.src.login.DataFile.Result
+    @SerializedName("Result") val result: String,
 )

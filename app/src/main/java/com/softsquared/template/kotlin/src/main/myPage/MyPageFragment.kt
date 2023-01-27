@@ -3,12 +3,12 @@ package com.softsquared.template.kotlin.src.main.myPage
 import android.app.Activity.INPUT_METHOD_SERVICE
 import android.app.Activity.RESULT_OK
 import android.app.AlertDialog
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -22,7 +22,10 @@ import com.softsquared.template.kotlin.config.BaseFragment
 import com.softsquared.template.kotlin.config.UserCode.auth
 import com.softsquared.template.kotlin.config.UserCode.jwt
 import com.softsquared.template.kotlin.databinding.FragmentMyPageBinding
+import com.softsquared.template.kotlin.src.login.LoginProcessActivity
 import com.softsquared.template.kotlin.src.main.MainActivity
+import com.softsquared.template.kotlin.src.main.myPage.mypageResponseFile.MypageResponse
+import com.softsquared.template.kotlin.src.main.myPage.mypageResultFile.Resultmypage
 import retrofit2.Call
 
 
@@ -30,8 +33,17 @@ import retrofit2.Call
 class MyPageFragment :
     BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding::bind, R.layout.fragment_my_page){
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        getmypage()
+
+
+
+
+
+
 
         //닉네임 초기설정 = 마이페이지 누를때 서버에서 api로 가져옴.
         //갤러리 부분 수정할때 Glide가 많이 바뀌어서 그냥 하기보다는 물어보라고 하심.
@@ -132,11 +144,11 @@ class MyPageFragment :
 
             val okButton = mDialogView.findViewById<Button>(R.id.btn_ok_log)
             okButton.setOnClickListener {
-                showCustomToast("로그아웃")
+                showCustomToast("로그아웃 완료!")
 
                 logout()
 
-                startActivity(Intent(activity,MainActivity::class.java))
+                startActivity(Intent(activity,LoginProcessActivity::class.java))
             }
             val noButton = mDialogView.findViewById<Button>(R.id.btn_no_log)
             noButton.setOnClickListener {
@@ -158,7 +170,7 @@ class MyPageFragment :
                 showCustomToast("탈퇴 완료")
 
                 withdraw()
-                startActivity(Intent(activity,MainActivity::class.java))
+                startActivity(Intent(activity,LoginProcessActivity::class.java))
 
             }
             val noButton = mDialogView.findViewById<Button>(R.id.btn_no_with)
@@ -170,6 +182,43 @@ class MyPageFragment :
 
 
     }//onCreate
+
+
+
+
+    private fun getmypage(){
+
+//        binding.txtNickname.text = mypageinformation.nickname
+//        binding.txtFootprintNum.text = mypageinformation.postingcount.toString()
+        MyPageService().tryGetMyPage(object : MyPageView{
+
+            override fun onMyPageSuccess(code: Int, result: Resultmypage) {
+
+                when(code){
+                    200->{
+                        val mypageinfor = Resultmypage(postingCount = 0, nickname = "", url = "")
+                        binding.txtNickname.text = mypageinfor.nickname
+                        binding.txtFootprintNum.text = mypageinfor.postingCount.toString()
+                        //갤러리는 찾는중
+                    }
+                }
+            }
+
+            override fun onMyPageFailure(message: String) {
+
+            }
+
+        } )
+
+
+
+
+
+    }
+
+
+
+
 
 
     //갤러리 접근을 위한 코드, 최근 api로직 많이 수정됨.
@@ -187,14 +236,10 @@ class MyPageFragment :
 
 
 
-
-
-
     private fun logout() {
         val spf = activity?.getSharedPreferences(auth , AppCompatActivity.MODE_PRIVATE)
         val editor = spf!!.edit()
         context?.let { showLoadingDialog(it) }
-        //로그아웃 api호출
         editor.remove(jwt)
         editor.apply()
     }
@@ -207,6 +252,8 @@ class MyPageFragment :
         editor.remove(jwt)
         editor.apply()
     }
+
+
 
 
     //비밀번호 변경 api보고 비밀번호 담아서 요청

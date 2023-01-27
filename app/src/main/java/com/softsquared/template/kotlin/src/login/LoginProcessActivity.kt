@@ -60,7 +60,7 @@ class LoginProcessActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainP
         // 로그인 버튼 입력 -> 성공한 여부는 나중에 추가할 예정
         login_btn.setOnClickListener{
             login()
-            showCustomToast("누름")
+            showCustomToast("로그인 완료!")
         }
     }
 
@@ -68,10 +68,9 @@ class LoginProcessActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainP
         NetworkDataSource().login(getUser(), object: LoginView{
 
             override fun onLoginSuccess(code: Int, result: Result?) {
-                Log.d("tester2", "onLoginSuccess: 실행됨$result")
                 when(code){
                     200 -> {
-                        saveJwt2(result!!.jwt)
+                        saveJwt2(result!!.grantType + result.jwt)
                         startSuccessActivity()
                     }
                 }
@@ -86,8 +85,10 @@ class LoginProcessActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainP
     }
 
     private fun getUser(): User {
-        val email = R.id.et_id.toString()
-        val password = R.id.et_pw.toString()
+        var et_pw = findViewById<EditText>(R.id.et_pw)
+        var et_id = findViewById<EditText>(R.id.et_id)
+        val email = et_id.text.toString()
+        val password = et_pw.text.toString()
 
         return User(email = email, password = password )
     }
@@ -95,19 +96,10 @@ class LoginProcessActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainP
     private fun startSuccessActivity(){
         val intent = Intent(this,LoginSuccessActivity::class.java)
         startActivity(intent)
-        showCustomToast("실행됨")
 
         finish()
     }
 
-    //int형 jwt
-    private fun saveJwt(jwt: Int) {
-        val spf = getSharedPreferences(auth , MODE_PRIVATE)
-        val editor = spf.edit()
-
-        editor.putInt("jwt", jwt)
-        editor.apply()
-    }
 
     //string형 jwt
     private fun saveJwt2(jwt:String){
