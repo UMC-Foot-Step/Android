@@ -36,8 +36,7 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-            
-            
+
 
         <!--OnBoarding Activity 추가-->
         <activity
