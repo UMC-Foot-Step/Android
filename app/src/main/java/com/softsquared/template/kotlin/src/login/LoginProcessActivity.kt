@@ -14,12 +14,13 @@ import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.config.UserCode
 import com.softsquared.template.kotlin.config.UserCode.auth
 import com.softsquared.template.kotlin.config.UserCode.auth2
-import com.softsquared.template.kotlin.databinding.ActivityMainPostBinding
+import com.softsquared.template.kotlin.databinding.ActivityLoginProcessBinding
 import com.softsquared.template.kotlin.src.login.DataFile.Result
 import com.softsquared.template.kotlin.src.login.DataFile.User
 import com.softsquared.template.kotlin.src.login.LoginDataSource.NetworkDataSource
+import com.softsquared.template.kotlin.src.signup.SignupActivity
 
-class LoginProcessActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBinding::inflate) {
+class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityLoginProcessBinding::inflate) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,7 @@ class LoginProcessActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainP
 
         var et_pw = findViewById<EditText>(R.id.et_pw)
         var login_btn = findViewById<Button>(R.id.login_btn)
+        var register_btn = findViewById<Button>(R.id.register_btn)
 
 
         // 비밀번호 4자리 이상 입력하지 않았을 경우에는 버튼 활성화 안되고 4자리 이상 입력한 경우에는 버튼 할성화
@@ -60,8 +62,17 @@ class LoginProcessActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainP
         // 로그인 버튼 입력 -> 성공한 여부는 나중에 추가할 예정
         login_btn.setOnClickListener{
             login()
-            showCustomToast("로그인 완료!")
         }
+
+        register_btn.setOnClickListener{
+            startregisterActivity()
+        }
+
+
+
+
+
+
     }
 
     private fun login() {
@@ -95,6 +106,12 @@ class LoginProcessActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainP
 
     private fun startSuccessActivity(){
         val intent = Intent(this,LoginSuccessActivity::class.java)
+        startActivity(intent)
+
+        finish()
+    }
+    private fun startregisterActivity(){
+        val intent = Intent(this,SignupActivity::class.java)
         startActivity(intent)
 
         finish()

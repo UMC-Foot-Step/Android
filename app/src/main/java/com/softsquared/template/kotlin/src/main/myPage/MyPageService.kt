@@ -11,17 +11,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MyPageService() {
+class MyPageService {
 
     private val mypageapi = ApplicationClass.sRetrofit.create(RetrofitInterface::class.java)
 
-
-    fun tryGetMyPage(MyPageView : MyPageView) {
-        ApplicationClass.sSharedPreferences.edit().putString(ApplicationClass.X_ACCESS_TOKEN, "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDY2MDA5MSwiZXhwIjoxNjc0OTYyNDkxfQ.W7MNMFI43SPbcw5pLhpbsuic0_nCDRcqHKPgEipV9ko").apply()
-        mypageapi.getmypage().enqueue(object : Callback<MypageResponse>{
+    fun tryGetMyPage(accessToken : String,MyPageView : MyPageView) {
+        val mypageservice = mypageapi.getmypage(accessToken)
+        mypageservice.enqueue(object : Callback<MypageResponse>{
             override fun onFailure(call: Call<MypageResponse>, t: Throwable) {
                 MyPageView.onMyPageFailure(t.message ?: "실패")
-
             }
 
             override fun onResponse(
@@ -39,40 +37,6 @@ class MyPageService() {
             }
         })
     }
-
-    fun trychangenickname(user:User, nicknameView: NicknameView){
-        val changeservice = mypageapi.nickname(user)
-
-        changeservice.enqueue(object : Callback<NicknameResponse>{ // 임시, Nicknamechangeresponse로 바꿀 예정
-            override fun onFailure(call: Call<NicknameResponse>, t: Throwable) {
-
-            }
-
-            override fun onResponse(
-                call: Call<NicknameResponse>,
-                response: Response<NicknameResponse>
-            ) {
-
-            }
-        })
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

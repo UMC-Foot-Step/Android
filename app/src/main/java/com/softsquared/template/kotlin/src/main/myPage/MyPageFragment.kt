@@ -1,7 +1,6 @@
 package com.softsquared.template.kotlin.src.main.myPage
 
-import android.app.Activity.INPUT_METHOD_SERVICE
-import android.app.Activity.RESULT_OK
+import android.app.Activity.*
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
@@ -18,6 +17,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.softsquared.template.kotlin.R
+import com.softsquared.template.kotlin.config.ApplicationClass
 import com.softsquared.template.kotlin.config.BaseFragment
 import com.softsquared.template.kotlin.config.UserCode.auth
 import com.softsquared.template.kotlin.config.UserCode.jwt
@@ -25,6 +25,7 @@ import com.softsquared.template.kotlin.databinding.FragmentMyPageBinding
 import com.softsquared.template.kotlin.src.login.LoginProcessActivity
 import com.softsquared.template.kotlin.src.main.MainActivity
 import com.softsquared.template.kotlin.src.main.myPage.mypageResponseFile.MypageResponse
+import com.softsquared.template.kotlin.src.main.myPage.mypageResponseFile.Nickname
 import com.softsquared.template.kotlin.src.main.myPage.mypageResultFile.Resultmypage
 import retrofit2.Call
 
@@ -114,6 +115,7 @@ class MyPageFragment :
             }else{
                 binding.txtNickname.text = aftername
             }
+            nicknamechange()
 
             imm.hideSoftInputFromWindow(binding.edtNickname.windowToken, 0)
 
@@ -184,13 +186,15 @@ class MyPageFragment :
     }//onCreate
 
 
+   private val accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDY2MDA5MSwiZXhwIjoxNjc0OTYyNDkxfQ.W7MNMFI43SPbcw5pLhpbsuic0_nCDRcqHKPgEipV9ko"
 
 
     private fun getmypage(){
 
+
 //        binding.txtNickname.text = mypageinformation.nickname
 //        binding.txtFootprintNum.text = mypageinformation.postingcount.toString()
-        MyPageService().tryGetMyPage(object : MyPageView{
+        MyPageService().tryGetMyPage(accessToken, object : MyPageView{
 
             override fun onMyPageSuccess(code: Int, result: Resultmypage) {
 
@@ -211,13 +215,33 @@ class MyPageFragment :
         } )
 
 
+    }
 
+    private fun nicknamechange(){
+
+        NicknameService().trygetNickname(accessToken , getNickname() , object : NicknameView{
+            override fun onNicknameSuccess(code: Int, result: String?) {
+                when(code){
+                    200->{
+                        showCustomToast(result!!)
+                    }
+                }
+            }
+
+            override fun onNicknameFailure(message: String) {
+                showCustomToast(message)
+            }
+
+        })
 
 
     }
 
+    private fun getNickname():Nickname{
+        val aftername = binding.edtNickname.text.toString()
 
-
+        return Nickname(aftername)
+    }
 
 
 

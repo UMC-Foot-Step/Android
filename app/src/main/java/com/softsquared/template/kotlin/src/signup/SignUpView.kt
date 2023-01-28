@@ -1,6 +1,6 @@
 package com.softsquared.template.kotlin.src.signup
 
 interface SignUpView {
-    fun onSignUpSuccess()
+    fun onSignUpSuccess(code : Int,result: String?)
     fun onSignUpFailure(message: String?)
 }

@@ -13,15 +13,15 @@ class XAccessTokenInterceptor : Interceptor {
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder: Request.Builder = chain.request().newBuilder()
-        val jwtToken: String? = sSharedPreferences.getString(X_ACCESS_TOKEN, null)
+        val jwtToken: String? = sSharedPreferences.getString(X_ACCESS_TOKEN, "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDY2MDA5MSwiZXhwIjoxNjc0OTYyNDkxfQ.W7MNMFI43SPbcw5pLhpbsuic0_nCDRcqHKPgEipV9ko")
 
-        // JWT 삽입 확인 (API 연결 테스팅)
-//        if (jwtToken != null) {
-//            Log.d("jwt 들어왔니?", jwtToken)
-//        }
-//        else{
-//            Log.d("NOPE...", "NOOOOOO")
-//        }
+
+        if (jwtToken != null) {
+            Log.d("jwt 들어왔니?", jwtToken)
+        }
+        else{
+            Log.d("NOPE...", "NOOOOOO")
+        }
 
         if (jwtToken != null) {
             builder.addHeader("Authorization", jwtToken)

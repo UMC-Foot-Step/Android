@@ -20,30 +20,12 @@ class NetworkDataSource {
     }
     private val api = ApplicationClass.sRetrofit.create(RetrofitInterface::class.java)
 
-    fun signUp(user: User, signupView: SignUpView){
-        val signUpService = api.join(user)
-
-        signUpService.enqueue(object : Callback<SignUpResponse> {
-            override fun onFailure(call: Call<SignUpResponse>, t: Throwable)
-                = signupView.onSignUpFailure(t.message)
-
-            override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
-                val resp = response.body() as SignUpResponse
-                when(resp.code){
-                    100 -> signupView.onSignUpSuccess()
-                    else -> signupView.onSignUpFailure(resp.message)
-                }
-            }
-        })
-    }
-
     fun login(user: User, loginView: LoginView){
         api.login(user).enqueue(object : Callback<LoginResponse>{
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
 
                 if(response.isSuccessful && response.code() == 200){
                     val loginResponse: LoginResponse = response.body()!!
-                    Log.d("tester", "onResponse: 실행됨${loginResponse}")
                     when (val code = loginResponse.code){
                         200 -> loginView.onLoginSuccess(code,loginResponse.result!!)
                         else -> loginView.onLoginFailure(response.message())
