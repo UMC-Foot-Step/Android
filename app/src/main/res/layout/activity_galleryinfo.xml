@@ -37,16 +37,14 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/galleryinfo_btn_option"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="310dp"
-
+            android:layout_alignParentEnd="true"
 
             android:layout_marginTop="13dp"
-            android:layout_marginEnd="173dp"
-            android:layout_toEndOf="@+id/galleryinfo_btn_back"
+            android:layout_marginEnd="20dp"
             android:background="@color/not_visible"
             app:srcCompat="@drawable/ic_galleryinfo_main_option" />
 

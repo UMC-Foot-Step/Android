@@ -35,9 +35,25 @@ class GalleryFragment :
          */
 
         GalleryService(this).GetPostList()
-
+        Log.d("onViewCreated()", "실행됨")
 
     }
+
+    /*
+        To Do 8. 갤러리 프래그먼트 재시작 시 실행 생명주기 메소드
+     */
+    override fun onStart() {
+        super.onStart()
+        Log.d("onStart()", "실행됨")
+
+        /*
+            To Do 9. 갤러리 발자취 게시글 리스트 조회 API 재실행
+         */
+        GalleryService(this).GetPostList()
+
+    }
+
+
 
     /*
     To Do 2. 갤러리 뷰 형태로 발자취 리스트 조회 구현

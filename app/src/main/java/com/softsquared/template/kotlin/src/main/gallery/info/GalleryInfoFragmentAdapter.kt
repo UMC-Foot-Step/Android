@@ -1,5 +1,7 @@
 package com.softsquared.template.kotlin.src.main.gallery.info
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -15,11 +17,13 @@ import com.softsquared.template.kotlin.src.main.gallery.info.models_sample.Resul
  */
 class GalleryInfoFragmentAdapter(
     private val galleryInfoActivity: GalleryInfoActivity,
+    private val galleryInfoFragment: GalleryInfoFragment,
     private val commentList: ArrayList<CommentList>
 ) : RecyclerView.Adapter<GalleryInfoFragmentAdapter.MyViewHolder>() {
 
     class MyViewHolder(
         private val galleryInfoActivity: GalleryInfoActivity,
+        private val galleryInfoFragment: GalleryInfoFragment,
         private val binding: ItemGalleryinfoCommentBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -43,31 +47,65 @@ class GalleryInfoFragmentAdapter(
                 To Do 1. 팝업메뉴 구현
                 */
                 // Activity 특성을 인자로 받기에, GallertInfoActivity 객체를 받아옴.
-                val popup = PopupMenu(galleryInfoActivity, binding.galleryinfoBtnCommentOption)
-                galleryInfoActivity.menuInflater.inflate(R.menu.menu_galleryinfo_option_btn, popup.menu)
+                val popup = PopupMenu(binding.root.context, binding.galleryinfoBtnCommentOption)
+                galleryInfoActivity.menuInflater.inflate(R.menu.menu_galleryinfo_comment_option, popup.menu)
 
                 popup.setOnMenuItemClickListener {
                         item ->
                     when(item.itemId){
-                        R.id.btn_flag ->
-                            galleryInfoActivity.showCustomToast("신고하기")
-                        R.id.btn_edit ->
-                            galleryInfoActivity.showCustomToast("수정하기")
-                        R.id.btn_del ->
-                            galleryInfoActivity.showCustomToast("삭제하기")
+                        R.id.btn_del -> {
+
+                            /*
+                                To Do 2. 삭제 다이얼로그 구현
+                             */
+                            val builder = AlertDialog.Builder(binding.root.context)
+                            builder.setTitle("댓글 삭제하기")
+                                .setMessage("해당 댓글을 삭제합니다.")
+                                .setPositiveButton("확인",
+                                    DialogInterface.OnClickListener { dialog, id ->
+                                        galleryInfoFragment.showCustomToast("댓글 삭제완료")
+
+                                        /*
+                                            To Do 2.2 댓글 삭제 API 구현
+                                         */
+                                        GalleryInfoFragmentService(galleryInfoFragment).deletePostComment(commentList.commentId)
+                                    })
+
+                                .setNegativeButton("취소",
+                                    DialogInterface.OnClickListener { dialog, id ->
+                                        galleryInfoFragment.showCustomToast("댓글 삭제취소")
+                                    })
+                            // 다이얼로그를 띄워주기
+                            builder.show()
+                            }
                         }
                         false
                     }
-                    popup.show()
+
+                    // 팝업 메뉴 아이콘 표시
+                    try {
+                        val fieldMPopup = PopupMenu::class.java.getDeclaredField("mPopup")
+                        fieldMPopup.isAccessible = true
+                        val mPopup = fieldMPopup.get(popup)
+                        mPopup.javaClass
+                            .getDeclaredMethod("setForceShowIcon", Boolean::class.java)
+                            .invoke(mPopup, true)
+                    } catch (e: Exception){
+                        Log.e("Main", "Error showing menu icons")
+                    } finally {
+                        popup.show()
+                    }
 
                 }
-
             }
 
         }
 
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         return MyViewHolder(galleryInfoActivity,
+            galleryInfoFragment,
             ItemGalleryinfoCommentBinding.inflate(
                 LayoutInflater.from(parent.context),
             parent, false))
