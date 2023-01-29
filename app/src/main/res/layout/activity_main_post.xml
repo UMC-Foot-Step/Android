@@ -18,7 +18,9 @@
             android:id="@+id/postIbBack"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:scaleType="centerCrop"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
             android:background="@android:color/transparent"
             android:src="@drawable/post_arrow_back" />
 
@@ -66,8 +68,8 @@
         android:layout_marginTop="10dp">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="170dp"
-            android:layout_height="170dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="0dp">
 
@@ -82,9 +84,12 @@
 
         <ImageButton
             android:id="@+id/postIbPhotoCancel"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
             android:layout_gravity="right"
+            android:scaleType="centerCrop"
             android:background="@android:color/transparent"
             android:src="@drawable/post_cal_close" />
     </FrameLayout>
