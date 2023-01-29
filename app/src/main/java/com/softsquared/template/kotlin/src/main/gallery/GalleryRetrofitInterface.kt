@@ -51,4 +51,10 @@ interface GalleryRetrofitInterface {
     @POST("footstep/{posting_id}/comment")
     fun postPostComment(@Path("posting_id") posting_id: Int, @Body params: PostCommentRequest) : Call <BaseResponse>
 
+
+    /*
+        To Do 7. MapGallery - 장소별 게시글 리스트 API 호출
+     */
+    @GET("footstep/{place_id}/list")
+    fun getPostListByPosition(@Path("place_id") place_id: Int) : Call<PostListResponse>
 }
