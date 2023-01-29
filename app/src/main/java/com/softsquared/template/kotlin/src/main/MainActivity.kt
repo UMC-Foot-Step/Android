@@ -2,6 +2,7 @@ package com.softsquared.template.kotlin.src.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.databinding.ActivityMainBinding
@@ -17,7 +18,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        supportFragmentManager.beginTransaction().replace(R.id.main_frm, MapFragment()).commitAllowingStateLoss()
+        Log.d("생명주기", "메인의 onCreate()")
+
+
+        //supportFragmentManager.beginTransaction().replace(R.id.main_frm, MapFragment()).commitAllowingStateLoss()
 
         binding.mainBtmFab.setOnClickListener {
             val intent = Intent(this@MainActivity, PostActivity::class.java)
@@ -30,9 +34,12 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
                     // 지도
                     R.id.menu_main_btm_nav_map -> {
-                        supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_frm, MapFragment())
-                            .commitAllowingStateLoss()
+                        //if (supportFragmentManager.findFragmentById(R.id.menu_main_btm_nav_map) != null){
+                            supportFragmentManager.beginTransaction()
+                               //.show(MapFragment())
+                                .replace(R.id.main_frm, MapFragment())
+                                .commitAllowingStateLoss()
+                        //}
                     }
 
                     // 갤러리 (GalleryService에서 더미데이터를 생성하고, GalleryFragment에 더미데이터 전달)
@@ -60,5 +67,9 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             }
             selectedItemId = R.id.menu_main_btm_nav_map
         }
+    }
+    override fun onDestroy() {
+        Log.d("생명주기", "메인의 onDestroy()")
+        super.onDestroy()
     }
 }

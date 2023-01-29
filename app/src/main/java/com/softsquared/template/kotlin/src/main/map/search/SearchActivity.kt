@@ -31,6 +31,8 @@ class SearchActivity : BaseActivity<ActivitySearchBinding>(ActivitySearchBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val view = binding.root
+        Log.d("생명주기", "서치액티비티의 onCreate()")
+
 
         // 리사이클러뷰
         binding.searchPosRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
