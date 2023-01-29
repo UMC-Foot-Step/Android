@@ -19,6 +19,8 @@ class GalleryFragment :
     BaseFragment<FragmentGallaryBinding>(FragmentGallaryBinding::bind, R.layout.fragment_gallary),
     GalleryFragmentInterface {
 
+    private var run_id: Int = 0
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -37,6 +39,7 @@ class GalleryFragment :
         GalleryService(this).GetPostList()
         Log.d("onViewCreated()", "실행됨")
 
+        run_id = 0
     }
 
     /*
@@ -46,11 +49,18 @@ class GalleryFragment :
         super.onStart()
         Log.d("onStart()", "실행됨")
 
-        /*
-            To Do 9. 갤러리 발자취 게시글 리스트 조회 API 재실행
-         */
-        GalleryService(this).GetPostList()
 
+
+        // API 호출 최적화 (코드 리팩토링)
+        if(run_id != 0) {
+            /*
+            To Do 9. 갤러리 발자취 게시글 리스트 조회 API 재실행
+            */
+            Log.d("onStart()", "API 실행됨")
+            GalleryService(this).GetPostList()
+        }
+
+        run_id = 1
     }
 
 

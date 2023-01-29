@@ -33,13 +33,14 @@ class GalleryInfoFragment (
         super.onViewCreated(view, savedInstanceState)
 
         galleryInfoFragment = this
+
         /*
             To Do. feetStepInfoResponse 객체 받아서, Fragment View에 뿌리기
          */
 
         // To DO 1. 발자취 게시글 상세 정보 뿌리기
         Glide.with(binding.root.context).load(resultPostInfo.imageUrl).into(binding.galleryinfoIvPostImg)
-        binding.galleryinfoTvDay.text = resultPostInfo.postingDate
+        binding.galleryinfoTvDay.text = resultPostInfo.postingDate.substring(0 until 4) + ". ".toString() + resultPostInfo.postingDate.substring(5 until 7) + ". " + resultPostInfo.postingDate.substring(8 until 10)
         binding.galleryinfoPostPosition.text = resultPostInfo.placeName
         binding.galleryinfoTvLikeCnt.text = resultPostInfo.likeNum.toString()
         binding.galleryinfoTvCommentCnt.text = resultPostInfo.commentNum.toString()

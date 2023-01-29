@@ -40,7 +40,7 @@ class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
         // ApplicationClass에서 선언해둔 SharedPreferences에 Jwt 토큰 값 임시로 저장
         ApplicationClass.sSharedPreferences.edit().putString(
             X_ACCESS_TOKEN,
-            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDY2MDA5MSwiZXhwIjoxNjc0OTYyNDkxfQ.W7MNMFI43SPbcw5pLhpbsuic0_nCDRcqHKPgEipV9ko"
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDkxNDc2NiwiZXhwIjoxNjc1MjE3MTY2fQ.KxwX1Q0o-omU1rRIiUJBd9gLPbTRVciP_9g_sklW1Bk"
         ).apply()
 
         val galleryRetrofitInterFace =

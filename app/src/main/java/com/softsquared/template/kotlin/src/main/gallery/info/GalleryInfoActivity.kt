@@ -171,7 +171,7 @@ class GalleryInfoActivity()
     // Activity View 구현
     // 정보 상세  조회 API 요청 & 응답 성공
     override fun onGetPostInfoSuccess(response: PostInfoResponse) {
-        binding.galleryTvTitle.text = response.result.placeName
+        binding.galleryTvTitle.text = response.result.postingName
 
         // Fragment에서 뿌릴 데이터 전달
         supportFragmentManager.beginTransaction().replace(com.softsquared.template.kotlin.R.id.galleryinfo_frm, GalleryInfoFragment(this, response.result, posting_id,)).commitAllowingStateLoss()

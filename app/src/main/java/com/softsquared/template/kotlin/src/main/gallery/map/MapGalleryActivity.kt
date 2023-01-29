@@ -17,7 +17,7 @@ class MapGalleryActivity: BaseActivity<ActivityMapgalleryBinding>(ActivityMapgal
 
 
         /*
-            To Do 1. 위치 데이터 받아서, 해당 장소에 대한 발자취 게시글 리스트 조회
+            To Do 1. 위치 Idx 받아서, 해당 장소에 대한 발자취 게시글 리스트 조회
          */
 
         // API 요청 & 응답 데이터 구성
