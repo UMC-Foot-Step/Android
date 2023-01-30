@@ -19,6 +19,8 @@ import com.softsquared.template.kotlin.src.login.DataFile.Result
 import com.softsquared.template.kotlin.src.login.DataFile.User
 import com.softsquared.template.kotlin.src.login.LoginDataSource.NetworkDataSource
 import com.softsquared.template.kotlin.src.signup.SignupActivity
+import com.softsquared.template.kotlin.util.removeJwt
+import com.softsquared.template.kotlin.util.saveJwt
 
 class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityLoginProcessBinding::inflate) {
 
@@ -29,6 +31,9 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
         var et_pw = findViewById<EditText>(R.id.et_pw)
         var login_btn = findViewById<Button>(R.id.login_btn)
         var register_btn = findViewById<Button>(R.id.register_btn)
+
+        //로그인 전 jwt 제거
+        removeJwt()
 
 
         // 비밀번호 4자리 이상 입력하지 않았을 경우에는 버튼 활성화 안되고 4자리 이상 입력한 경우에는 버튼 할성화
@@ -81,8 +86,9 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
             override fun onLoginSuccess(code: Int, result: Result?) {
                 when(code){
                     200 -> {
-                        saveJwt2(result!!.grantType + result.jwt)
+                        saveJwt(result!!.grantType + result.jwt)
                         startSuccessActivity()
+                        Log.d("Tester", "onLoginSuccess: 실행됨")
                     }
                 }
             }
@@ -90,6 +96,7 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
             override fun onLoginFailure(message: String?) {
                 Toast.makeText(this@LoginProcessActivity,message.toString(),Toast.LENGTH_SHORT)
                     .show()
+                Log.d("Tester", "onLoginFailure: dd")
             }
         })
 
@@ -119,13 +126,7 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
 
 
     //string형 jwt
-    private fun saveJwt2(jwt:String){
-        val spf = getSharedPreferences(auth2, MODE_PRIVATE)
-        val editor = spf.edit()
 
-        editor.putString(UserCode.jwt,jwt)
-        editor.apply()
-    }
 }
 
 

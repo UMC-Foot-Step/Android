@@ -1,5 +1,6 @@
 package com.softsquared.template.kotlin.src.signup.DataSource
 
+import android.util.Log
 import com.softsquared.template.kotlin.config.ApplicationClass
 import com.softsquared.template.kotlin.src.login.DataFile.LoginResponse
 import com.softsquared.template.kotlin.src.login.DataFile.User
@@ -26,6 +27,7 @@ class SignUpService {
 
             override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
                 val signupResponse: SignUpResponse = response.body()!!
+                Log.d("Tester", "onResponse: 성공?${signupResponse}")
                 when (val code = signupResponse.code){
                     200 -> signupView.onSignUpSuccess(code, signupResponse.result)
                     else -> signupView.onSignUpFailure(response.message())

@@ -2,7 +2,6 @@ package com.softsquared.template.kotlin.src.main.myPage
 
 import android.util.Log
 import com.softsquared.template.kotlin.config.ApplicationClass
-import com.softsquared.template.kotlin.config.XAccessTokenInterceptor
 import com.softsquared.template.kotlin.src.login.DataFile.User
 import com.softsquared.template.kotlin.src.login.TemporApi.RetrofitInterface
 import com.softsquared.template.kotlin.src.main.myPage.mypageResponseFile.MypageResponse

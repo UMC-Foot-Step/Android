@@ -26,7 +26,9 @@ class NetworkDataSource {
 
                 if(response.isSuccessful && response.code() == 200){
                     val loginResponse: LoginResponse = response.body()!!
+                    Log.d("Tester", "onResponse: ${loginResponse}")
                     when (val code = loginResponse.code){
+
                         200 -> loginView.onLoginSuccess(code,loginResponse.result!!)
                         else -> loginView.onLoginFailure(response.message())
                     }

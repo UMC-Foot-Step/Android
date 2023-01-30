@@ -14,29 +14,41 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.softsquared.template.kotlin.R
-import com.softsquared.template.kotlin.config.ApplicationClass
 import com.softsquared.template.kotlin.config.BaseFragment
-import com.softsquared.template.kotlin.config.UserCode.auth
-import com.softsquared.template.kotlin.config.UserCode.jwt
 import com.softsquared.template.kotlin.databinding.FragmentMyPageBinding
 import com.softsquared.template.kotlin.src.login.LoginProcessActivity
-import com.softsquared.template.kotlin.src.main.MainActivity
-import com.softsquared.template.kotlin.src.main.myPage.mypageResponseFile.MypageResponse
-import com.softsquared.template.kotlin.src.main.myPage.mypageResponseFile.Nickname
+import com.softsquared.template.kotlin.src.main.myPage.mypageResponseFile.changeNicknameInfo
 import com.softsquared.template.kotlin.src.main.myPage.mypageResultFile.Resultmypage
-import retrofit2.Call
+import com.softsquared.template.kotlin.util.getJwt
+import com.softsquared.template.kotlin.util.removeJwt
 
 
 // 메인 - 마이페이지
 class MyPageFragment :
     BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding::bind, R.layout.fragment_my_page){
 
+    //호출 시점은 accessToken호출 때
+    private val accessToken : String by lazy{
+        val jwt = getJwt()
+
+        if(jwt == null){
+            startActivity(Intent(requireContext(),LoginProcessActivity::class.java))
+            requireActivity().finish()
+
+            //flag clear -> 로그인 화면 넘어가면 이전 activity삭제
+            return@lazy ""
+        }
+
+        jwt
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+
 
         getmypage()
 
@@ -150,6 +162,8 @@ class MyPageFragment :
 
                 logout()
 
+                //flag
+
                 startActivity(Intent(activity,LoginProcessActivity::class.java))
             }
             val noButton = mDialogView.findViewById<Button>(R.id.btn_no_log)
@@ -172,6 +186,7 @@ class MyPageFragment :
                 showCustomToast("탈퇴 완료")
 
                 withdraw()
+
                 startActivity(Intent(activity,LoginProcessActivity::class.java))
 
             }
@@ -186,8 +201,6 @@ class MyPageFragment :
     }//onCreate
 
 
-   private val accessToken = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDY2MDA5MSwiZXhwIjoxNjc0OTYyNDkxfQ.W7MNMFI43SPbcw5pLhpbsuic0_nCDRcqHKPgEipV9ko"
-
 
     private fun getmypage(){
 
@@ -200,9 +213,8 @@ class MyPageFragment :
 
                 when(code){
                     200->{
-                        val mypageinfor = Resultmypage(postingCount = 0, nickname = "", url = "")
-                        binding.txtNickname.text = mypageinfor.nickname
-                        binding.txtFootprintNum.text = mypageinfor.postingCount.toString()
+                        binding.txtNickname.text = result.nickname
+                        binding.txtFootprintNum.text = result.postingCount.toString()
                         //갤러리는 찾는중
                     }
                 }
@@ -219,17 +231,19 @@ class MyPageFragment :
 
     private fun nicknamechange(){
 
-        NicknameService().trygetNickname(accessToken , getNickname() , object : NicknameView{
-            override fun onNicknameSuccess(code: Int, result: String?) {
+        NicknameService().trychangeNickname(accessToken , getNickname() , object : NicknameView{
+            override fun onNicknameSuccess(code: Int, result: String) {
                 when(code){
                     200->{
-                        showCustomToast(result!!)
+                        changeNicknameInfo(getNickname().toString())
+                        showCustomToast(result)
                     }
                 }
             }
 
             override fun onNicknameFailure(message: String) {
                 showCustomToast(message)
+                Log.d("Tester", "onNicknameFailure: 실행됨")
             }
 
         })
@@ -237,10 +251,10 @@ class MyPageFragment :
 
     }
 
-    private fun getNickname():Nickname{
+    private fun getNickname():changeNicknameInfo{
         val aftername = binding.edtNickname.text.toString()
 
-        return Nickname(aftername)
+        return changeNicknameInfo(aftername)
     }
 
 
@@ -256,25 +270,19 @@ class MyPageFragment :
                     .load(uri)
                     .into(binding.imgMyProfile)
             }
+        //사진을 직접 보내기 retrofit multipart
         }
 
 
 
     private fun logout() {
-        val spf = activity?.getSharedPreferences(auth , AppCompatActivity.MODE_PRIVATE)
-        val editor = spf!!.edit()
-        context?.let { showLoadingDialog(it) }
-        editor.remove(jwt)
-        editor.apply()
+
+        removeJwt()
     }
 
     private fun withdraw() {
-        val spf = activity?.getSharedPreferences(auth , AppCompatActivity.MODE_PRIVATE)
-        val editor = spf!!.edit()
-        context?.let { showLoadingDialog(it) }
-        //회원탈퇴 api호출
-        editor.remove(jwt)
-        editor.apply()
+        removeJwt()
+        //api보내는건 따로
     }
 
 

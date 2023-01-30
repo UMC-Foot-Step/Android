@@ -2,6 +2,7 @@ package com.softsquared.template.kotlin.src.signup
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -9,10 +10,12 @@ import android.widget.Toast
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.databinding.ActivityMainPostBinding
+import com.softsquared.template.kotlin.databinding.ActivitySignupCheckBinding
 import com.softsquared.template.kotlin.src.signup.DataFile.SignUpForm
+import com.softsquared.template.kotlin.src.signup.DataFile.SignUpUser
 import com.softsquared.template.kotlin.src.signup.DataSource.SignUpService
 
-class SignupCheckActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBinding::inflate) {
+class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySignupCheckBinding::inflate) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,7 +26,8 @@ class SignupCheckActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPo
         var agree_check = findViewById<CheckBox>(R.id.agree_check)
         var authority_check = findViewById<CheckBox>(R.id.authority_check)
 
-        var nickname = edt_name.text.toString()
+
+        intent.getSerializableExtra("userData") as SignUpUser
 
 
 
@@ -42,16 +46,12 @@ class SignupCheckActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPo
         }
 
 
-        
-
 
     }
 
     private fun signUp(){
         SignUpService().signUp(getUser(),object : SignUpView{
-
-
-            override fun onSignUpSuccess(code: Int, result: String?) {
+            override fun onSignUpSuccess(code: Int, result: String) {
                 when(code){
                     200->{
                         showCustomToast(result!!)
@@ -71,12 +71,13 @@ class SignupCheckActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPo
 
     private fun getUser():SignUpForm {
         var edt_name = findViewById<EditText>(R.id.et_nickname)
-        var userlist = intent.getStringArrayListExtra("text")
-        var id = userlist?.get(0).toString()
-        var pw = userlist?.get(1).toString()
+
+
+
+
         var nickname = edt_name.text.toString()
 
-        return SignUpForm(email = id, password = pw, nickname = nickname)
+        return SignUpForm(email = "", password = "", nickname = nickname)
     }
 
     private fun startActivityLogin(){

@@ -4,7 +4,7 @@ import com.softsquared.template.kotlin.src.login.DataFile.LoginResponse
 import com.softsquared.template.kotlin.src.login.DataFile.User
 import com.softsquared.template.kotlin.src.main.Example.models.SignUpResponse
 import com.softsquared.template.kotlin.src.main.myPage.mypageResponseFile.MypageResponse
-import com.softsquared.template.kotlin.src.main.myPage.mypageResponseFile.Nickname
+import com.softsquared.template.kotlin.src.main.myPage.mypageResponseFile.changeNicknameInfo
 import com.softsquared.template.kotlin.src.main.myPage.mypageResponseFile.NicknameResponse
 import com.softsquared.template.kotlin.src.signup.DataFile.SignUpForm
 import retrofit2.Call
@@ -13,7 +13,6 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.PATCH
 import retrofit2.http.POST
-import retrofit2.http.Query
 
 interface RetrofitInterface {
     //로그인
@@ -41,10 +40,10 @@ interface RetrofitInterface {
 
 
     //마이페이지 정보변경
-    @PATCH("/nickname")
+    @PATCH("/my-page/nickname")
     fun nickname(
-        @Body nickname: Nickname,
-        @Header("") accessToken: String): Call<NicknameResponse>
+        @Body changeNicknameInfo: changeNicknameInfo,
+        @Header("Authorization") accessToken: String): Call<NicknameResponse>
 
     @PATCH("/password")
     fun password(@Body user: User): Call <MypageResponse>

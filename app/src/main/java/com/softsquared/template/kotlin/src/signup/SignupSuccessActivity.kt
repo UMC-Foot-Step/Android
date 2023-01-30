@@ -6,9 +6,10 @@ import android.widget.Button
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.databinding.ActivityMainPostBinding
+import com.softsquared.template.kotlin.databinding.ActivitySignupSuccessBinding
 import com.softsquared.template.kotlin.src.login.LoginProcessActivity
 
-class SignupSuccessActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBinding::inflate) {
+class SignupSuccessActivity : BaseActivity<ActivitySignupSuccessBinding>(ActivitySignupSuccessBinding::inflate) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
