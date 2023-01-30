@@ -96,6 +96,7 @@ class GalleryFragment :
         binding.galleryRvFeetstepList.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(activity)
+//            (layoutManager as LinearLayoutManager).setStackFromEnd(true)
             adapter = GalleryFragmentAdater(response, galleryFragmentInterface)
         }
     }
