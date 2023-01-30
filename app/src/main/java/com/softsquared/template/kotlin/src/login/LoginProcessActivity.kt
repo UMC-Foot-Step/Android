@@ -12,15 +12,12 @@ import android.widget.Toast
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.config.UserCode
-import com.softsquared.template.kotlin.config.UserCode.auth
-import com.softsquared.template.kotlin.config.UserCode.auth2
 import com.softsquared.template.kotlin.databinding.ActivityLoginProcessBinding
 import com.softsquared.template.kotlin.src.login.DataFile.Result
 import com.softsquared.template.kotlin.src.login.DataFile.User
 import com.softsquared.template.kotlin.src.login.LoginDataSource.NetworkDataSource
 import com.softsquared.template.kotlin.src.signup.SignupActivity
-import com.softsquared.template.kotlin.util.removeJwt
-import com.softsquared.template.kotlin.util.saveJwt
+import com.softsquared.template.kotlin.util.*
 
 class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityLoginProcessBinding::inflate) {
 
@@ -32,9 +29,8 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
         var login_btn = findViewById<Button>(R.id.login_btn)
         var register_btn = findViewById<Button>(R.id.register_btn)
 
-        //로그인 전 jwt 제거
-        removeJwt()
-
+        //로그인 전 제거하고 시작해야 하는 정보
+        beforeStartActivity()
 
         // 비밀번호 4자리 이상 입력하지 않았을 경우에는 버튼 활성화 안되고 4자리 이상 입력한 경우에는 버튼 할성화
         login_btn.isClickable = false
@@ -124,8 +120,16 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
         finish()
     }
 
+    private fun beforeStartActivity(){
 
-    //string형 jwt
+        removeJwt()
+        removeCheck2()
+        removeCheck1()
+        removeSignInId()
+        removeSignInPw()
+        removeSignInNickname()
+    }
+
 
 }
 

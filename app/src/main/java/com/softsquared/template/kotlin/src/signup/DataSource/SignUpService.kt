@@ -19,18 +19,22 @@ class SignUpService {
     private val api = ApplicationClass.sRetrofit.create(RetrofitInterface::class.java)
 
     fun signUp(user : SignUpForm, signupView: SignUpView){
+        Log.d("Tester", "signUp: 여까지는?어때?")
         val signUpService = api.join(user)
 
         signUpService.enqueue(object : Callback<SignUpResponse> {
-            override fun onFailure(call: Call<SignUpResponse>, t: Throwable)
-                    = signupView.onSignUpFailure(t.message)
+            override fun onFailure(call: Call<SignUpResponse>, t: Throwable){
+                signupView.onSignUpFailure(t.message)
+
+            }
+
 
             override fun onResponse(call: Call<SignUpResponse>, response: Response<SignUpResponse>) {
                 val signupResponse: SignUpResponse = response.body()!!
                 Log.d("Tester", "onResponse: 성공?${signupResponse}")
                 when (val code = signupResponse.code){
                     200 -> signupView.onSignUpSuccess(code, signupResponse.result)
-                    else -> signupView.onSignUpFailure(response.message())
+                    else -> signupView.onSignUpFailure(signupResponse.message)
                 }
             }
         })

@@ -23,54 +23,47 @@ class SignupInfoActivity : BaseActivity<ActivitySignupInfoBinding>(ActivitySignu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup_info)
 
         var next = findViewById<Button>(R.id.next_btn)
-
-        next.isClickable = false
-        next.setBackgroundColor(R.drawable.login_button)
 
         var scroll1 = findViewById<ScrollView>(R.id.scroll1)
         scroll1.setOnScrollChangeListener { view , i, i2, i3, i4 ->
             scroll1_flag = !view.canScrollVertically(1)
+            if(scroll1_flag){
+                checkscroll()
+            }
         }
 
 
         var scroll2 = findViewById<ScrollView>(R.id.scroll2)
         scroll2.setOnScrollChangeListener { view , i, i2, i3, i4 ->
             scroll2_flag = !view.canScrollVertically(1)
-        }
-
-        //정신 나가기 일보 직전 나중에 해결할 예정 ㅠㅠ
-
-        if(scroll1_flag){
             if(scroll2_flag){
-                binding.nextBtn.isClickable = true
-                next.setBackgroundColor(R.drawable.solid_button)
+                checkscroll()
             }
-            else{
-                binding.nextBtn.isClickable = false
-                next.setBackgroundColor(R.drawable.login_button)
-            }
-        }else {
-            binding.nextBtn.isClickable = false
-            next.setBackgroundColor(R.drawable.login_button)
         }
-
-
 
         next.setOnClickListener {
-            Log.d("Tester", "onCreate: $scroll2_flag,$scroll1_flag")
             returncheckActivity()
-
         }
 
     }
 
     private fun returncheckActivity(){
         var intent = Intent(this,SignupCheckActivity::class.java)
+
         startActivity(intent)
-        finish()
+    }
+
+    private fun checkscroll(){
+
+        if(scroll1_flag){
+            binding.nextBtn.isEnabled = scroll2_flag
+        }else {
+            binding.nextBtn.isEnabled = false
+
+        }
+
     }
 
 

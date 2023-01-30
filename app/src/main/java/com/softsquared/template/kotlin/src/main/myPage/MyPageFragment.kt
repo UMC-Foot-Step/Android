@@ -47,16 +47,7 @@ class MyPageFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
-
         getmypage()
-
-
-
-
-
-
 
         //닉네임 초기설정 = 마이페이지 누를때 서버에서 api로 가져옴.
         //갤러리 부분 수정할때 Glide가 많이 바뀌어서 그냥 하기보다는 물어보라고 하심.

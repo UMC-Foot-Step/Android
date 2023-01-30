@@ -13,7 +13,6 @@ class SignupSuccessActivity : BaseActivity<ActivitySignupSuccessBinding>(Activit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup_success)
 
         var next = findViewById<Button>(R.id.next_btn)
 
