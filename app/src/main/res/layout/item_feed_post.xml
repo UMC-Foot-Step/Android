@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="470dp">
+
+    <ImageView
+        android:id="@+id/feedlist_iv_feed_img"
+        android:layout_width="328dp"
+        android:layout_height="328dp"
+
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/feedlist_tv_user_nickname"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/feedlist_tv_user_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/feed_tv_user_name"
+
+
+        android:layout_marginTop="3dp"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/feedlist_iv_feed_img"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/gallery_btn_like"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginRight="4.3dp"
+        android:background="@color/not_visible"
+        app:layout_constraintBottom_toBottomOf="@+id/feedlist_tv_feed_title"
+        app:layout_constraintEnd_toStartOf="@+id/feedlist_tv_like_cnt"
+        app:layout_constraintTop_toTopOf="@+id/feedlist_tv_feed_title"
+        app:srcCompat="@drawable/ic_postlike_btn_selected" />
+
+    <TextView
+        android:id="@+id/feedlist_tv_like_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:text="@string/gallery_tv_post_like_cnt"
+        android:textColor="#fd346e"
+        android:textSize="12sp"
+        android:textStyle="normal"
+
+
+        app:layout_constraintBottom_toBottomOf="@+id/gallery_btn_like"
+        app:layout_constraintEnd_toEndOf="@+id/feedlist_iv_feed_img"
+        app:layout_constraintTop_toTopOf="@+id/gallery_btn_like" />
+
+    <ImageView
+        android:id="@+id/feedlist_iv_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/feedlist_tv_comment_cnt"
+        app:layout_constraintEnd_toStartOf="@+id/feedlist_tv_comment_cnt"
+        app:layout_constraintTop_toTopOf="@+id/feedlist_tv_comment_cnt"
+        app:srcCompat="@drawable/ic_galleryinfo_comments_icon"
+        android:layout_marginRight="4.3dp"/>
+
+    <TextView
+        android:id="@+id/feedlist_tv_comment_cnt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/galleryinfo_tv_post_comment_cnt"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        android:textStyle="normal"
+
+        app:layout_constraintEnd_toEndOf="@+id/feedlist_tv_like_cnt"
+        app:layout_constraintTop_toTopOf="@+id/feedlist_tv_position" />
+
+    <ImageView
+        android:id="@+id/feedlist_iv_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="7.1dp"
+        app:layout_constraintStart_toStartOf="@+id/feedlist_tv_feed_title"
+        app:layout_constraintTop_toBottomOf="@+id/feedlist_tv_feed_title"
+        app:srcCompat="@drawable/ic_post_position_img" />
+
+    <TextView
+        android:id="@+id/feedlist_tv_position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gallery_tv_post_position"
+        android:textStyle="normal"
+        android:textSize="12sp"
+        android:textColor="#ff7b31"
+
+
+        android:layout_marginLeft="3dp"
+        app:layout_constraintBottom_toBottomOf="@+id/feedlist_iv_position"
+        app:layout_constraintStart_toEndOf="@+id/feedlist_iv_position"
+        app:layout_constraintTop_toTopOf="@+id/feedlist_iv_position" />
+
+    <TextView
+        android:id="@+id/feedlist_tv_feed_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gallery_tv_post_title"
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:textStyle="normal"
+
+        android:layout_marginTop="9dp"
+        app:layout_constraintStart_toStartOf="@+id/feedlist_iv_feed_img"
+        app:layout_constraintTop_toBottomOf="@+id/feedlist_iv_feed_img" />
+
+    <TextView
+        android:id="@+id/feedlist_tv_upload_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="normal"
+        android:textSize="12sp"
+        android:textColor="@color/grey"
+        android:text="@string/galleryinfo_tv_post_day"
+
+        android:layout_marginTop="5dp"
+        app:layout_constraintStart_toStartOf="@+id/feedlist_iv_position"
+        app:layout_constraintTop_toBottomOf="@+id/feedlist_iv_position" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

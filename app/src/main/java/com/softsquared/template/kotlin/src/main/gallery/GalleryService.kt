@@ -23,10 +23,6 @@ import retrofit2.Response
 
 class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
 
-    // 전역변수 - 날짜별 카테고리 게시글 리스트 저장
-    private val mSectionFeetStepList = ArrayList<ResultFeetStepList>()
-
-
 
 
     /*

@@ -76,4 +76,9 @@
     <string name= "galleryinfo_btn_comment_check">작성</string>
 
 
+    <!-- Feed -->
+    <string name= "feed_tv_title">피드</string>
+    <string name= "feed_tv_user_name">닉네임</string>
+
+
 </resources>

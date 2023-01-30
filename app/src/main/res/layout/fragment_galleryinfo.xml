@@ -56,7 +56,7 @@
         app:layout_constraintTop_toTopOf="@+id/gallery_btn_like" />
 
     <ImageView
-        android:id="@+id/galleryinfo_iv_comment"
+        android:id="@+id/feedlist_iv_comment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/galleryinfo_tv_comment_cnt"
@@ -79,7 +79,7 @@
         app:layout_constraintTop_toBottomOf="@+id/galleryinfo_tv_like_cnt" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/feedlist_iv_position"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -100,9 +100,9 @@
 
 
         android:layout_marginLeft="3dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView3"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toTopOf="@+id/imageView3" />
+        app:layout_constraintBottom_toBottomOf="@+id/feedlist_iv_position"
+        app:layout_constraintStart_toEndOf="@+id/feedlist_iv_position"
+        app:layout_constraintTop_toTopOf="@+id/feedlist_iv_position" />
 
     <View
         android:layout_width="match_parent"

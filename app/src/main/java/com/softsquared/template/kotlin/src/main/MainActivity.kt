@@ -5,8 +5,7 @@ import android.os.Bundle
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.databinding.ActivityMainBinding
-import com.softsquared.template.kotlin.src.main.Example.HomeFragment
-import com.softsquared.template.kotlin.src.main.feed.FeedFragment
+import com.softsquared.template.kotlin.src.main.feed.FeedListFragment
 import com.softsquared.template.kotlin.src.main.gallery.GalleryFragment
 import com.softsquared.template.kotlin.src.main.map.MapFragment
 import com.softsquared.template.kotlin.src.main.myPage.MyPageFragment
@@ -45,7 +44,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     // 피드
                     R.id.menu_main_btm_nav_feed -> {
                         supportFragmentManager.beginTransaction()
-                            .replace(R.id.main_frm, FeedFragment())
+                            .replace(R.id.main_frm, FeedListFragment())
                             .commitAllowingStateLoss()
                     }
 
