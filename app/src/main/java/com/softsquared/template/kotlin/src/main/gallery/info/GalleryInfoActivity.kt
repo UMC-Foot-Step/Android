@@ -82,9 +82,9 @@ class GalleryInfoActivity()
                 when(item.itemId){
 
                     // 게시글 신고하기 메뉴
-                    R.id.btn_flag -> {
-                        showCustomToast("신고하기 버튼 클릭")
-                    }
+//                    R.id.btn_flag -> {
+//                        showCustomToast("신고하기 버튼 클릭")
+//                    }
 
                     // 게시글 수정하기 메뉴
                     R.id.btn_edit -> {

@@ -9,11 +9,13 @@ import com.softsquared.template.kotlin.databinding.ItemFeedPostBinding
 import com.softsquared.template.kotlin.src.main.feed.models.FeedList
 
 class FeedListFragmentAdapter(
-    private val feedList: ArrayList<FeedList>
+    private val feedList: ArrayList<FeedList>,
+    private val feedListFragmentInterface: FeedListFragmentInterface
 ) : RecyclerView.Adapter<FeedListFragmentAdapter.MyViewHolder>() {
 
     class MyViewHolder(
-        private val binding: ItemFeedPostBinding
+        private val binding: ItemFeedPostBinding,
+        private val feedListFragmentInterface: FeedListFragmentInterface
     ) : RecyclerView.ViewHolder(binding.root){
 
 
@@ -35,19 +37,28 @@ class FeedListFragmentAdapter(
 
 
             /*
-                To Do 2. 유저 닉네임 클릭 이벤트
+                To Do 2. 특정 피드 클릭 이벤트
+             */
+            binding.root.setOnClickListener {
+                val post_idx: Int = feedList.postingId
+                feedListFragmentInterface.changeFeedInfoActivity(post_idx)
+            }
+
+
+            /*
+                To Do 3. 유저 닉네임 클릭 이벤트
              */
         }
     }
 
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedListFragmentAdapter.MyViewHolder {
-        return FeedListFragmentAdapter.MyViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
+        return MyViewHolder(
             ItemFeedPostBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent, false
-            )
+            ), feedListFragmentInterface
         )
     }
 

@@ -11,5 +11,10 @@ interface FeedListFragmentInterface {
     fun onGetFeedListSuccess(feedListService: FeedListResponse)
     fun onGetFeedListFailure(message: String)
 
+    /*
+        To Do 2. FeedInfoActivity로 전환
+     */
+    fun changeFeedInfoActivity(postIdx: Int)
+
 
 }
