@@ -6,7 +6,7 @@ import com.softsquared.template.kotlin.src.main.map.model.PopupResponse
 
 interface MapFragmentInterface {
 
-    fun onGetMapFootStepListSuccess(response:AllResponse)
+    fun onGetMapFootStepListSuccess(response:AllResponse):HashMap<Int,Marker>
 
     fun onGetMapFootStepListFailure(message:String)
 

@@ -12,7 +12,7 @@ import retrofit2.Response
 
 class MapService(val mapFragmentInterface: MapFragment) {
 val accessToken="Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDkxNDc2NiwiZXhwIjoxNjc1MjE3MTY2fQ.KxwX1Q0o-omU1rRIiUJBd9gLPbTRVciP_9g_sklW1Bk"
-    fun tryGetMapFootStepList(){
+    fun tryGetMapFootStepList():HashMap<Int,Marker>{
         var return_map=HashMap<Int,Marker>()
         ApplicationClass.sSharedPreferences.edit().putString(X_ACCESS_TOKEN, accessToken).apply()
 
@@ -24,7 +24,7 @@ val accessToken="Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmV
                 Log.d("FootStepList", "tryGetMapFootStepList 되긴하니?")
 
                 if(response.body()!=null)
-                    mapFragmentInterface.onGetMapFootStepListSuccess(response.body() as AllResponse)
+                    return_map=mapFragmentInterface.onGetMapFootStepListSuccess(response.body() as AllResponse)
                 else
                     Log.d("FootStepList", "맵 서비스에서의 결과 : ${response.body().toString()}")
             }
@@ -34,6 +34,7 @@ val accessToken="Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmV
             }
 
         })
+        return return_map
     }
 
     fun tryGetMapFootStepPopup(place_id:Int){

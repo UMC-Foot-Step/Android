@@ -17,20 +17,49 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup">
 
-
-
         <activity
-            android:name=".src.main.MainActivity"
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".src.splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".src.main.MainActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
+
+
+        <!--OnBoarding Activity 추가-->
+        <activity
+            android:name=".src.onboarding.OnboardingActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+
+
+        <!--Login Activity 추가-->
+        <activity
+            android:name=".src.login.LoginProcessActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name=".src.login.LoginSuccessActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
 
 
@@ -75,6 +104,7 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
 
 
 

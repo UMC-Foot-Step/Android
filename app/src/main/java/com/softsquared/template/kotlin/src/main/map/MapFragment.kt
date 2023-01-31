@@ -283,8 +283,8 @@ class MapFragment :
         binding.mapView.onLowMemory()
     }
 
-    private fun subRoutine(){
-        MapService(this).tryGetMapFootStepList()
+    private fun subRoutine():HashMap<Int,Marker>{
+        return MapService(this).tryGetMapFootStepList()
     }
 
     override fun onMapReady(@NonNull naverMap: NaverMap) {
@@ -295,21 +295,21 @@ class MapFragment :
         runBlocking {
 
             //CoroutineScope(Dispatchers.IO).launch {
-            val job = CoroutineScope(Dispatchers.IO).launch {
+            val job = CoroutineScope(Dispatchers.IO).async {
                 Log.d("FootStepList", "처음 마커 띄우기 코루틴 진입하긴함")
 
                 subRoutine()
             }
 
-            job.join()
-            //Thread.sleep(3000)
+            //job.join()
+            Thread.sleep(3000)
 
             Log.d("FootStepList", "해시마커 포문직전")
 
             //  withContext(Main) {
-            for ((key, value) in marker_hashMap) {
+            for ((key, value) in job.await()){//marker_hashMap) {
                 Log.d("FootStepList", "해시마커 포문 안되니+ $key")
-
+                value.map=naverMap
                 value.setOnClickListener {
                     setMarkerClickEvent(key, value, value.tag as Boolean)
                     true
@@ -340,7 +340,7 @@ class MapFragment :
             }
         }
 
-        
+
         Log.d("FootStepList", "런블락킹 나감")
 
         naverMap.setOnMapClickListener{  _, coord ->
@@ -515,7 +515,7 @@ class MapFragment :
     }
 
 
-    override fun onGetMapFootStepListSuccess(response: AllResponse){
+    override fun onGetMapFootStepListSuccess(response: AllResponse):HashMap<Int,Marker>{
 
         Log.d("FootStepList", "onGetMapFootStepListSuccess 되긴하니??")
 
@@ -523,7 +523,7 @@ class MapFragment :
 
             marker_hashMap[result_arr.placeId]=Marker().apply {
                 position = LatLng(result_arr.lat, result_arr.lng)
-                map = naverMap
+                map = null
                 icon = OverlayImage.fromResource(R.drawable.foot3)
                 tag = false
             }
@@ -531,7 +531,7 @@ class MapFragment :
             Log.d("FootStepList", "placeId: ${result_arr.placeId}")
 
         }
-       // return marker_hashMap
+        return marker_hashMap
     }
 
     override fun onGetMapFootStepListFailure(message: String) {
