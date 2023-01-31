@@ -26,6 +26,24 @@ fun removeJwt() {
     editor.apply()
 }
 
+fun saveRefresh(refresh: String){
+    val spf = ApplicationClass.sSharedPreferences
+    val editor = spf.edit()
+
+    editor.putString(UserCode.refresh,refresh)
+    editor.apply()
+}
+
+fun getRefresh():String? = ApplicationClass.sSharedPreferences.getString(UserCode.refresh,null)
+
+fun removeRefresh(){
+    val spf = ApplicationClass.sSharedPreferences
+    val editor = spf.edit()
+
+    editor.remove(UserCode.refresh)
+    editor.apply()
+}
+
 fun saveCheck1(status:Boolean){
     val spf = ApplicationClass.sSharedPreferences
     val editor = spf.edit()

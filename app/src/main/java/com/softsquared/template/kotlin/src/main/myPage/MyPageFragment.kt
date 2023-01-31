@@ -1,10 +1,18 @@
 package com.softsquared.template.kotlin.src.main.myPage
 
+
 import android.app.Activity.*
 import android.app.AlertDialog
+import android.content.ContentResolver
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.CalendarContract.Attendees.query
+import android.provider.CalendarContract.Reminders.query
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -14,6 +22,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContentResolverCompat.query
+import androidx.core.content.contentValuesOf
 import com.bumptech.glide.Glide
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseFragment
@@ -22,7 +32,14 @@ import com.softsquared.template.kotlin.src.login.LoginProcessActivity
 import com.softsquared.template.kotlin.src.main.myPage.mypageResponseFile.changeNicknameInfo
 import com.softsquared.template.kotlin.src.main.myPage.mypageResultFile.Resultmypage
 import com.softsquared.template.kotlin.util.getJwt
+import com.softsquared.template.kotlin.util.getRefresh
 import com.softsquared.template.kotlin.util.removeJwt
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 
 // 메인 - 마이페이지
@@ -42,6 +59,20 @@ class MyPageFragment :
         }
 
         jwt
+    }
+
+    private val refreshToken : String by lazy{
+        val refresh = getRefresh()
+
+        if(refresh == null){
+            showCustomToast("재 로그인 후 시도 필요")
+            startActivity(Intent(requireContext(),LoginProcessActivity::class.java))
+            requireActivity().finish()
+
+            return@lazy ""
+        }
+
+        refresh
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -129,6 +160,8 @@ class MyPageFragment :
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             activityResult.launch(intent)
+
+
         }
 
 //        binding.btnWithdraw.setOnClickListener {
@@ -138,6 +171,7 @@ class MyPageFragment :
 //
 //        }
 
+        //로그아웃
         binding.btnLogout.setOnClickListener {
 
             val mDialogView = LayoutInflater.from(context).inflate(R.layout.fragment_dialog,null)
@@ -156,6 +190,7 @@ class MyPageFragment :
                 //flag
 
                 startActivity(Intent(activity,LoginProcessActivity::class.java))
+                requireActivity().finish()
             }
             val noButton = mDialogView.findViewById<Button>(R.id.btn_no_log)
             noButton.setOnClickListener {
@@ -163,6 +198,8 @@ class MyPageFragment :
             }
         }
 
+
+        //회원탈퇴
         binding.btnWithdraw.setOnClickListener {
 
             val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_withdraw,null)
@@ -179,7 +216,7 @@ class MyPageFragment :
                 withdraw()
 
                 startActivity(Intent(activity,LoginProcessActivity::class.java))
-
+                requireActivity().finish()
             }
             val noButton = mDialogView.findViewById<Button>(R.id.btn_no_with)
             noButton.setOnClickListener {
@@ -191,6 +228,30 @@ class MyPageFragment :
 
     }//onCreate
 
+
+    var filepath: MultipartBody.Part? = null
+
+
+    private fun changeProfile(){
+        ProfileService().tryChangeProfile(accessToken, filepath!!, object : ProfileView{
+            override fun onProfileSuccess(code: Int, result: String) {
+                when(code){
+                    200->{
+                        showCustomToast("이미지 변경 성공!")
+                        binding.btnModifyOk.isEnabled = true
+                    }
+                }
+            }
+
+            override fun onProfileFailure(message: String) {
+                showCustomToast(message)
+//                if("이미 존재하는 닉네임입니다." == message){
+//                    어떤 방식으로 로직을 짜야 버튼을 누르면 토스트 메세지만 뜨고 확인이 안될지 고민중에 있습니다.
+//                }
+            }
+
+        })
+    }
 
 
     private fun getmypage(){
@@ -206,7 +267,12 @@ class MyPageFragment :
                     200->{
                         binding.txtNickname.text = result.nickname
                         binding.txtFootprintNum.text = result.postingCount.toString()
-                        //갤러리는 찾는중
+                        Glide.with(this@MyPageFragment)
+                            .load(result.url)
+                            .into(binding.imgMyProfile)
+
+
+
                     }
                 }
             }
@@ -239,7 +305,6 @@ class MyPageFragment :
 
         })
 
-
     }
 
     private fun getNickname():changeNicknameInfo{
@@ -249,8 +314,6 @@ class MyPageFragment :
     }
 
 
-
-    //갤러리 접근을 위한 코드, 최근 api로직 많이 수정됨.
     private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()){
 
@@ -260,9 +323,30 @@ class MyPageFragment :
                 Glide.with(this)
                     .load(uri)
                     .into(binding.imgMyProfile)
+                filepath = changeMultipart(getRealPathFormURI(uri!!))
             }
         //사진을 직접 보내기 retrofit multipart
+        //changeProfile()
         }
+    private fun changeMultipart(filePath:String):MultipartBody.Part{
+        val file = File(filePath)
+        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+        return MultipartBody.Part.createFormData("image",file.name,requestFile)
+    }
+    private fun getRealPathFormURI(uri: Uri):String{
+        val buildName = Build.MANUFACTURER
+        if(buildName.equals("Xiaomi")){
+            return uri.path.toString()
+        }
+        var columIndex = 0
+        val proj = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = activity?.contentResolver?.query(uri,proj,null,null,null)
+        if(cursor!!.moveToFirst()){
+            columIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        }
+        return cursor.getString(columIndex)
+    }
+
 
 
 
@@ -272,8 +356,26 @@ class MyPageFragment :
     }
 
     private fun withdraw() {
+        secceion()
+
         removeJwt()
-        //api보내는건 따로
+    }
+
+    private fun secceion(){
+        SecessionService().trySecession(accessToken, refreshToken, object : SecessionView{
+            override fun onSecessionSuccess(code: Int, result: String) {
+                when(code){
+                    200->{
+                        showCustomToast(result)
+                    }
+                }
+            }
+
+            override fun onSecessionFailure(message: String) {
+                showCustomToast(message)
+            }
+
+        })
     }
 
 

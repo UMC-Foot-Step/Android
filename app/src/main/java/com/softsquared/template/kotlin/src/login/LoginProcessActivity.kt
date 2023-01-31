@@ -23,7 +23,6 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_process)
 
         var et_pw = findViewById<EditText>(R.id.et_pw)
         var login_btn = findViewById<Button>(R.id.login_btn)
@@ -83,6 +82,7 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
                 when(code){
                     200 -> {
                         saveJwt(result!!.grantType + result.jwt)
+                        saveRefresh(result!!.grantType + result.refreshJwt)
                         startSuccessActivity()
                         Log.d("Tester", "onLoginSuccess: 실행됨")
                     }
@@ -123,6 +123,7 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
     private fun beforeStartActivity(){
 
         removeJwt()
+        removeRefresh()
         removeCheck2()
         removeCheck1()
         removeSignInId()
