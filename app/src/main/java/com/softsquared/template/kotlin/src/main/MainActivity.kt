@@ -21,7 +21,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         supportFragmentManager.beginTransaction().replace(R.id.main_frm, MapFragment()).commitAllowingStateLoss()
 
         binding.mainBtmFab.setOnClickListener {
-            val intent = Intent(this@MainActivity, PostUpdateActivity::class.java)
+            val intent = Intent(this@MainActivity, PostActivity::class.java)
             startActivity(intent)
         }
 

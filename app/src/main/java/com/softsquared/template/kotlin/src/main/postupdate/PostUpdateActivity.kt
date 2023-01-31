@@ -18,15 +18,19 @@ import com.softsquared.template.kotlin.databinding.ActivityPostEditBinding
 import com.softsquared.template.kotlin.src.main.post.PostSearchPositionActivity
 import com.softsquared.template.kotlin.src.main.postupdate.models.PostUpdateResponse
 import java.time.LocalDate
-
+import java.time.format.DateTimeFormatter
+import java.util.Date
 
 
 class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEditBinding::inflate), PostUpdateActivityInterface {
     // postingId
     private var postingId: Int = 0
 
+    // accessToken
+    private val token: String = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDkxNDc2NiwiZXhwIjoxNjc1MjE3MTY2fQ.KxwX1Q0o-omU1rRIiUJBd9gLPbTRVciP_9g_sklW1Bk"
+
     // datepicker
-    private val today = LocalDate.now()
+    private var today = LocalDate.now()
     private var tvYear = today.year
     private var tvMonth = today.monthValue
     private var tvDay = today.dayOfMonth
@@ -48,8 +52,8 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
         val intent = intent
         postingId = intent.getIntExtra("posting-id", 3)
 
-        // 값 전달
-        PostUpdateService(this).getPostUpdateInfo(postingId)
+        // api 값 요청
+        PostUpdateService(this).getPostUpdateInfo(token, postingId)
 
         // 뒤로가기 버튼 누르면 뒤로 가기
         binding.editIbBack.setOnClickListener {
@@ -178,10 +182,18 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
 
         binding.editIbPhotoCancel.visibility = View.VISIBLE
     }
-
+    // api 요청 성공
     override fun onGetPostUpdateInfoSuccess(response: PostUpdateResponse) {
-        Log.d("postUpdateActivityResponse", response.toString())
+        Log.d("Success", "$response")
+        binding.editEtTitle.setText(response.result.postingTitle)
+        binding.editEtContent.setText(response.result.postingContent)
+        val serverImg = response.result.postingImageUrl
+        showServerImg(serverImg)
+        binding.editBtnLoc.text = response.result.createPlaceDto.name
+        showCalendar(response.result.postingDate)
+        swChecked = response.result.postingOpen
     }
+
 
 
     // api 요청 실패
@@ -189,5 +201,26 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
         showCustomToast("API 요청 실패, LogCat 확인")
         Log.d("Why fail?", message)
     }
+
+    // 이미지 보여주기
+    private fun showServerImg(serverUrl: String){
+        Glide.with(this)
+            .load(serverUrl)
+            .into(binding.editIbGallery)
+
+        binding.editIbPhotoCancel.visibility = View.VISIBLE
+    }
+
+    // 캘린더 날짜 보여주기
+    private fun showCalendar(serverDate: String){
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+        today = LocalDate.parse(serverDate, formatter)
+        tvYear = today.year
+        tvMonth = today.monthValue
+        tvDay = today.dayOfMonth
+        dataSet(tvYear, tvMonth, tvDay)
+    }
+
+
 }
 

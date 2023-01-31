@@ -3,6 +3,7 @@ package com.softsquared.template.kotlin.src.main.postupdate
 import com.softsquared.template.kotlin.src.main.postupdate.models.PostUpdateResponse
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.Path
 
 /*
@@ -15,5 +16,8 @@ import retrofit2.http.Path
 interface PostUpdateRetrofitInterface {
     // 발자취 수정 데이터 가져오기
     @GET("/footstep/{posting-id}/edit")
-    fun getPostUpdateInfo(@Path("posting-id") postingId: Int) : Call<PostUpdateResponse>
+    fun getPostUpdateInfo(
+        @Header("Authorization") accessToken: String,
+        @Path("posting-id") postingId: Int
+    ) : Call<PostUpdateResponse>
 }

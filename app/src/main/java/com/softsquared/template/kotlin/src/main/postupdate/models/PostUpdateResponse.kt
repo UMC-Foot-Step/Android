@@ -4,5 +4,8 @@ import com.google.gson.annotations.SerializedName
 import com.softsquared.template.kotlin.config.BaseResponse
 
 data class PostUpdateResponse (
-    @SerializedName("result") val result: ArrayList<PostUpdateResult>
-) : BaseResponse(), java.io.Serializable
+    @SerializedName("code") val code: Int = 0,
+    @SerializedName("isSuccess") val isSuccess: Boolean = false,
+    @SerializedName("message") val message: String? = null,
+    @SerializedName("result") val result: PostUpdateResult
+)
