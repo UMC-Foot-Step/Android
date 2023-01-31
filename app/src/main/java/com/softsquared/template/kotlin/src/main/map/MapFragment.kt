@@ -86,6 +86,7 @@ class MapFragment :
         /* Activity가 onDestroy되고 재생성될 때 Fragment도 같이 재생성된다. 하지만 setRetainInstance(true)를 설정하면
        onCreate, onDestory가 호출되지 않고 재사용된다.->현재는 mvvm패턴의 viewModel써서 하라는데 몰라서 저거 일단 둠
         */
+        MapService(this).tryGetMapFootStepList()
         v1 = layoutInflater.inflate(R.layout.feetstep_info, binding.placeInfo, true)
         bottomSheet = layoutInflater.inflate(R.layout.fragment_map_time_setting, null)
         bottomSheet2 = layoutInflater.inflate(R.layout.fragment_map_calendar, null)
@@ -298,16 +299,16 @@ class MapFragment :
             val job = CoroutineScope(Dispatchers.IO).async {
                 Log.d("FootStepList", "처음 마커 띄우기 코루틴 진입하긴함")
 
-                subRoutine()
+           //     subRoutine()
             }
 
             //job.join()
-            Thread.sleep(3000)
+            //Thread.sleep(3000)
 
             Log.d("FootStepList", "해시마커 포문직전")
 
             //  withContext(Main) {
-            for ((key, value) in job.await()){//marker_hashMap) {
+            for ((key, value) in marker_hashMap){//marker_hashMap) {
                 Log.d("FootStepList", "해시마커 포문 안되니+ $key")
                 value.map=naverMap
                 value.setOnClickListener {
