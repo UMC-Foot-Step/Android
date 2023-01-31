@@ -31,6 +31,7 @@
     <string name="post_tv_content_hint">내용</string>
     <string name="post_sw_text">공개</string>
     <string name="post_btn_text">작성하기</string>
+    <string name="post_edit_tv_title">수정하기</string>
 
     <!-- Calender -->
     <string name="cal_tv_fragment_title">날짜 선택</string>

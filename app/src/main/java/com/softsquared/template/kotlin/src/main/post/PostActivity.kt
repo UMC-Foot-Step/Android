@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.CalendarView
@@ -16,7 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.databinding.ActivityMainPostBinding
-import com.softsquared.template.kotlin.src.main.post.models.PostPlaceList
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -41,12 +42,20 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
 
     // filepath
     private var filePath: MultipartBody.Part? = null
+    var postHashmap = HashMap<String, RequestBody>()
+    var postTextHashmap = HashMap<String, Any>()
 
     // switch checked
     private var swChecked = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // 뒤로가기 버튼 누르면 뒤로가기..!
+        binding.postIbBack.setOnClickListener {
+            finish()
+        }
+
         // 사진 삭제 imageButton
         if (uri==null) {
             binding.postIbPhotoCancel.visibility = View.INVISIBLE
@@ -57,12 +66,6 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
             binding.postIbGallery.setImageResource(R.drawable.post_iv_unselected)
             uri = null
             binding.postIbPhotoCancel.visibility = View.INVISIBLE
-        }
-
-
-        // 뒤로가기 버튼 누르면 뒤로가기..!
-        binding.postIbBack.setOnClickListener {
-            finish()
         }
 
         binding.postIbCalendar.setOnClickListener {
@@ -134,17 +137,55 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
     @SerializedName("title") val title: String,
     @SerializedName("visibilityStatusCode") val open: Int
          */
+        //val addressBodyPart: MultipartBody.Part = MultipartBody.Part.createFormData("address", intent.getStringExtra("positionAddress").toString())
+        //val latitudeBodyPart: MultipartBody.Part = MultipartBody.Part.createFormData("latitude", intent.getStringExtra("positionLatitude").toString())
+        //val longitudeBodyPart: MultipartBody.Part = MultipartBody.Part.createFormData("longitude", intent.getStringExtra("positionLongitude").toString())
+        //val placeNameBodyPart: MultipartBody.Part = MultipartBody.Part.createFormData("name", intent.getStringExtra("positionTitle").toString())
+        //val contentRequestBody: RequestBody = binding.postEtContent.text.toString().toPlainRequestBody()
+        //val dateRequestBody: RequestBody = changeDate(tvYear, tvMonth, tvDay).toPlainRequestBody()
+        //val openRequestBody: RequestBody = swChecked.toString().toPlainRequestBody()
+        //val titleRequestBody: RequestBody = binding.postEtTitle.toString().toPlainRequestBody()
+        /*
+                    val contentBodyPart: MultipartBody.Part = MultipartBody.Part.createFormData("content", binding.postEtContent.text.toString())
+            val dateBodyPart: MultipartBody.Part = MultipartBody.Part.createFormData("recordDate", changeDate(tvYear, tvMonth, tvDay))
+            val openBodyPart: MultipartBody.Part = MultipartBody.Part.createFormData("visibilityStatusCode", swChecked.toString())
+            val titleBodyPart: MultipartBody.Part = MultipartBody.Part.createFormData("title", binding.postEtTitle.toString())
+            val addressRequestBody: RequestBody = intent.getStringExtra("positionAddress").toString().toPlainRequestBody()
+            val latitudeRequestBody: RequestBody = intent.getStringExtra("positionLatitude").toString().toPlainRequestBody()
+            val longitudeRequestBody: RequestBody = intent.getStringExtra("positionLongitude").toString().toPlainRequestBody()
+            val placeNameRequestBody: RequestBody = intent.getStringExtra("positionTitle").toString().toPlainRequestBody()
+            postHashmap["createPlaceDto.address"] = addressRequestBody
+            postHashmap["createPlaceDto.latitude"] = latitudeRequestBody
+            postHashmap["createPlaceDto.logitude"] = longitudeRequestBody
+            postHashmap["createPlaceDto.name"] = placeNameRequestBody
+            Log.d("post content", "$contentBodyPart")
+            Log.d("post date", "$dateBodyPart")
+            Log.d("post open", "$openBodyPart")
+            Log.d("post title", "$titleBodyPart")
+            Log.d("post image", "$filePath")
+            Log.d("post content", "$postHashmap")
+            PostService().postPost(filePath, contentBodyPart, dateBodyPart, titleBodyPart, openBodyPart, postHashmap)
+         */
         binding.postBtnPost.setOnClickListener {
-            val textHashMap = hashMapOf<String, RequestBody>()
-            val contentRequestBody: RequestBody = binding.postEtContent.text.toString().toPlainRequestBody()
-            val dateRequestBody: RequestBody = changeDate(tvYear, tvMonth, tvDay).toPlainRequestBody()
-            val openRequestBody: RequestBody = swChecked.toString().toPlainRequestBody()
-            val titleRequestBody: RequestBody = binding.postEtTitle.toString().toPlainRequestBody()
-            textHashMap["content"] = contentRequestBody
-            textHashMap["title"] = titleRequestBody
-            textHashMap["recordDate"] = dateRequestBody
-            textHashMap["visibilityStatusCode"] = openRequestBody
-            PostService().postPost(filePath, textHashMap)
+            //val text: String = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDkxNDc2NiwiZXhwIjoxNjc1MjE3MTY2fQ.KxwX1Q0o-omU1rRIiUJBd9gLPbTRVciP_9g_sklW1Bk"
+            val contentText: String = binding.postEtContent.text.toString()
+            val addressText: String = intent.getStringExtra("positionAddress").toString()
+            val latitudeText: Double = intent.getStringExtra("positionLatitude")?.toDouble() ?: 0.0
+            val longitudeText: Double = intent.getStringExtra("positionLongitude")?.toDouble() ?: 0.0
+            val placeNameText: String = intent.getStringExtra("positionTitle").toString()
+            val dateText: String = changeDate(tvYear, tvMonth, tvDay)
+            val titleText: String = binding.postEtTitle.toString()
+            val openText: Int = swChecked
+            //postTextHashmap["Authorization"] = text
+            postTextHashmap["content"] = contentText
+            postTextHashmap["createPlaceDto.address"] = addressText
+            postTextHashmap["createPlaceDto.latitude"] = latitudeText
+            postTextHashmap["createPlaceDto.longitude"] = longitudeText
+            postTextHashmap["createPalceDto.name"] = placeNameText
+            postTextHashmap["recordDate"] = dateText
+            postTextHashmap["title"] = titleText
+            postTextHashmap["visibilityStatusCode"] = openText
+            PostService().postText(postTextHashmap)
             finish()
         }
 
@@ -157,12 +198,6 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
         // 장소 제목 불러오기
         if(intent.hasExtra("positionTitle")){
             binding.postBtnLoc.text = intent.getStringExtra("positionTitle")
-            PostPlaceList(
-                intent.getStringExtra("positionAddress").toString(),
-                intent.getDoubleExtra("positionLatitude", 0.0),
-                intent.getDoubleExtra("positionLongitude", 0.0),
-                intent.getStringExtra("positionTitle").toString()
-            )
         }
     }
     private fun dataSet(year: Int, month: Int, day: Int){

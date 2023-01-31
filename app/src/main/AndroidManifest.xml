@@ -73,10 +73,17 @@
         <activity
             android:name=".src.main.post.PostSearchPositionActivity"
             android:exported="false"
+            android:parentActivityName=".src.main.post.PostActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
 
+        <!--Post Update Activity 추가-->
+        <activity android:name=".src.main.postupdate.PostUpdateActivity"
+            android:exported="false"
+            android:parentActivityName=".src.main.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
 
         <!--Gallery Activity 추가-->

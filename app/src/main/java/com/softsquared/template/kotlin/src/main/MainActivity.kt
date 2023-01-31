@@ -11,6 +11,7 @@ import com.softsquared.template.kotlin.src.main.gallery.GalleryFragment
 import com.softsquared.template.kotlin.src.main.map.MapFragment
 import com.softsquared.template.kotlin.src.main.myPage.MyPageFragment
 import com.softsquared.template.kotlin.src.main.post.PostActivity
+import com.softsquared.template.kotlin.src.main.postupdate.PostUpdateActivity
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
@@ -20,7 +21,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         supportFragmentManager.beginTransaction().replace(R.id.main_frm, MapFragment()).commitAllowingStateLoss()
 
         binding.mainBtmFab.setOnClickListener {
-            val intent = Intent(this@MainActivity, PostActivity::class.java)
+            val intent = Intent(this@MainActivity, PostUpdateActivity::class.java)
             startActivity(intent)
         }
 
