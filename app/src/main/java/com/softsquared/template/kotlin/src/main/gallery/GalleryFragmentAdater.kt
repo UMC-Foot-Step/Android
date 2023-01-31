@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.softsquared.template.kotlin.databinding.ItemGallerySectionBinding
-import com.softsquared.template.kotlin.src.main.gallery.models_sample.SectionModel
+import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
 
 class GalleryFragmentAdater(
     private val daySectionFeetStepList: List<SectionModel>,
@@ -18,7 +18,30 @@ class GalleryFragmentAdater(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(sectionModel: SectionModel) {
-            binding.galleryTvDay.text = sectionModel.day_category
+
+
+            /*
+                To Do 1. 날짜 데이터 ~년 ~월 ~일 뷰 형태로 뿌리기
+                (년, 월, 일)
+             */
+            binding.galleryTvYearNum.text = sectionModel.day_category.substring(0 until 4)
+
+            // 월 데이터 한자릿수 판별
+            if(sectionModel.day_category[5].toString() == "0"){
+                binding.galleryTvMonthNum.text = sectionModel.day_category[6].toString()
+            }
+            else{
+                binding.galleryTvMonthNum.text = sectionModel.day_category.substring(5 until 7)
+            }
+
+            // 일 데이터 한자릿수 판별
+            if(sectionModel.day_category[8].toString() == "0"){
+                binding.galleryTvDayNum.text = sectionModel.day_category[9].toString()
+            }
+            else{
+                binding.galleryTvDayNum.text = sectionModel.day_category.substring(8 until 10)
+            }
+
 
             binding.galleryItemRvSectionList.apply {
                 setHasFixedSize(true)

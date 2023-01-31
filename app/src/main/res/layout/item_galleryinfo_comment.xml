@@ -24,7 +24,7 @@
         android:id="@+id/galleryinfo_btn_comment_option"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/not_visible"
 
         android:layout_marginRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
