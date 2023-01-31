@@ -1,6 +1,7 @@
 package com.softsquared.template.kotlin.src.main.map
 
 import android.util.Log
+import com.naver.maps.map.overlay.Marker
 import com.softsquared.template.kotlin.config.ApplicationClass
 import com.softsquared.template.kotlin.config.ApplicationClass.Companion.X_ACCESS_TOKEN
 import com.softsquared.template.kotlin.src.main.map.model.AllResponse
@@ -12,6 +13,7 @@ import retrofit2.Response
 class MapService(val mapFragmentInterface: MapFragment) {
 val accessToken="Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDkxNDc2NiwiZXhwIjoxNjc1MjE3MTY2fQ.KxwX1Q0o-omU1rRIiUJBd9gLPbTRVciP_9g_sklW1Bk"
     fun tryGetMapFootStepList(){
+        var return_map=HashMap<Int,Marker>()
         ApplicationClass.sSharedPreferences.edit().putString(X_ACCESS_TOKEN, accessToken).apply()
 
         val mapRetrofitInterface=ApplicationClass.sRetrofit.create(MapRetrofitInterface::class.java)

@@ -11,7 +11,7 @@ interface MapRetrofitInterface {
     @GET("/footstep/all")
     fun getMapFootStepList() : Call<AllResponse>
 
-    @GET("/footstep/{place_id}")
-    fun getMapFootStepPopup(@Path("place_id") place_id : Int) : Call<PopupResponse>
+    @GET("/footstep/{place-id}")
+    fun getMapFootStepPopup(@Path("place-id") place_id : Int) : Call<PopupResponse>
 
 }

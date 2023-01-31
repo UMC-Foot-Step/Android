@@ -1,5 +1,6 @@
 package com.softsquared.template.kotlin.src.main.map
 
+import com.naver.maps.map.overlay.Marker
 import com.softsquared.template.kotlin.src.main.map.model.AllResponse
 import com.softsquared.template.kotlin.src.main.map.model.PopupResponse
 

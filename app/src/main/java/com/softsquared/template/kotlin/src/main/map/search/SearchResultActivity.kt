@@ -134,7 +134,7 @@ class SearchResultActivity: BaseActivity<ActivitySearchResultBinding>(ActivitySe
 
             v1.findViewById<TextView>(R.id.feetTextView).text = "방문하지 않은 곳"
             v1.setOnClickListener{
-                Toast.makeText(this, "뷰 클릭됨", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "이 장소를 방문하지 않았습니다", Toast.LENGTH_SHORT).show()
                 //SearchService(this).tryGetMapSearchFootStep(37.5776087830657,126.976896737645)
             }
         }
