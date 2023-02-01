@@ -24,7 +24,7 @@
             app:cardCornerRadius="20dp"
             app:cardElevation="0dp"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/titleTextView">
+            app:layout_constraintTop_toTopOf="@id/locationNameTextView">
 
             <ImageView
                 android:id="@+id/thumbnailImageView"
@@ -35,7 +35,7 @@
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/titleTextView"
+            android:id="@+id/locationNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -59,7 +59,7 @@
             android:textStyle="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toLeftOf="@id/cardview_member"
-            app:layout_constraintTop_toBottomOf="@id/titleTextView"
+            app:layout_constraintTop_toBottomOf="@id/locationNameTextView"
             app:layout_constraintVertical_bias="0.88"
             tools:text="내 발자취 1개" />
 

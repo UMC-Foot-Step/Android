@@ -44,15 +44,14 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
-
         <!--OnBoarding Activity 추가-->
         <activity
             android:name=".src.onboarding.OnboardingActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
-            
-            
+
+
 
         <!--Login Activity 추가-->
         <activity
@@ -95,8 +94,6 @@
 
 
 
-
-
         <!--Post Activity 추가-->
         <activity
             android:name=".src.main.post.PostActivity"
@@ -119,17 +116,28 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-            
-            
 
-        <!--Gallery Activity 추가-->
+
+
+        <!--Map Activity 추가-->
         <activity
             android:name=".src.main.map.search.SearchActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-            
-            
+        <activity
+            android:name=".src.main.map.area.AreaActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".src.main.map.search.SearchResultActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+
+
 
         <!--MapGallery Activity 추가-->
         <activity
@@ -150,6 +158,7 @@
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="phlxzodw8d" />
+
 
         <!--kakaoMap api-->
         <meta-data

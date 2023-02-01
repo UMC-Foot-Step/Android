@@ -93,5 +93,8 @@ dependencies {
     //naver map api
     implementation 'com.naver.maps:map-sdk:3.16.1'
     implementation("com.google.android.gms:play-services-location:16.0.0")
+    //코루틴
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+
 
 }

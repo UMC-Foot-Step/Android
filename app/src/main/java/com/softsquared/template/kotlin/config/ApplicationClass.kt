@@ -17,6 +17,8 @@ class ApplicationClass : Application() {
 
     // 당신의 발자취 서버 URL 주소
     val API_URL = "http://52.78.49.35:8080"
+    //카카오 서버주소
+    val KAKAO_API_URL = "https://dapi.kakao.com/"
 
     // 코틀린의 전역변수 문법
     companion object {
@@ -26,8 +28,11 @@ class ApplicationClass : Application() {
         // JWT Token Header 키 값
         const val X_ACCESS_TOKEN = "accessToken"
 
+        const val accessToken="Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDY2MDA5MSwiZXhwIjoxNjc0OTYyNDkxfQ.W7MNMFI43SPbcw5pLhpbsuic0_nCDRcqHKPgEipV9ko\n"
+
         // Retrofit 인스턴스, 앱 실행시 한번만 생성하여 사용합니다.
         lateinit var sRetrofit: Retrofit
+        lateinit var kRetrofit: Retrofit
     }
 
     // 앱이 처음 생성되는 순간, SP를 새로 만들어주고, 레트로핏 인스턴스를 생성합니다.
@@ -35,6 +40,9 @@ class ApplicationClass : Application() {
         super.onCreate()
         sSharedPreferences =
             applicationContext.getSharedPreferences("SOFTSQUARED_TEMPLATE_APP", MODE_PRIVATE)
+
+       // sSharedPreferences.edit().putString(X_ACCESS_TOKEN, accessToken).apply()
+
         // 레트로핏 인스턴스 생성
         initRetrofitInstance()
     }
@@ -55,6 +63,11 @@ class ApplicationClass : Application() {
         sRetrofit = Retrofit.Builder()
             .baseUrl(API_URL)
             .client(client)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        kRetrofit = Retrofit.Builder()
+            .baseUrl(KAKAO_API_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

@@ -22,6 +22,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="40dp"
             >
+
             <Button
                 android:id="@+id/btn_menu"
                 android:layout_width="58dp"
@@ -48,25 +49,34 @@
             android:layout_marginTop="5dp"
             android:visibility="gone"
             >
-
-            <Button
+            <RadioGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+            <RadioButton
                 android:id="@+id/btn_location_check"
                 android:layout_width="wrap_content"
                 android:layout_height="34dp"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/category_btn_background"
+                android:layout_marginTop="2dp"
+                android:background="@drawable/selector_locationbtn"
                 android:text="지역별 조회"
-                android:textColor="@color/orange"
+                android:textColor="@drawable/selector_location_text"
                 android:textSize="12sp"
-                android:textStyle="bold" />
-            <Button
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:button="@null"
+                />
+            <RadioButton
                 android:id="@+id/btn_time"
                 android:layout_width="43dp"
                 android:layout_height="43dp"
-                android:background="@drawable/time_btn_background"
+                android:background="@drawable/selector_timebtn"
                 tools:ignore="SpeakableTextPresentCheck"
                 android:layout_toRightOf="@id/btn_location_check"
-                android:layout_marginLeft="5dp"/>
+                android:layout_marginLeft="5dp"
+                android:button="@null"
+                />
+            </RadioGroup>
         </RelativeLayout>
 
         <Button
@@ -76,7 +86,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="18dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="40dp"
             android:background="@drawable/tracking_btn_background"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -88,7 +98,7 @@
         android:layout_height="107dp"
         android:layout_above="@+id/btn_position"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="40dp"
         android:visibility="gone"
         />
 </FrameLayout>
