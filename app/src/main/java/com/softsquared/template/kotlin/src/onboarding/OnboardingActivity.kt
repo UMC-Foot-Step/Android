@@ -9,14 +9,17 @@ import android.widget.TextView
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.databinding.ActivityMainPostBinding
+import com.softsquared.template.kotlin.databinding.ActivityOnboardingBinding
 import com.softsquared.template.kotlin.src.login.LoginProcessActivity
 import com.softsquared.template.kotlin.src.main.MainActivity
+import com.softsquared.template.kotlin.util.*
 
-class OnboardingActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBinding::inflate) {
+class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(ActivityOnboardingBinding::inflate) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_onboarding)
+
+
 
         var onboarding1img = findViewById<ImageView>(R.id.onboarding1img)
         var onboarding2img = findViewById<ImageView>(R.id.onboarding2img)
@@ -45,8 +48,7 @@ class OnboardingActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPos
             }
         }
 
-
-
-
     }
+
+
 }

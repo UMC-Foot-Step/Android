@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+
+    <item
+        android:id="@+id/btn_edit"
+        android:title="@string/gallery_toolbar_option_2"
+        android:icon="@drawable/ic_galleryinfo_option_edit"
+        android:textStyle="bold"
+        app:showAsAction="withText"
+        android:textSize="14sp"
+        android:textColor="#000000"
+        />
+
+    <item
+        android:id="@+id/btn_del"
+        android:title="@string/gallery_toolbar_option_3"
+        android:icon="@drawable/ic_galleryinfo_option_del"
+        android:textStyle="bold"
+        app:showAsAction="withText"
+        android:textSize="14sp"
+        android:textColor="#000000"
+
+        />
+
+
+
+</menu>

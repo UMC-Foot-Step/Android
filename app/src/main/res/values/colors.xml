@@ -17,4 +17,7 @@
     <color name="grey">#988D8D</color>
     <color name="searchLocationEt">#F1F0F0</color>
 
+    <color name="not_visible">#00FF0000</color>
+
+
 </resources>

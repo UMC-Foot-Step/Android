@@ -177,9 +177,9 @@
                 android:id="@+id/btn_friend"
                 android:layout_width="match_parent"
                 android:layout_height="39dp"
-                android:paddingLeft="8dp"
                 android:background="@drawable/top_stroke"
                 android:gravity="center|left"
+                android:paddingLeft="8dp"
                 android:text="친구"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -190,7 +190,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
-                android:layout_marginLeft="61dp"
+                android:layout_marginLeft="51dp"
                 android:text="999"
                 android:textColor="@color/orange"
                 android:textSize="16sp"
@@ -211,16 +211,17 @@
                 android:background="@drawable/top_stroke"
                 android:gravity="center|left"
                 android:text="내 발자취"/>
+
             <TextView
                 android:id="@+id/txt_footprint_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|left"
-                android:textStyle="bold"
+                android:layout_marginLeft="85dp"
+                android:text="999"
                 android:textColor="@color/orange"
-                android:layout_marginLeft="95dp"
                 android:textSize="16sp"
-                android:text="999"/>
+                android:textStyle="bold" />
         </FrameLayout>
 
         <Button

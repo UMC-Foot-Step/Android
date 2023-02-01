@@ -1,37 +1,84 @@
 package com.softsquared.template.kotlin.src.main.myPage
 
-import android.app.Activity.INPUT_METHOD_SERVICE
-import android.app.Activity.RESULT_OK
+
+import android.app.Activity.*
 import android.app.AlertDialog
-import android.content.Context
+import android.content.ContentResolver
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.CalendarContract.Attendees.query
+import android.provider.CalendarContract.Reminders.query
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContentResolverCompat.query
+import androidx.core.content.contentValuesOf
 import com.bumptech.glide.Glide
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseFragment
-import com.softsquared.template.kotlin.config.UserCode.auth
-import com.softsquared.template.kotlin.config.UserCode.jwt
 import com.softsquared.template.kotlin.databinding.FragmentMyPageBinding
-import com.softsquared.template.kotlin.src.main.MainActivity
-import retrofit2.Call
+import com.softsquared.template.kotlin.src.login.LoginProcessActivity
+import com.softsquared.template.kotlin.src.main.myPage.mypageResponseFile.changeNicknameInfo
+import com.softsquared.template.kotlin.src.main.myPage.mypageResultFile.Resultmypage
+import com.softsquared.template.kotlin.util.getJwt
+import com.softsquared.template.kotlin.util.getRefresh
+import com.softsquared.template.kotlin.util.removeJwt
+import okhttp3.MediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 
 // 메인 - 마이페이지
 class MyPageFragment :
     BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding::bind, R.layout.fragment_my_page){
 
+    //호출 시점은 accessToken호출 때
+    private val accessToken : String by lazy{
+        val jwt = getJwt()
+
+        if(jwt == null){
+            startActivity(Intent(requireContext(),LoginProcessActivity::class.java))
+            requireActivity().finish()
+
+            //flag clear -> 로그인 화면 넘어가면 이전 activity삭제
+            return@lazy ""
+        }
+
+        jwt
+    }
+
+    private val refreshToken : String by lazy{
+        val refresh = getRefresh()
+
+        if(refresh == null){
+            showCustomToast("재 로그인 후 시도 필요")
+            startActivity(Intent(requireContext(),LoginProcessActivity::class.java))
+            requireActivity().finish()
+
+            return@lazy ""
+        }
+
+        refresh
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        getmypage()
 
         //닉네임 초기설정 = 마이페이지 누를때 서버에서 api로 가져옴.
         //갤러리 부분 수정할때 Glide가 많이 바뀌어서 그냥 하기보다는 물어보라고 하심.
@@ -49,6 +96,8 @@ class MyPageFragment :
             binding.btnModifyOk.visibility = View.VISIBLE
 
         }
+
+
 
         binding.edtNickname.addTextChangedListener (object : TextWatcher{
 
@@ -100,6 +149,7 @@ class MyPageFragment :
             }else{
                 binding.txtNickname.text = aftername
             }
+            nicknamechange()
 
             imm.hideSoftInputFromWindow(binding.edtNickname.windowToken, 0)
 
@@ -110,6 +160,8 @@ class MyPageFragment :
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             activityResult.launch(intent)
+
+
         }
 
 //        binding.btnWithdraw.setOnClickListener {
@@ -119,6 +171,7 @@ class MyPageFragment :
 //
 //        }
 
+        //로그아웃
         binding.btnLogout.setOnClickListener {
 
             val mDialogView = LayoutInflater.from(context).inflate(R.layout.fragment_dialog,null)
@@ -130,11 +183,14 @@ class MyPageFragment :
 
             val okButton = mDialogView.findViewById<Button>(R.id.btn_ok_log)
             okButton.setOnClickListener {
-                showCustomToast("로그아웃")
+                showCustomToast("로그아웃 완료!")
 
                 logout()
 
-                startActivity(Intent(activity,MainActivity::class.java))
+                //flag
+
+                startActivity(Intent(activity,LoginProcessActivity::class.java))
+                requireActivity().finish()
             }
             val noButton = mDialogView.findViewById<Button>(R.id.btn_no_log)
             noButton.setOnClickListener {
@@ -142,6 +198,8 @@ class MyPageFragment :
             }
         }
 
+
+        //회원탈퇴
         binding.btnWithdraw.setOnClickListener {
 
             val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_withdraw,null)
@@ -156,8 +214,9 @@ class MyPageFragment :
                 showCustomToast("탈퇴 완료")
 
                 withdraw()
-                startActivity(Intent(activity,MainActivity::class.java))
 
+                startActivity(Intent(activity,LoginProcessActivity::class.java))
+                requireActivity().finish()
             }
             val noButton = mDialogView.findViewById<Button>(R.id.btn_no_with)
             noButton.setOnClickListener {
@@ -170,7 +229,91 @@ class MyPageFragment :
     }//onCreate
 
 
-    //갤러리 접근을 위한 코드, 최근 api로직 많이 수정됨.
+    var filepath: MultipartBody.Part? = null
+
+
+    private fun changeProfile(){
+        ProfileService().tryChangeProfile(accessToken, filepath!!, object : ProfileView{
+            override fun onProfileSuccess(code: Int, result: String) {
+                when(code){
+                    200->{
+                        showCustomToast("이미지 변경 성공!")
+                        binding.btnModifyOk.isEnabled = true
+                    }
+                }
+            }
+
+            override fun onProfileFailure(message: String) {
+                showCustomToast(message)
+//                if("이미 존재하는 닉네임입니다." == message){
+//                    어떤 방식으로 로직을 짜야 버튼을 누르면 토스트 메세지만 뜨고 확인이 안될지 고민중에 있습니다.
+//                }
+            }
+
+        })
+    }
+
+
+    private fun getmypage(){
+
+
+//        binding.txtNickname.text = mypageinformation.nickname
+//        binding.txtFootprintNum.text = mypageinformation.postingcount.toString()
+        MyPageService().tryGetMyPage(accessToken, object : MyPageView{
+
+            override fun onMyPageSuccess(code: Int, result: Resultmypage) {
+
+                when(code){
+                    200->{
+                        binding.txtNickname.text = result.nickname
+                        binding.txtFootprintNum.text = result.postingCount.toString()
+                        Glide.with(this@MyPageFragment)
+                            .load(result.url)
+                            .into(binding.imgMyProfile)
+
+
+
+                    }
+                }
+            }
+
+            override fun onMyPageFailure(message: String) {
+
+            }
+
+        } )
+
+
+    }
+
+    private fun nicknamechange(){
+
+        NicknameService().trychangeNickname(accessToken , getNickname() , object : NicknameView{
+            override fun onNicknameSuccess(code: Int, result: String) {
+                when(code){
+                    200->{
+                        changeNicknameInfo(getNickname().toString())
+                        showCustomToast(result)
+                    }
+                }
+            }
+
+            override fun onNicknameFailure(message: String) {
+                showCustomToast(message)
+                Log.d("Tester", "onNicknameFailure: 실행됨")
+            }
+
+        })
+
+    }
+
+    private fun getNickname():changeNicknameInfo{
+        val aftername = binding.edtNickname.text.toString()
+
+        return changeNicknameInfo(aftername)
+    }
+
+
     private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()){
 
@@ -180,31 +323,62 @@ class MyPageFragment :
                 Glide.with(this)
                     .load(uri)
                     .into(binding.imgMyProfile)
+                filepath = changeMultipart(getRealPathFormURI(uri!!))
             }
+        //사진을 직접 보내기 retrofit multipart
+        //changeProfile()
         }
-
-
+    private fun changeMultipart(filePath:String):MultipartBody.Part{
+        val file = File(filePath)
+        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+        return MultipartBody.Part.createFormData("image",file.name,requestFile)
+    }
+    private fun getRealPathFormURI(uri: Uri):String{
+        val buildName = Build.MANUFACTURER
+        if(buildName.equals("Xiaomi")){
+            return uri.path.toString()
+        }
+        var columIndex = 0
+        val proj = arrayOf(MediaStore.Images.Media.DATA)
+        val cursor = activity?.contentResolver?.query(uri,proj,null,null,null)
+        if(cursor!!.moveToFirst()){
+            columIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+        }
+        return cursor.getString(columIndex)
+    }
 
 
 
 
     private fun logout() {
-        val spf = activity?.getSharedPreferences(auth , AppCompatActivity.MODE_PRIVATE)
-        val editor = spf!!.edit()
-        context?.let { showLoadingDialog(it) }
-        //로그아웃 api호출
-        editor.remove(jwt)
-        editor.apply()
+
+        removeJwt()
     }
 
     private fun withdraw() {
-        val spf = activity?.getSharedPreferences(auth , AppCompatActivity.MODE_PRIVATE)
-        val editor = spf!!.edit()
-        context?.let { showLoadingDialog(it) }
-        //회원탈퇴 api호출
-        editor.remove(jwt)
-        editor.apply()
+        secceion()
+
+        removeJwt()
     }
+
+    private fun secceion(){
+        SecessionService().trySecession(accessToken, refreshToken, object : SecessionView{
+            override fun onSecessionSuccess(code: Int, result: String) {
+                when(code){
+                    200->{
+                        showCustomToast(result)
+                    }
+                }
+            }
+
+            override fun onSecessionFailure(message: String) {
+                showCustomToast(message)
+            }
+
+        })
+    }
+
+
 
 
     //비밀번호 변경 api보고 비밀번호 담아서 요청
@@ -213,8 +387,7 @@ class MyPageFragment :
 }
 
 //사용자 구별=토큰
-//어디에든 똑같은 키 code=키값을 관리하는곳 jwt나 auth 는 문자열(key값)
-//로그아웃 로직에 대해 설명하고 말 나누기
+//어디에든 똑같은 키 code=키값을 관리하는곳 jwt나 auth는 문자열(key값)
 //
 //페이지에 들어 왔을때 api요청
 //

@@ -23,42 +23,50 @@ import retrofit2.Response
 
 class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
 
-    // 전역변수 - 날짜별 카테고리 게시글 리스트 저장
-    private val mSectionFeetStepList = ArrayList<ResultFeetStepList>()
 
 
     /*
-        To Do 1. 발자취 리스트 조회 API의
-        응답 더미데이터 생성
+        To Do 2. 갤러리 발자취 조회 API 연결
      */
     fun GetPostList() {
-
-
         /*
-            To Do 1. 갤러리 발자취 조회 API 연결 테스팅
-         */
+            To Do 2. 갤러리 발자취 조회 API 연결 테스팅
+        */
 
         // ApplicationClass에서 선언해둔 SharedPreferences에 Jwt 토큰 값 임시로 저장
-        ApplicationClass.sSharedPreferences.edit().putString(X_ACCESS_TOKEN, "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDY2MDA5MSwiZXhwIjoxNjc0OTYyNDkxfQ.W7MNMFI43SPbcw5pLhpbsuic0_nCDRcqHKPgEipV9ko").apply()
+//        ApplicationClass.sSharedPreferences.edit().putString(
+//            X_ACCESS_TOKEN,
+//            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDkxNDc2NiwiZXhwIjoxNjc1MjE3MTY2fQ.KxwX1Q0o-omU1rRIiUJBd9gLPbTRVciP_9g_sklW1Bk"
+//        ).apply()
 
-        val galleryRetrofitInterFace = ApplicationClass.sRetrofit.create(GalleryRetrofitInterface::class.java)
-        galleryRetrofitInterFace.getGalleryPostList().enqueue(object : Callback<PostListResponse>{
-            override fun onResponse(call: Call<PostListResponse>, response: Response<PostListResponse>) {
+        val galleryRetrofitInterFace =
+            ApplicationClass.sRetrofit.create(GalleryRetrofitInterface::class.java)
+        galleryRetrofitInterFace.getGalleryPostList().enqueue(object : Callback<PostListResponse> {
 
-                // 요청 객체 예외처리
-                if(response.body() != null) {
-                    galleryFragmentInterface.onGetGalleryPostListSuccess(response.body() as PostListResponse)
+                // API 요청 에러 & 요청 성공 시 실행
+                override fun onResponse(
+                    call: Call<PostListResponse>,
+                    response: Response<PostListResponse>
+                ) {
+
+                    Log.d("지나가니?", "어? 지나가?")
+
+                    // 요청 객체 예외처리
+                    if (response.body() != null) {
+                        galleryFragmentInterface.onGetGalleryPostListSuccess(response.body() as PostListResponse)
+                    } else {
+                        Log.d("요청 객체 받기실패", response.body().toString())
+                    }
                 }
-                else{
-                    Log.d("요청 객체 받기실패", response.body().toString())
+
+
+                // API 응답에러가 발생 시 실행
+                override fun onFailure(call: Call<PostListResponse>, t: Throwable) {
+                    galleryFragmentInterface.onGetPostListFailure(t.message ?: "통신 오류")
                 }
-            }
 
-            override fun onFailure(call: Call<PostListResponse>, t: Throwable) {
-                galleryFragmentInterface.onGetPostListFailure(t.message?: "통신 오류")
-            }
-
-        })
+            })
+    }
 
 
 
@@ -72,6 +80,10 @@ class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
 
 
 
+    /*
+    To Do 1. 발자취 리스트 조회 API의
+    응답 더미데이터 생성
+    */
         // 발자취 리스트 응답 더미데이터 객체 생성
         // val postListResponse: FeetStepListResponse
         /*
@@ -86,91 +98,91 @@ class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
          */
 
         // 발자취 게시글 리스트 Data객체 생성 - API 응답 데이터
-        val resultFeetStepList = ArrayList<ResultFeetStepList>()
-        resultFeetStepList.apply {
-            add(ResultFeetStepList(
-                "5월 31일",
-                R.drawable.sample_post_img_1_1,
-                "애니메이션 Car 모티브 카페",
-                1,
-                "당진 1950 카페",
-                3,
-            true))
-
-            add(ResultFeetStepList(
-                "5월 31일",
-                R.drawable.sample_post_img_1_2,
-                "만화속 카페..",
-                1,
-                "당진 1950 카페",
-                3,
-                true))
-
-            add(ResultFeetStepList(
-                "5월 31일",
-                R.drawable.sample_post_img_1_3,
-                "갬성 넘치는 철도길 뷰",
-                1,
-                "당진 1950 카페",
-                3,
-                true))
-
-
-
-
-            add(ResultFeetStepList(
-                "5월 3일",
-                R.drawable.sample_post_img_2_1,
-                "독고리에서 칼국수",
-                0,
-                "독곶리 해변",
-                2,
-                false))
-            add(ResultFeetStepList(
-                "5월 3일",
-                R.drawable.sample_post_img_2_2,
-                "독곶리의 므찐 일몰",
-                0,
-                "독곶리 해변",
-                2,
-                false))
-
-
-
-            add(ResultFeetStepList(
-                "5월 1일",
-                R.drawable.sample_post_img_2_2,
-                "독곶리의 므찐 일몰",
-                0,
-                "독곶리 해변",
-                3,
-                false))
-
-            add(ResultFeetStepList(
-                "5월 1일",
-                R.drawable.sample_post_img_2_2,
-                "독곶리의 므찐 일몰",
-                0,
-                "독곶리 해변",
-                3,
-                false))
-
-            add(ResultFeetStepList(
-                "5월 1일",
-                R.drawable.sample_post_img_2_2,
-                "독곶리의 므찐 일몰",
-                0,
-                "독곶리 해변",
-                3,
-                false))
-        }
+//        val resultFeetStepList = ArrayList<ResultFeetStepList>()
+//        resultFeetStepList.apply {
+//            add(ResultFeetStepList(
+//                "5월 31일",
+//                R.drawable.sample_post_img_1_1,
+//                "애니메이션 Car 모티브 카페",
+//                1,
+//                "당진 1950 카페",
+//                3,
+//            true))
+//
+//            add(ResultFeetStepList(
+//                "5월 31일",
+//                R.drawable.sample_post_img_1_2,
+//                "만화속 카페..",
+//                1,
+//                "당진 1950 카페",
+//                3,
+//                true))
+//
+//            add(ResultFeetStepList(
+//                "5월 31일",
+//                R.drawable.sample_post_img_1_3,
+//                "갬성 넘치는 철도길 뷰",
+//                1,
+//                "당진 1950 카페",
+//                3,
+//                true))
+//
+//
+//
+//
+//            add(ResultFeetStepList(
+//                "5월 3일",
+//                R.drawable.sample_post_img_2_1,
+//                "독고리에서 칼국수",
+//                0,
+//                "독곶리 해변",
+//                2,
+//                false))
+//            add(ResultFeetStepList(
+//                "5월 3일",
+//                R.drawable.sample_post_img_2_2,
+//                "독곶리의 므찐 일몰",
+//                0,
+//                "독곶리 해변",
+//                2,
+//                false))
+//
+//
+//
+//            add(ResultFeetStepList(
+//                "5월 1일",
+//                R.drawable.sample_post_img_2_2,
+//                "독곶리의 므찐 일몰",
+//                0,
+//                "독곶리 해변",
+//                3,
+//                false))
+//
+//            add(ResultFeetStepList(
+//                "5월 1일",
+//                R.drawable.sample_post_img_2_2,
+//                "독곶리의 므찐 일몰",
+//                0,
+//                "독곶리 해변",
+//                3,
+//                false))
+//
+//            add(ResultFeetStepList(
+//                "5월 1일",
+//                R.drawable.sample_post_img_2_2,
+//                "독곶리의 므찐 일몰",
+//                0,
+//                "독곶리 해변",
+//                3,
+//                false))
+//        }
 
 
 
         /*
             날짜별 카테고리로 게시글 그룹화 - 데이터 전처리?
          */
-        val daySectionFeetStepList = ArrayList<SectionModel>()
+//        val daySectionFeetStepList = ArrayList<SectionModel>()
 
 //        var day_cnt: Int
 //        day_cnt = resultFeetStepList[0].post_cnt
@@ -214,35 +226,35 @@ class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
 //            )
 //        )
 
-        var idx: Int = 0
-
-
-        // 백엔드 API에서 날짜별 카테고리 갯수가 몇개인지 받기
-        // 숫자 2를 API에서 받아오기
-        for(i: Int in 1..3){
-
-
-            // 카테고리 별 게시글 리스트 데이터 - ArrayList 객체 생성
-            val sectionFeetStepList = ArrayList<ResultFeetStepList>()
-
-            var z: Int = resultFeetStepList[idx].post_cnt
-            while(z > 0){
-
-                sectionFeetStepList.add(
-                    resultFeetStepList[idx]
-                )
-                idx ++
-                z--
-            }
-
-            daySectionFeetStepList.add(
-                SectionModel(
-                    resultFeetStepList[idx - 1].day,
-                    sectionFeetStepList
-                )
-            )
-
-        }
+//        var idx: Int = 0
+//
+//
+//        // 백엔드 API에서 날짜별 카테고리 갯수가 몇개인지 받기
+//        // 숫자 2를 API에서 받아오기
+//        for(i: Int in 1..3){
+//
+//
+//            // 카테고리 별 게시글 리스트 데이터 - ArrayList 객체 생성
+//            val sectionFeetStepList = ArrayList<ResultFeetStepList>()
+//
+//            var z: Int = resultFeetStepList[idx].post_cnt
+//            while(z > 0){
+//
+//                sectionFeetStepList.add(
+//                    resultFeetStepList[idx]
+//                )
+//                idx ++
+//                z--
+//            }
+//
+//            daySectionFeetStepList.add(
+//                SectionModel(
+//                    resultFeetStepList[idx - 1].day,
+//                    sectionFeetStepList
+//                )
+//            )
+//
+//        }
 
 
 //        Log.d("더미데이터 리스트 사이즈 체크", "data_size = " + daySectionFeetStepList.size)
@@ -264,15 +276,9 @@ class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
 
 
         // GalleryFragemnt로 발자취 게시글 데이터 전달 - 날짜별 카테고리 게시글 리스트 Data
-        galleryFragmentInterface.onGetPostListSuccess(daySectionFeetStepList)
+//        galleryFragmentInterface.onGetPostListSuccess(daySectionFeetStepList)
 
 
 
-
-
-
-
-
-    }
 
 }

@@ -1,12 +1,14 @@
 package com.softsquared.template.kotlin.src.main.gallery.models
 
 import com.google.gson.annotations.SerializedName
+import java.time.DateTimeException
+import java.time.LocalDate
 
 
 // 갤러리 정보 조회 데이터 객체
 data class PostList(
     @SerializedName("placeName") val placeName: String,
-    @SerializedName("recordDate") val recordDate: Int,
+    @SerializedName("recordDate") val recordDate: String,
     @SerializedName("imageUrl") val imageUrl: String,
     @SerializedName("title") val title: String ,
     @SerializedName("likes") val likes_cnt: Int,
