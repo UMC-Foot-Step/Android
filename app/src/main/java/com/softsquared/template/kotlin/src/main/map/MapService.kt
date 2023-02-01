@@ -11,10 +11,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class MapService(val mapFragmentInterface: MapFragment) {
-val accessToken="Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDkxNDc2NiwiZXhwIjoxNjc1MjE3MTY2fQ.KxwX1Q0o-omU1rRIiUJBd9gLPbTRVciP_9g_sklW1Bk"
+//val accessToken="Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDkxNDc2NiwiZXhwIjoxNjc1MjE3MTY2fQ.KxwX1Q0o-omU1rRIiUJBd9gLPbTRVciP_9g_sklW1Bk"
     fun tryGetMapFootStepList():HashMap<Int,Marker>{
         var return_map=HashMap<Int,Marker>()
-        ApplicationClass.sSharedPreferences.edit().putString(X_ACCESS_TOKEN, accessToken).apply()
+//        ApplicationClass.sSharedPreferences.edit().putString(X_ACCESS_TOKEN, accessToken).apply()
 
         val mapRetrofitInterface=ApplicationClass.sRetrofit.create(MapRetrofitInterface::class.java)
         mapRetrofitInterface.getMapFootStepList().enqueue(object : Callback<AllResponse>{
@@ -40,7 +40,7 @@ val accessToken="Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmV
     fun tryGetMapFootStepPopup(place_id:Int){
       //  Log.d("FootStepList", "tryGetMapFootStepPopup 진입")
 
-        ApplicationClass.sSharedPreferences.edit().putString(X_ACCESS_TOKEN, accessToken).apply()
+//        ApplicationClass.sSharedPreferences.edit().putString(X_ACCESS_TOKEN, accessToken).apply()
 
         val mapRetrofitInterface=ApplicationClass.sRetrofit.create(MapRetrofitInterface::class.java)
         Log.d("FootStepList", "tryGetMapFootStepPopup 안쪽직전진입")

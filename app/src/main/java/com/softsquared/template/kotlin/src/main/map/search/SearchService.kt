@@ -13,10 +13,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class SearchService(val searchResultActivityInterface: SearchResultActivityInterface) {
-    val accessToken="Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDkxNDc2NiwiZXhwIjoxNjc1MjE3MTY2fQ.KxwX1Q0o-omU1rRIiUJBd9gLPbTRVciP_9g_sklW1Bk"
+//    val accessToken="Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDkxNDc2NiwiZXhwIjoxNjc1MjE3MTY2fQ.KxwX1Q0o-omU1rRIiUJBd9gLPbTRVciP_9g_sklW1Bk"
 
     fun tryGetMapSearchFootStep(latitude : Double,longitude : Double){
-        ApplicationClass.sSharedPreferences.edit().putString(X_ACCESS_TOKEN, accessToken).apply()
+//        ApplicationClass.sSharedPreferences.edit().putString(X_ACCESS_TOKEN, accessToken).apply()
 
         val searchRetrofitInterface=ApplicationClass.sRetrofit.create(SearchRetrofitInterface::class.java)
         searchRetrofitInterface.getMapSearchFootStep(latitude,longitude).enqueue(object : Callback<PopupResponse2>{
