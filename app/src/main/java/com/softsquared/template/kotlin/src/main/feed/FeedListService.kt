@@ -1,5 +1,6 @@
 package com.softsquared.template.kotlin.src.main.feed
 
+import android.util.Log
 import com.softsquared.template.kotlin.config.ApplicationClass
 import com.softsquared.template.kotlin.src.main.feed.models.FeedListResponse
 import com.softsquared.template.kotlin.src.main.gallery.GalleryRetrofitInterface
@@ -23,7 +24,12 @@ class FeedListService(val feedListFragmentInterface: FeedListFragmentInterface) 
                 call: Call<FeedListResponse>,
                 response: Response<FeedListResponse>
             ) {
-                feedListFragmentInterface.onGetFeedListSuccess(response.body() as FeedListResponse)
+                // 요청 객체 예외처리
+                if (response.body() != null) {
+                    feedListFragmentInterface.onGetFeedListSuccess(response.body() as FeedListResponse)
+                } else {
+                    Log.d("요청 객체 받기실패", response.body().toString())
+                }
             }
 
 
