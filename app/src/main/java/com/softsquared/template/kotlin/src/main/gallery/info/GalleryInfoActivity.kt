@@ -17,6 +17,7 @@ import com.softsquared.template.kotlin.config.BaseResponse
 import com.softsquared.template.kotlin.databinding.ActivityGalleryinfoBinding
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostInfoResponse
 import com.softsquared.template.kotlin.src.main.gallery.info.models_sample.FeetStepInfoResponse
+import com.softsquared.template.kotlin.src.main.postupdate.PostUpdateActivity
 
 
 class GalleryInfoActivity()
@@ -98,6 +99,9 @@ class GalleryInfoActivity()
                                     /*
                                         To Do 3.3 게시글 수정 액티비티로 전환
                                      */
+                                    val intent = Intent(this, PostUpdateActivity::class.java)
+                                    intent.putExtra("posting-id", posting_id)
+                                    startActivity(intent)
 
                                     finish()
                                 })

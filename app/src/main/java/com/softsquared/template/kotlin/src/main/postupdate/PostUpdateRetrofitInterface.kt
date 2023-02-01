@@ -17,7 +17,7 @@ interface PostUpdateRetrofitInterface {
     // 발자취 수정 데이터 가져오기
     @GET("/footstep/{posting-id}/edit")
     fun getPostUpdateInfo(
-        @Header("Authorization") accessToken: String,
+//        @Header("Authorization") accessToken: String,
         @Path("posting-id") postingId: Int
     ) : Call<PostUpdateResponse>
 }
