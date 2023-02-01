@@ -83,5 +83,6 @@
     <!-- Feed -->
     <string name= "feed_tv_title">피드</string>
     <string name= "feed_tv_user_name">닉네임</string>
+    <string name= "feed_spcificlist_tv_title">유저 닉네임</string>
 
 </resources>

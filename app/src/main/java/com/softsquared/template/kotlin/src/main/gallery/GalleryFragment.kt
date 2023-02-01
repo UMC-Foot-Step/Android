@@ -133,39 +133,50 @@ class GalleryFragment :
         To DO 5. 갤러리 게시글 리스트 조회 API 연결
     */
     override fun onGetGalleryPostListSuccess(response: PostListResponse) {
+
+
         /*
+            To Do 6. 게시글 예외처리 - 게시글 존재하지 않을 상황 예외처리
+        */
+        if(response.isSuccess == false){
+            response.message?.let { showCustomToast(it) }
+        }
+        else {
+            /*
         날짜별 카테고리로 게시글 그룹화 - 데이터 전처리?
         */
-        val daySectionFeetStepList = ArrayList<SectionModel>()
+            val daySectionFeetStepList = ArrayList<SectionModel>()
 
-        var idx: Int = 0
+            var idx: Int = 0
 
-        // 날짜별 카테고리  갯수만큼 반복
-        for(i: Int in 1..response.result.upload_date){
+            // 날짜별 카테고리  갯수만큼 반복
+            for(i: Int in 1..response.result.upload_date){
 
-            // 카테고리 별 게시글 리스트 데이터 - ArrayList 객체 생성
-            val sectionFeetStepList = ArrayList<PostList>()
+                // 카테고리 별 게시글 리스트 데이터 - ArrayList 객체 생성
+                val sectionFeetStepList = ArrayList<PostList>()
 
-            var z: Int = response.result.post_list[idx].posting_cnt
-            while(z > 0){
+                var z: Int = response.result.post_list[idx].posting_cnt
+                while(z > 0){
 
-                sectionFeetStepList.add(
-                    response.result.post_list[idx]
+                    sectionFeetStepList.add(
+                        response.result.post_list[idx]
+                    )
+                    idx ++
+                    z--
+                }
+
+                daySectionFeetStepList.add(
+                    SectionModel(
+                        response.result.post_list[idx - 1].recordDate,
+                        sectionFeetStepList
+                    )
                 )
-                idx ++
-                z--
+
             }
 
-            daySectionFeetStepList.add(
-                SectionModel(
-                    response.result.post_list[idx - 1].recordDate,
-                    sectionFeetStepList
-                )
-            )
+            setupRecyclerView(daySectionFeetStepList, this)
 
         }
-
-        setupRecyclerView(daySectionFeetStepList, this)
 
     }
 

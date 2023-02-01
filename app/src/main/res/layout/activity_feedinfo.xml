@@ -49,6 +49,7 @@
         android:id="@+id/galleryinfo_iv_post_img"
         android:layout_width="328dp"
         android:layout_height="328dp"
+        android:scaleType="centerCrop"
 
         android:layout_marginTop="22dp"
         app:layout_constraintEnd_toEndOf="parent"

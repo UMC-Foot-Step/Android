@@ -9,6 +9,7 @@
         android:id="@+id/feedlist_iv_feed_img"
         android:layout_width="328dp"
         android:layout_height="328dp"
+        android:scaleType="centerCrop"
 
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
