@@ -40,13 +40,21 @@ class FeedListFragment :
         To Do 1. 타 유저 피드 리스트 조회 API 호출 응답 메소드
      */
     override fun onGetFeedListSuccess(feedListResponse: FeedListResponse) {
-        binding.feedlistRvFeeds.apply {
-            setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(activity)
-            adapter = FeedListFragmentAdapter(
-                feedListResponse.result.feedListDto
-            , feedListFragment)
+
+        // 피드 게시글 리스트 예외처리
+        if(feedListResponse.isSuccess == false){
+            feedListResponse.message?.let { showCustomToast(it) }
         }
+        else{
+            binding.feedlistRvFeeds.apply {
+                setHasFixedSize(true)
+                layoutManager = LinearLayoutManager(activity)
+                adapter = FeedListFragmentAdapter(
+                    feedListResponse.result.feedListDto
+                    , feedListFragment)
+            }
+        }
+
     }
     override fun onGetFeedListFailure(message: String) {
         showCustomToast(message)

@@ -11,6 +11,8 @@ fun saveJwt(jwt:String){
     val spf = ApplicationClass.sSharedPreferences
     val editor = spf.edit()
 
+
+    Log.d("jwt check", jwt)
     editor.putString(UserCode.jwt,jwt)
     editor.apply()
 }

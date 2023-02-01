@@ -2,7 +2,8 @@ package com.softsquared.template.kotlin.config
 
 object UserCode {
     //로그인 정보
-    const val jwt = "jwt"
+    // 이든 | jwt 데이터 값 SP Key 값에 맞는 값으로 변경 (2023. 02. 01)
+    const val jwt = "accessToken"
     const val id = "id"
     const val refresh = "refresh"
 
