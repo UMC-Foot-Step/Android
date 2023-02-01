@@ -49,6 +49,9 @@ class PostSearchPositionActivity : BaseActivity<ActivitySearchPositionBinding>(A
                 val item_result = listItems[position]
                 val intent = Intent(binding.root.context, PostActivity::class.java).apply{
                     putExtra("positionTitle", item_result.pos_title)
+                    putExtra("positionAddress", item_result.pos_address)
+                    putExtra("positionLatitude", item_result.y)
+                    putExtra("positionLongitude", item_result.x)
                 }
                 setResult(RESULT_OK, intent)
                 if(!isFinishing) finish()

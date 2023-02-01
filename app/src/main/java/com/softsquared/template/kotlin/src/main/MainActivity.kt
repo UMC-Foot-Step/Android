@@ -11,6 +11,7 @@ import com.softsquared.template.kotlin.src.main.gallery.GalleryFragment
 import com.softsquared.template.kotlin.src.main.map.MapFragment
 import com.softsquared.template.kotlin.src.main.myPage.MyPageFragment
 import com.softsquared.template.kotlin.src.main.post.PostActivity
+import com.softsquared.template.kotlin.src.main.postupdate.PostUpdateActivity
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 

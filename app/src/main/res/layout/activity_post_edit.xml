@@ -15,7 +15,7 @@
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/postIbBack"
+            android:id="@+id/editIbBack"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:scaleType="centerCrop"
@@ -25,12 +25,12 @@
             android:src="@drawable/post_arrow_back" />
 
         <TextView
-            android:id="@+id/postTvFragmentTitle"
+            android:id="@+id/editTvFragmentTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginLeft="10dp"
-            android:text="@string/post_tv_fragment_title"
+            android:text="@string/post_edit_tv_title"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -44,14 +44,14 @@
         android:orientation="horizontal" >
 
         <TextView
-            android:id="@+id/postTvDate"
+            android:id="@+id/editTvDate"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_gravity="center_vertical" />
 
         <ImageButton
-            android:id="@+id/postIbCalendar"
+            android:id="@+id/editIbCalendar"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:padding="0sp"
@@ -74,7 +74,7 @@
             app:cardElevation="0dp">
 
             <ImageButton
-                android:id="@+id/postIbGallery"
+                android:id="@+id/editIbGallery"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
@@ -83,7 +83,7 @@
         </androidx.cardview.widget.CardView>
 
         <ImageButton
-            android:id="@+id/postIbPhotoCancel"
+            android:id="@+id/editIbPhotoCancel"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginRight="5dp"
@@ -101,7 +101,7 @@
         android:orientation="horizontal" >
 
         <ImageView
-            android:id="@+id/postIvLocation"
+            android:id="@+id/editIvLocation"
             android:layout_width="18dp"
             android:layout_height="26dp"
             android:layout_marginTop="2dp"
@@ -112,7 +112,7 @@
             android:src="@drawable/post_location_logo" />
 
         <Button
-            android:id="@+id/postBtnLoc"
+            android:id="@+id/editBtnLoc"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
             android:layout_weight="1"
@@ -130,7 +130,7 @@
     </LinearLayout>
 
     <EditText
-        android:id="@+id/postEtTitle"
+        android:id="@+id/editEtTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -146,7 +146,7 @@
         android:textColor="@color/blackForText" />
 
     <EditText
-        android:id="@+id/postEtContent"
+        android:id="@+id/editEtContent"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginTop="10dp"
@@ -162,7 +162,7 @@
         android:textColor="@color/blackForText" />
 
     <Switch
-        android:id="@+id/postSwOpen"
+        android:id="@+id/editSwOpen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -174,11 +174,11 @@
         android:textSize="18sp"/>
 
     <Button
-        android:id="@+id/postBtnPost"
+        android:id="@+id/editBtnPost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/post_btn_text"
+        android:text="@string/post_edit_tv_title"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:textSize="20sp"

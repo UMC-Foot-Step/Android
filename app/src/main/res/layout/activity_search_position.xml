@@ -30,6 +30,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center_vertical"
+            android:scaleType="centerCrop"
+            android:background="@android:color/transparent"
             android:src="@drawable/post_cal_close" />
 
     </LinearLayout>
@@ -43,7 +45,7 @@
         <TextView
             android:id="@+id/searchPosTvPlace"
             android:layout_width="match_parent"
-            android:layout_height="44dp"
+            android:layout_height="50dp"
             android:textSize="18sp"
             android:background="@drawable/search_position_et_round"
             android:textColor="@color/blackForText" />
@@ -53,16 +55,19 @@
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="50dp"
+            android:layout_marginRight="60dp"
             android:hint="@string/search_loc_et_search_hint"
+            android:layout_gravity="center_vertical"
             android:textColor="@color/blackForText"/>
 
         <ImageView
             android:id="@+id/searchPosIv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
             android:layout_gravity="right|center_vertical"
-            android:paddingRight ="10dp"
+            android:background="@android:color/transparent"
+            android:layout_marginRight="10dp"
             app:srcCompat="@drawable/search_position_iv" />
     </FrameLayout>
 
