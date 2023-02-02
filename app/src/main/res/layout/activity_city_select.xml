@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <TextView
+        android:id="@+id/city_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/noto_sans_extrabold"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/city_si"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0703"
+        tools:text="지역별 조회" />
+
+    <LinearLayout
+        android:id="@+id/city_si"
+        android:layout_width="328dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/city_line"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/si_box"
+        android:layout_marginBottom="15dp">
+
+        <TextView
+            android:id="@+id/si_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="normal"
+            tools:text="시 조회" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/si_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingVertical="7dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/city_si"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.24">
+
+        <RadioGroup
+            android:id="@+id/si_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/seoul"
+                android:layout_width="81dp"
+                android:layout_height="31dp"
+                android:background="@drawable/city_check"
+                android:button="@null"
+                android:checked="true"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="서울특별시"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <RadioButton
+                android:id="@+id/incheon"
+                android:layout_width="81dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/city_uncheck"
+                android:button="@null"
+                android:checked="false"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="인천광역시"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <RadioButton
+                android:id="@+id/busan"
+                android:layout_width="81dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/city_uncheck"
+                android:button="@null"
+                android:checked="false"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="부산광역시"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/si_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/daegu"
+                android:layout_width="81dp"
+                android:layout_height="31dp"
+                android:background="@drawable/city_uncheck"
+                android:button="@null"
+                android:checked="false"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="대구광역시"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <RadioButton
+                android:id="@+id/daejeon"
+                android:layout_width="81dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/city_uncheck"
+                android:button="@null"
+                android:checked="false"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="대전광역시"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <RadioButton
+                android:id="@+id/gwangju"
+                android:layout_width="81dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/city_uncheck"
+                android:button="@null"
+                android:checked="false"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="광주광역시"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/si_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/ulsan"
+                android:layout_width="81dp"
+                android:layout_height="31dp"
+                android:background="@drawable/city_uncheck"
+                android:button="@null"
+                android:checked="false"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="울산광역시"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <RadioButton
+                android:id="@+id/sejong"
+                android:layout_width="107dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/city_uncheck"
+                android:button="@null"
+                android:checked="false"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="세종특별자치시"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/city_do"
+        android:layout_width="328dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/city_line"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/si_box"
+        app:layout_constraintTop_toBottomOf="@+id/si_box">
+
+        <TextView
+            android:id="@+id/do_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="normal"
+            tools:text="도 조회" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/do_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:orientation="vertical"
+        android:paddingVertical="7dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/city_si"
+        app:layout_constraintTop_toBottomOf="@+id/city_do"
+        app:layout_constraintVertical_bias="0.0">
+
+        <RadioGroup
+            android:id="@+id/do_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/gyeonggi"
+                android:layout_width="55dp"
+                android:layout_height="31dp"
+                android:background="@drawable/city_uncheck"
+                android:button="@null"
+                android:checked="false"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="경기도"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <RadioButton
+                android:id="@+id/gangwon"
+                android:layout_width="55dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/city_uncheck"
+                android:button="@null"
+                android:checked="false"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="강원도"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <RadioButton
+                android:id="@+id/chungcheongbuk"
+                android:layout_width="68dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/city_uncheck"
+                android:button="@null"
+                android:checked="false"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="충청북도"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <RadioButton
+                android:id="@+id/chungcheongnam"
+                android:layout_width="68dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/city_uncheck"
+                android:button="@null"
+                android:checked="false"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="충청북도"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/do_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/gyeongsangbuk"
+                android:layout_width="68dp"
+                android:layout_height="31dp"
+                android:background="@drawable/city_uncheck"
+                android:button="@null"
+                android:checked="false"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="경상북도"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <RadioButton
+                android:id="@+id/gyeongsangnam"
+                android:layout_width="68dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/city_uncheck"
+                android:button="@null"
+                android:checked="false"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="경상남도"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <RadioButton
+                android:id="@+id/jeollabuk"
+                android:layout_width="68dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/city_uncheck"
+                android:button="@null"
+                android:checked="false"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="전라북도"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+
+            <RadioButton
+                android:id="@+id/jeollanam"
+                android:layout_width="68dp"
+                android:layout_height="31dp"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/city_uncheck"
+                android:button="@null"
+                android:checked="false"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="전라남도"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+        </RadioGroup>
+
+        <RadioGroup
+            android:id="@+id/do_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/jeju"
+                android:layout_width="107dp"
+                android:layout_height="31dp"
+                android:background="@drawable/city_uncheck"
+                android:button="@null"
+                android:checked="false"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:text="제주특별자치도"
+                android:textColor="@drawable/city_text"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+        </RadioGroup>
+
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/city_btn"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background = "@color/black"
+        android:fontFamily="@font/inter"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        tools:text="확인"
+        />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
