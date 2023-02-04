@@ -8,5 +8,7 @@ class AreaActivity : BaseActivity<ActivityAreaBinding>(ActivityAreaBinding::infl
 {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
     }
 }

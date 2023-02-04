@@ -34,10 +34,12 @@ import com.softsquared.template.kotlin.src.main.gallery.map.MapGalleryActivity
 import com.softsquared.template.kotlin.src.main.map.area.AreaActivity
 import com.softsquared.template.kotlin.src.main.map.model.AllResponse
 import com.softsquared.template.kotlin.src.main.map.model.PopupResponse
+import com.softsquared.template.kotlin.src.main.map.model.SpecificFstResponse
 import com.softsquared.template.kotlin.src.main.map.search.SearchActivity
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
 import java.time.LocalDate
+import kotlin.properties.Delegates
 
 class MapFragment :
     BaseFragment<FragmentMapBinding>(FragmentMapBinding::bind, R.layout.fragment_map),
@@ -51,7 +53,7 @@ class MapFragment :
     private val LOCATION_PERMISSTION_REQUEST_CODE: Int = 1000
     private lateinit var locationSource: FusedLocationSource // 위치를 반환하는 구현체
     private lateinit var naverMap: NaverMap
-    private var PlaceId:Int=0
+    var firstRun=false
 
     var marker_info_hashMap=HashMap<Int, ResultPopupListMap>()
     var marker_hashMap=HashMap<Int,Marker>()
@@ -86,7 +88,6 @@ class MapFragment :
         /* Activity가 onDestroy되고 재생성될 때 Fragment도 같이 재생성된다. 하지만 setRetainInstance(true)를 설정하면
        onCreate, onDestory가 호출되지 않고 재사용된다.->현재는 mvvm패턴의 viewModel써서 하라는데 몰라서 저거 일단 둠
         */
-        MapService(this).tryGetMapFootStepList()
         v1 = layoutInflater.inflate(R.layout.feetstep_info, binding.placeInfo, true)
         bottomSheet = layoutInflater.inflate(R.layout.fragment_map_time_setting, null)
         bottomSheet2 = layoutInflater.inflate(R.layout.fragment_map_calendar, null)
@@ -102,11 +103,17 @@ class MapFragment :
 
 
     override fun onAttach(context: Context) {
-        super.onAttach(context)
-        Log.d("생명주기","맵 프래그먼트의 onAttach")
+        runBlocking {
+            super.onAttach(context)
+            Log.d("생명주기", "맵 프래그먼트의 onAttach")
+            val job = launch {
+                subRoutine()
+            }
+            job.join()
 
-        // 메인 액티비티 context 획득
-        mContext = context
+            // 메인 액티비티 context 획득
+            mContext = context
+        }
     }
 
     private fun initButtonView() {
@@ -140,8 +147,11 @@ class MapFragment :
             val btnR5=bottomSheet.findViewById<RadioButton>(R.id.radioBtn5)
             val date1=bottomSheet.findViewById<TextView>(R.id.dateText1)
             val date2=bottomSheet.findViewById<TextView>(R.id.dateText2)
+            val btnChk=bottomSheet.findViewById<TextView>(R.id.periodBtnCheck)
 
             val dsl=bottomSheet.findViewById<ConstraintLayout>(R.id.direct_select_layout)
+            lateinit var dateReturn1:String
+            lateinit var dateReturn2:String
 
             // date bottomsheetdialog 설정
             if(bottomSheet.parent!=null) {
@@ -158,7 +168,6 @@ class MapFragment :
             btnClose.setOnClickListener {
                 bottomSheetDialog.dismiss()
             }
-
 
             btnR.setOnClickListener {
                 dsl.visibility=View.GONE
@@ -177,10 +186,19 @@ class MapFragment :
             }
 
             btnCal1.setOnClickListener{
-                setCalBtnClickEnent(1)
+                dateReturn1=setCalBtnClickEnent(1)
             }
             btnCal2.setOnClickListener{
-                setCalBtnClickEnent(2)
+                dateReturn2=setCalBtnClickEnent(2)
+            }
+            btnChk.setOnClickListener {
+                runBlocking {
+                    val job=launch{
+                        subRoutine3(dateReturn1,dateReturn2)
+                    }
+                    job.join()
+                }
+                bottomSheetDialog.dismiss()
             }
         }
 
@@ -195,18 +213,33 @@ class MapFragment :
         }
 
         binding.btnPosition.setOnClickListener {
+           /* if(firstRun) {
+                runBlocking {
+                    val job = launch {
+                        subRoutine()
+                    }
+                    job.join()
+                }
+            }
+            */
             naverMap.locationSource = locationSource
             naverMap.locationTrackingMode = LocationTrackingMode.Follow
+            if(!firstRun)
+                firstRun=true
         }
     }
-
-    fun setCalBtnClickEnent(btn_type:Int){
+    private fun subRoutine3(start_date:String,end_date:String){
+        //return
+        MapService(this).tryGetMapFootStepSpecific(start_date,end_date)
+    }
+    fun setCalBtnClickEnent(btn_type:Int):String{
         //val bottomSheetDialog = BottomSheetDialog(mContext,R.style.calTheme_Custom)
         val bottomSheetDialog = BottomSheetDialog(mContext)
 
         val btnClose = bottomSheet2.findViewById<ImageButton>(R.id.dateBtnQuit)
         val btnDateCheck = bottomSheet2.findViewById<Button>(R.id.dateBtnCheck)
         val calView = bottomSheet2.findViewById<CalendarView>(R.id.calenderView)
+        lateinit var dateReturn:String
 
         calView.maxDate = System.currentTimeMillis()
 
@@ -229,9 +262,10 @@ class MapFragment :
         }
 
         btnDateCheck.setOnClickListener{
-            setData(tvYear, tvMonth, tvDay,btn_type)
+            dateReturn=setData(tvYear, tvMonth, tvDay, btn_type)
             bottomSheetDialog.dismiss()
         }
+        return dateReturn
     }
 
     private fun setData(
@@ -239,13 +273,39 @@ class MapFragment :
         month: Int,
         day: Int,
         btn_type: Int):String{
+        var year1 by Delegates.notNull<Int>()
+        var month1 by Delegates.notNull<Int>()
+        var day1 by Delegates.notNull<Int>()
 
-        var date = "$year / $month / $day"
-        if(btn_type==1)
+
+        var date = "$year - $month - $day"
+
+        if(btn_type==1) {
+            year1=year
+            month1=month
+            day1=day
             bottomSheet.findViewById<TextView>(R.id.dateText1).text = date
-        else
-            bottomSheet.findViewById<TextView>(R.id.dateText2).text = date
+        }
+        else {
+            //date2 = "$year / $month / $day"
+            if(year1>year){
+                Toast.makeText(mContext, "날짜 범위에 맞지 않습니다", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                if(month1>month){
+                    Toast.makeText(mContext, "날짜 범위에 맞지 않습니다", Toast.LENGTH_SHORT).show()
+                }
+                else{
+                    if(day1>day){
+                        Toast.makeText(mContext, "날짜 범위에 맞지 않습니다", Toast.LENGTH_SHORT).show()
+                    }
+                    else{
+                        bottomSheet.findViewById<TextView>(R.id.dateText2).text = date
+                    }
+                }
+            }
 
+        }
         return date
     }
 
@@ -284,65 +344,51 @@ class MapFragment :
         binding.mapView.onLowMemory()
     }
 
-    private fun subRoutine():HashMap<Int,Marker>{
-        return MapService(this).tryGetMapFootStepList()
+    private fun subRoutine(){//:HashMap<Int,Marker>{
+        //return
+        MapService(this).tryGetMapFootStepList()
     }
 
     override fun onMapReady(@NonNull naverMap: NaverMap) {
-        Log.d("MapFragment", "onMapReady")
+        Log.d("생명주기", "onMapReady")
         this.naverMap = naverMap
-        // CoroutineScope(Dispatchers.Main).launch {
-        //subRoutine()
-        runBlocking {
 
-            //CoroutineScope(Dispatchers.IO).launch {
-            val job = CoroutineScope(Dispatchers.IO).async {
-                Log.d("FootStepList", "처음 마커 띄우기 코루틴 진입하긴함")
-
-           //     subRoutine()
-            }
-
-            //job.join()
-            //Thread.sleep(3000)
-
-            Log.d("FootStepList", "해시마커 포문직전")
+        Log.d("FootStepList", "해시마커 포문직전")
 
             //  withContext(Main) {
-            for ((key, value) in marker_hashMap){//marker_hashMap) {
+        CoroutineScope(Dispatchers.Main).launch {
+            for ((key, value) in marker_hashMap) {//marker_hashMap) {
                 Log.d("FootStepList", "해시마커 포문 안되니+ $key")
-                value.map=naverMap
+                value.map = naverMap
                 value.setOnClickListener {
                     setMarkerClickEvent(key, value, value.tag as Boolean)
                     true
                 }
             }
-
-
-            naverMap.locationSource = locationSource
-            naverMap.locationTrackingMode = LocationTrackingMode.Follow
-
-            for ((i, value) in latlngList.withIndex()) {
-                if (i < 4 || i > 5) {
-                    Marker().apply {
-                        position = LatLng(value[0], value[1])
-                        map = naverMap
-                        icon = OverlayImage.fromResource(R.drawable.footstep_orange)
-                        tag = false
-
-                        setOnClickListener {
-                            //val important = tag as Boolean
-                            setDummyMarkerClickEvent(true, this, tag as Boolean, i)
-
-                            true
-                        }
-                    }
-                }
-
-            }
         }
 
+        naverMap.locationSource = locationSource
+        naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
-        Log.d("FootStepList", "런블락킹 나감")
+      /*  for ((i, value) in latlngList.withIndex()) {
+            if (i < 4 || i > 5) {
+                Marker().apply {
+                    position = LatLng(value[0], value[1])
+                    map = naverMap
+                    icon = OverlayImage.fromResource(R.drawable.footstep_orange)
+                    tag = false
+
+                    setOnClickListener {
+                            //val important = tag as Boolean
+                        setDummyMarkerClickEvent(true, this, tag as Boolean, i)
+
+                        true
+
+                    }
+                }
+            }
+       */
+        //Log.d("FootStepList", "런블락킹 나감")
 
         naverMap.setOnMapClickListener{  _, coord ->
             binding.placeInfo.visibility=View.GONE
@@ -436,103 +482,86 @@ class MapFragment :
         var locationName=""
         var imageUrl=""
         if (tag == false) {
-            //displayDummyFeetStepInfoView(marker_type,marker_num)
             marker.tag = true
             binding.placeInfo.visibility = View.VISIBLE
 
             v1.findViewById<CardView>(R.id.cardview_member).visibility = View.VISIBLE
-            PlaceId=placeId
-
             //////////////////////////////////////////////////////////////////////////////////////////////////////
-            //CoroutineScope(Dispatchers.IO).launch {
-            runBlocking {
 
-                val job= launch {
-                    subRoutine2(placeId)//        MapService(this).tryGetMapFootStepPopup(placeId)
-
-                    Log.d("FootStepList", "마커 클릭 코루틴 진입하긴함")
-                }
-                job.join()
-
-                //Thread.sleep(2000)
-           //    withContext(Dispatchers.Main) {
-                    if (marker_info_hashMap.containsKey(placeId)){
-                        postingCount = marker_info_hashMap[placeId]!!.postingCount
-                        locationName=  marker_info_hashMap[placeId]!!.loacationName
-                        imageUrl=  marker_info_hashMap[placeId]!!.imageUrl
-                    }
-                    else
-                        Log.d("FootStepList", "실패")
-
-
-                   Log.d("FootStepList", "코루틴 진입후+ ${postingCount} ${locationName} ${imageUrl}")
-
-                   val textData: String = "내 발자취 ${postingCount}개"
-
-                   val spannable = SpannableStringBuilder(textData)
-                   val boldSpan = StyleSpan(Typeface.BOLD)
-
-                   if(postingCount/10==0) {
-                       spannable.setSpan(boldSpan, 6, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                       //Log.d("ddd","marker_num%10==0 -> $marker_num 의 결과 :  ${marker_num%10}")
-                   }
-                   else if(postingCount/10>0) {
-                       spannable.setSpan(boldSpan, 6, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-                       //Log.d("ddd","marker_num%10>0 : $marker_num 의 결과 : ${marker_num%10}")
-
-                   }
-                   v1.findViewById<TextView>(R.id.feetTextView).text = spannable
-                   v1.findViewById<TextView>(R.id.locationNameTextView).text = locationName
-
-                   val Imageview=v1.findViewById<ImageView>(R.id.thumbnailImageView)//.setImageResource(imageList[marker_num%4])
-
-                   Glide.with(mContext).load(imageUrl).into(Imageview)
-
-                   v1.setOnClickListener {
-                       // Toast.makeText(mContext, "뷰 클릭됨", Toast.LENGTH_SHORT).show()
-
-                       val intent= Intent(requireContext(), MapGalleryActivity::class.java).apply {
-                           putExtra("placeId", placeId)
-                       }
-                       startActivity(intent)
-                   }
-
+            if (marker_info_hashMap.containsKey(placeId)){
+                postingCount = marker_info_hashMap[placeId]!!.postingCount
+                locationName=  marker_info_hashMap[placeId]!!.loacationName
+                imageUrl=  marker_info_hashMap[placeId]!!.imageUrl
             }
-                //delay(2000)
+            else
+                Log.d("FootStepList", "실패")
+
+
+            Log.d("FootStepList", "코루틴 진입후+ ${postingCount} ${locationName} ${imageUrl}")
+
+            val textData: String = "내 발자취 ${postingCount}개"
+
+            val spannable = SpannableStringBuilder(textData)
+            val boldSpan = StyleSpan(Typeface.BOLD)
+
+            if(postingCount/10==0) {
+                spannable.setSpan(boldSpan, 6, 7, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                       //Log.d("ddd","marker_num%10==0 -> $marker_num 의 결과 :  ${marker_num%10}")
+            }
+            else if(postingCount/10>0) {
+                spannable.setSpan(boldSpan, 6, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                       //Log.d("ddd","marker_num%10>0 : $marker_num 의 결과 : ${marker_num%10}")
+            }
+
+            v1.findViewById<TextView>(R.id.feetTextView).text = spannable
+            v1.findViewById<TextView>(R.id.locationNameTextView).text = locationName
+
+            val Imageview=v1.findViewById<ImageView>(R.id.thumbnailImageView)//.setImageResource(imageList[marker_num%4])
+
+            Glide.with(mContext).load(imageUrl).into(Imageview)
+
+            v1.setOnClickListener {
+                // Toast.makeText(mContext, "뷰 클릭됨", Toast.LENGTH_SHORT).show()
+
+                val intent= Intent(requireContext(), MapGalleryActivity::class.java).apply {
+                    putExtra("placeId", placeId)
+                }
+                startActivity(intent)
+            }
+
         }
             //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-          //  PlaceId=0
-
-     //   }
 
         else{
             binding.placeInfo.visibility=View.GONE
             marker.tag = false
         }
-
     }
 
 
-    override fun onGetMapFootStepListSuccess(response: AllResponse):HashMap<Int,Marker>{
+    override fun onGetMapFootStepListSuccess(response: AllResponse){//:HashMap<Int,Marker>{
+        runBlocking {
 
-        Log.d("FootStepList", "onGetMapFootStepListSuccess 되긴하니??")
+            Log.d("FootStepList", "onGetMapFootStepListSuccess 되긴하니??")
 
-        for (result_arr in response.result) {
+            for (result_arr in response.result) {
+                marker_hashMap[result_arr.placeId] = Marker().apply {
+                    position = LatLng(result_arr.lat, result_arr.lng)
+                    map = null
+                    icon = OverlayImage.fromResource(R.drawable.foot3)
+                    tag = false
 
-            marker_hashMap[result_arr.placeId]=Marker().apply {
-                position = LatLng(result_arr.lat, result_arr.lng)
-                map = null
-                icon = OverlayImage.fromResource(R.drawable.foot3)
-                tag = false
+                    val job=launch {
+                        subRoutine2(result_arr.placeId)
+                    }
+                    job.join()
+                }
+
+                Log.d("FootStepList", "placeId: ${result_arr.placeId}")
+
             }
-
-            Log.d("FootStepList", "placeId: ${result_arr.placeId}")
-
         }
-        return marker_hashMap
+        //return marker_hashMap
     }
 
     override fun onGetMapFootStepListFailure(message: String) {
@@ -557,5 +586,21 @@ class MapFragment :
         //showCustomToast("오류 : $message")
     }
 
+    override fun onGetMapFootStepSpecificSuccess(response: SpecificFstResponse) {
+        var result_arr=response.result.allPlaceDto
+        var cnt=0
+        for ((key, value) in marker_hashMap) {
+
+            if((cnt<result_arr.size)&&key==result_arr[cnt].placeId) {
+                cnt++
+                continue
+            }
+            value.map=null
+        }
+    }
+
+    override fun onGetMapFootStepSpecificFailure(message: String) {
+        //
+    }
 
 }

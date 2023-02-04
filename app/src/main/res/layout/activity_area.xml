@@ -66,6 +66,11 @@
         app:layout_constraintVertical_bias="0.24">
 
         <RadioGroup
+            android:id="@+id/si_0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <RadioGroup
             android:id="@+id/si_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -207,7 +212,7 @@
                 android:textStyle="normal" />
 
         </RadioGroup>
-
+        </RadioGroup>
     </LinearLayout>
 
     <View
