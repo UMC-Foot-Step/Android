@@ -1,29 +1,75 @@
 package com.softsquared.template.kotlin.src.main.gallery
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.CalendarView
+import android.widget.ImageButton
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseFragment
 import com.softsquared.template.kotlin.databinding.FragmentGallaryBinding
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoActivity
 import com.softsquared.template.kotlin.src.main.gallery.map.MapGalleryActivity
 import com.softsquared.template.kotlin.src.main.gallery.models.PostList
+import com.softsquared.template.kotlin.src.main.gallery.models.PostListByDateResponse
 import com.softsquared.template.kotlin.src.main.gallery.models.PostListResponse
 import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
+import java.time.LocalDate
 
 
 class GalleryFragment :
     BaseFragment<FragmentGallaryBinding>(FragmentGallaryBinding::bind, R.layout.fragment_gallary),
     GalleryFragmentInterface {
 
+    // 갤러리 - 실행 프래그먼트 체크
     private var run_id: Int = 0
+    // 갤러리 - 프래그먼트 기능전환 체크
+    /*
+        1 -> 모아두기 실행
+        2 -> 날짜별 실행
+     */
+    private var feature_check: Int = 1
+
+    // 갤러리 확장기능 - 캘린더 다이얼로그
+    private lateinit var calBottomSheet:View
+
+    private var calYear = LocalDate.now().year
+    private var calMonth = LocalDate.now().monthValue
+    private var calDay = LocalDate.now().dayOfMonth
+
+    // 갤러리 예외 뷰
+    private lateinit var exceptionView: View
+
+    // 갤러리 날짜별 특정날짜 저장
+    private lateinit var date: String
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        calBottomSheet = layoutInflater.inflate(R.layout.fragment_map_calendar, null)
+        exceptionView = layoutInflater.inflate(R.layout.fragment_gallery_exception, null)
+
+        /*
+            To Do 9. 모아보기 Deafult 실행 - 텍스트 색 설정
+        */
+        // 모아두기 텍스트 Default - 색상 변경
+        binding.galleryFeatureAllTxt.setTextColor(Color.parseColor("#ff7b31"))
+        binding.galleryFeatureDateTxt.setTextColor(Color.parseColor("#000000"))
+
+
+
+
+        // 프래그먼트 객체 실행
+        run_id = 0
+        // 모아두기 Default 지정
+        feature_check = 1
 
 
 
@@ -35,12 +81,109 @@ class GalleryFragment :
             2. 응답 받은 더미데이터를 가지고 onGetPostListSuccess() 메소드 호출하여
             해당 프래그먼트의 Recycler View 형태로 구현한다.
          */
-
         GalleryService(this).GetPostList()
         Log.d("onViewCreated()", "실행됨")
 
-        run_id = 0
-    }
+
+        /*
+            To Do 10. 날짜별 갤러리 게시글 조회
+         */
+        binding.galleryFeatureDateTxt.setOnClickListener {
+
+            // 날짜별 텍스트 클릭 이벤트 - 색상 변경
+            binding.galleryFeatureDateTxt.setTextColor(Color.parseColor("#ff7b31"))
+            binding.galleryFeatureAllTxt.setTextColor(Color.parseColor("#000000"))
+
+
+            /*
+                To Do 11. 달력 다이얼로그 띄우기
+            */
+            val bottomSheetDialog = activity?.let { it1 -> BottomSheetDialog(it1) }
+
+            val btnClose = calBottomSheet.findViewById<ImageButton>(R.id.dateBtnQuit)
+            val btnDateCheck = calBottomSheet.findViewById<Button>(R.id.dateBtnCheck)
+            val calView = calBottomSheet.findViewById<CalendarView>(R.id.calenderView)
+
+            calView.maxDate = System.currentTimeMillis()
+
+            // calendar bottomsheetdialog 설정
+            if(calBottomSheet.parent!=null) {
+                var p=calBottomSheet.parent as ViewGroup
+                p.removeView(calBottomSheet)
+            }
+            if (bottomSheetDialog != null) {
+                bottomSheetDialog.setContentView(calBottomSheet)
+                bottomSheetDialog.show()
+            }
+
+            // 캘린더 다이얼로그 취소 버튼 이벤트
+            btnClose.setOnClickListener {
+
+                // 캘린더 다이얼로그 제거 & 텍스트 업데이트
+                if (bottomSheetDialog != null) {
+                    bottomSheetDialog.dismiss()
+                    // 날짜별 기능 취소 버튼 이벤트 - 텍스트 색상 변경
+                    binding.galleryFeatureAllTxt.setTextColor(Color.parseColor("#ff7b31"))
+                    binding.galleryFeatureDateTxt.setTextColor(Color.parseColor("#000000"))
+
+
+                }
+            }
+
+
+            // 캘린더 내의 날짜 변경 이벤트
+            calView.setOnDateChangeListener { calView, year, month, dayOfMonth ->
+                calYear = year
+                calMonth = month + 1
+                calDay = dayOfMonth
+            }
+
+            // 캘린더 다이얼로그 확인 버튼 이벤트
+            btnDateCheck.setOnClickListener{
+
+                // 캘린더 다이얼로그 제거 & 특정 날짜별 게시글 API 호출
+                if (bottomSheetDialog != null) {
+                    bottomSheetDialog.dismiss()
+
+                    /*
+                        To Do 12. 캘린더 지정 Date로 특정 날짜별 게시글 조회 API 호출
+                    */
+
+                    // 갤러리 - 날짜별 기능 실행상태
+                    feature_check = 2
+
+                    // 캘린더 날짜 데이터 가져오기
+                    val date = "$calYear-$calMonth-$calDay"
+                    this.date = date
+                    // API 호출
+                    GalleryService(this).getPostListByDate(date)
+
+                }
+
+
+            }
+
+        }
+
+            /*
+                To Do 13. 모아보기 - 갤러리 게시글 리스트 조회
+             */
+        binding.galleryFeatureAllTxt.setOnClickListener {
+
+            // 갤러리 - 모아두기 실행상태
+            feature_check = 1
+
+            // 모아두기 텍스트 클릭 이벤트 - 색상 변경
+            binding.galleryFeatureAllTxt.setTextColor(Color.parseColor("#ff7b31"))
+            binding.galleryFeatureDateTxt.setTextColor(Color.parseColor("#000000"))
+
+            // 모아두기 - 갤러리 게시글 리스트 조회 API 호출
+            GalleryService(this).GetPostList()
+        }
+
+        }
+
+
 
     /*
         To Do 8. 갤러리 프래그먼트 재시작 시 실행 생명주기 메소드
@@ -51,13 +194,20 @@ class GalleryFragment :
 
 
 
+        // 게시글 상세 조회 뷰에서 종료하고 넘어올 때 예외작업 {추가 필요}
         // API 호출 최적화 (코드 리팩토링)
-        if(run_id != 0) {
+
+        // 모아두기 실행 상태
+        if(run_id != 0 && feature_check == 1) {
             /*
             To Do 9. 갤러리 발자취 게시글 리스트 조회 API 재실행
             */
             Log.d("onStart()", "API 실행됨")
             GalleryService(this).GetPostList()
+        }
+        // 날짜별 실행 상태
+        else if(run_id != 0 && feature_check == 2) {
+            GalleryService(this).getPostListByDate(date)
         }
 
         run_id = 1
@@ -127,8 +277,6 @@ class GalleryFragment :
         startActivity(intent)
     }
 
-
-
     /*
         To DO 5. 갤러리 게시글 리스트 조회 API 연결
     */
@@ -140,6 +288,7 @@ class GalleryFragment :
         */
         if(response.isSuccess == false){
             response.message?.let { showCustomToast(it) }
+
         }
         else {
             /*
@@ -178,6 +327,54 @@ class GalleryFragment :
 
         }
 
+    }
+
+
+
+
+    /*
+        To Do 14. 갤러리 - 날짜별 특정날짜 게시글 리스트 조회 API 응답 메소드
+     */
+    override fun onGetGalleryPostListByDateSuccess(response: PostListByDateResponse) {
+
+        // 뷰 업데이트
+        if(response.isSuccess == false){
+            response.message?.let { showCustomToast(it) }
+
+            /*
+                To Do 6. 게시글 예외처리 - 게시글이 존재하지 않을 때의 예외 뷰 {구현 필요}
+            */
+        }
+        else {
+            val daySectionFeetStepList = ArrayList<SectionModel>()
+
+            // 카테고리 별 게시글 리스트 데이터 - ArrayList 객체 생성
+            val sectionFeetStepList = ArrayList<PostList>()
+
+            var z: Int = response.result.post_list[0].posting_cnt
+            while (z > 0) {
+
+                sectionFeetStepList.add(
+                    response.result.post_list[0]
+                )
+                z--
+            }
+
+            daySectionFeetStepList.add(
+                SectionModel(
+                    response.result.post_list[0].recordDate,
+                    sectionFeetStepList
+                )
+            )
+
+            setupRecyclerView(daySectionFeetStepList, this)
+        }
+
+    }
+
+    override fun onGetGalleryPostListByDateFailure(message: String) {
+        showCustomToast(message)
+        Log.d("API 응답 에러", message)
     }
 
 
