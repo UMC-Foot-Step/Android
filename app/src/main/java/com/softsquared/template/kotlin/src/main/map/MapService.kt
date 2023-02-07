@@ -70,21 +70,22 @@ class MapService(val mapFragmentInterface: MapFragment) {
 
     fun tryGetMapFootStepSpecific(start_date :String,ene_date:String){
         val mapRetrofitInterface=ApplicationClass.sRetrofit.create(MapRetrofitInterface::class.java)
+        Log.d("FootStepList2", "tryGetMapFootStepSpecific 안쪽직전진입")
 
         mapRetrofitInterface.getMapFootStepSpecific(start_date,ene_date).enqueue(object :Callback<SpecificFstResponse>{
             override fun onResponse(
                 call: Call<SpecificFstResponse>,
                 response: Response<SpecificFstResponse>) {
-                Log.d("FootStepList", "tryGetMapFootStepSpecific 되긴하니?")
+                Log.d("FootStepList2", "tryGetMapFootStepSpecific 되긴하니?")
 
                 if(response.body()!=null)
                     mapFragmentInterface.onGetMapFootStepSpecificSuccess(response.body() as SpecificFstResponse)
                 else
-                    Log.d("FootStepList", "맵 서비스 Specific에서의 결과 : ${response.body().toString()}")
+                    Log.d("FootStepList2", "맵 서비스 Specific에서의 결과 : ${response.body().toString()}")
             }
 
             override fun onFailure(call: Call<SpecificFstResponse>, t: Throwable) {
-                Log.d("FootStepList", t.message.toString())
+                Log.d("FootStepList2", t.message.toString())
 
                 mapFragmentInterface.onGetMapFootStepSpecificFailure(t.message ?: "통신 오류")
             }
