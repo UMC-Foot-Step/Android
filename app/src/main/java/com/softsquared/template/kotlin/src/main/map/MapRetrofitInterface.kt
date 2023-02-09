@@ -10,12 +10,12 @@ import retrofit2.http.*
 interface MapRetrofitInterface {
 
     @GET("/footstep/all")
-    fun getMapFootStepList() : Call<AllResponse>
+    suspend fun getMapFootStepList() : AllResponse
 
     @GET("/footstep/{place-id}")
-    fun getMapFootStepPopup(@Path("place-id") place_id : Int) : Call<PopupResponse>
+    suspend fun getMapFootStepPopup(@Path("place-id") place_id : Int) : PopupResponse
 
     @GET("/footstep/specific/{start-date}/{end-date}")
-    fun getMapFootStepSpecific(@Path("start-date") start_date : String, @Path("end-date") end_date:String) : Call<SpecificFstResponse>
+    suspend fun getMapFootStepSpecific(@Path("start-date") start_date : String, @Path("end-date") end_date:String) : SpecificFstResponse
 
 }
