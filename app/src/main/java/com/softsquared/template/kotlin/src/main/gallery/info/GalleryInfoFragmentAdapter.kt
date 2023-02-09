@@ -63,7 +63,7 @@ class GalleryInfoFragmentAdapter(
                                 .setMessage("해당 댓글을 삭제합니다.")
                                 .setPositiveButton("확인",
                                     DialogInterface.OnClickListener { dialog, id ->
-                                        galleryInfoFragment.showCustomToast("댓글 삭제완료")
+//                                        galleryInfoFragment.showCustomToast("댓글 삭제완료")
 
                                         /*
                                             To Do 2.2 댓글 삭제 API 구현
@@ -73,7 +73,7 @@ class GalleryInfoFragmentAdapter(
 
                                 .setNegativeButton("취소",
                                     DialogInterface.OnClickListener { dialog, id ->
-                                        galleryInfoFragment.showCustomToast("댓글 삭제취소")
+//                                        galleryInfoFragment.showCustomToast("댓글 삭제취소")
                                     })
                             // 다이얼로그를 띄워주기
                             builder.show()
@@ -83,7 +83,19 @@ class GalleryInfoFragmentAdapter(
                             To Do 3. 댓글 신고 이벤트 구현
                         */
                         R.id.btn_flag -> {
-                                galleryInfoFragment.showCustomToast("댓글 신고하기 버튼")
+                            val builder = AlertDialog.Builder(binding.root.context)
+                            builder.setTitle("댓글 신고하기")
+                                .setMessage("해당 댓글을 신고합니다.")
+                                .setPositiveButton("확인",
+                                    DialogInterface.OnClickListener { dialog, id ->
+                                        galleryInfoFragment.showCustomToast("댓글 신고 접수완료")
+                                    })
+                                .setNegativeButton("취소",
+                                    DialogInterface.OnClickListener { dialog, id ->
+//                                        galleryInfoFragment.showCustomToast("댓글 삭제취소")
+                                    })
+                            // 다이얼로그를 띄워주기
+                            builder.show()
                             }
 
 

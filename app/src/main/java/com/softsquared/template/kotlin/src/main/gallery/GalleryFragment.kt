@@ -29,6 +29,7 @@ class GalleryFragment :
 
     // 갤러리 - 실행 프래그먼트 체크
     private var run_id: Int = 0
+
     // 갤러리 - 프래그먼트 기능전환 체크
     /*
         1 -> 모아두기 실행
@@ -54,7 +55,7 @@ class GalleryFragment :
         super.onViewCreated(view, savedInstanceState)
 
         calBottomSheet = layoutInflater.inflate(R.layout.fragment_map_calendar, null)
-        exceptionView = layoutInflater.inflate(R.layout.fragment_gallery_exception, null)
+        exceptionView = layoutInflater.inflate(R.layout.item_gallery_exception, null)
 
         /*
             To Do 9. 모아보기 Deafult 실행 - 텍스트 색 설정
@@ -165,9 +166,9 @@ class GalleryFragment :
 
         }
 
-            /*
-                To Do 13. 모아보기 - 갤러리 게시글 리스트 조회
-             */
+        /*
+            To Do 13. 모아보기 - 갤러리 게시글 리스트 조회
+        */
         binding.galleryFeatureAllTxt.setOnClickListener {
 
             // 갤러리 - 모아두기 실행상태
@@ -286,15 +287,13 @@ class GalleryFragment :
         /*
             To Do 6. 게시글 예외처리 - 게시글 존재하지 않을 상황 예외처리
         */
-        if(response.isSuccess == false){
-            response.message?.let { showCustomToast(it) }
+        val daySectionFeetStepList = ArrayList<SectionModel>()
 
+        if(response.isSuccess == false){
+
+            setupRecyclerView(daySectionFeetStepList, this)
         }
         else {
-            /*
-        날짜별 카테고리로 게시글 그룹화 - 데이터 전처리?
-        */
-            val daySectionFeetStepList = ArrayList<SectionModel>()
 
             var idx: Int = 0
 
@@ -337,16 +336,20 @@ class GalleryFragment :
      */
     override fun onGetGalleryPostListByDateSuccess(response: PostListByDateResponse) {
 
+        // 발자취 데이터 객체 - 리사이클러 아이템 객체
+        val daySectionFeetStepList = ArrayList<SectionModel>()
+
         // 뷰 업데이트
         if(response.isSuccess == false){
-            response.message?.let { showCustomToast(it) }
+//            response.message?.let { showCustomToast(it) }
 
             /*
                 To Do 6. 게시글 예외처리 - 게시글이 존재하지 않을 때의 예외 뷰 {구현 필요}
             */
+            setupRecyclerView(daySectionFeetStepList, this)
         }
         else {
-            val daySectionFeetStepList = ArrayList<SectionModel>()
+
 
             // 카테고리 별 게시글 리스트 데이터 - ArrayList 객체 생성
             val sectionFeetStepList = ArrayList<PostList>()
