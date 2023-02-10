@@ -2,9 +2,10 @@ package com.softsquared.template.kotlin.src.main.post
 
 import android.util.Log
 import com.softsquared.template.kotlin.config.ApplicationClass
-import com.softsquared.template.kotlin.config.ApplicationClass.Companion.X_ACCESS_TOKEN
 import com.softsquared.template.kotlin.config.UserCode
-import com.softsquared.template.kotlin.src.main.post.models.PostListResponse
+import com.softsquared.template.kotlin.src.main.post.models.PostResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,78 +19,21 @@ import retrofit2.Response
     백엔드 API 엮을 때는
     서비스에서 조회 API 요청을 보낸다. (Retrofit 객체 생성)
  */
-class PostService {
+class PostService(val postActivityInterface: PostActivityInterface) {
+    private val api = ApplicationClass.sRetrofit.create(PostRetrofitInterface::class.java)
     // API text post
-    fun postText(hashMap: HashMap<String, Any>){
-        // jwt 삭제
-//        removeJwt()
-//        ApplicationClass.sSharedPreferences.edit().putString(X_ACCESS_TOKEN, "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDkxNDc2NiwiZXhwIjoxNjc1MjE3MTY2fQ.KxwX1Q0o-omU1rRIiUJBd9gLPbTRVciP_9g_sklW1Bk").apply()
+    fun postInfo(token: String, image: MultipartBody.Part?, textHashMap: HashMap<String, RequestBody>){
+        api.postInfoList(image, textHashMap).enqueue(object:
+        Callback<PostResponse> {
+            override fun onResponse(call: Call<PostResponse>, response: Response<PostResponse>) {
+                postActivityInterface.onPostPostInfoSuccess(response.body() as PostResponse)
+            }
 
-        val postRetrofitInterface = ApplicationClass.sRetrofit.create(PostRetrofitInterface::class.java)
-        postRetrofitInterface.postTextList(hashMap)
-            .enqueue(object : Callback<PostListResponse>{
-                override fun onResponse(
-                    call: Call<PostListResponse>,
-                    response: Response<PostListResponse>
-                ) {
-                    val result = response.body()
-                    if(response.isSuccessful){
-                        Log.d("posttext 성공", "$result")
-                        Log.d("value", hashMap.toString())
-                    }
-                    else{
-                        Log.d("value", hashMap.toString())
-                    }
-                }
-
-                override fun onFailure(call: Call<PostListResponse>, t: Throwable) {
-                    Log.d("서버연결 실패", t.message.toString())
-                }
-
-            })
+            override fun onFailure(call: Call<PostResponse>, t: Throwable) {
+                postActivityInterface.onPostPostInfoFailure(t.message ?: "통신 오류")
+            }
+        }
+        )
     }
-
-    fun removeJwt(){
-        val spf = ApplicationClass.sSharedPreferences
-        val editor = spf.edit()
-
-        editor.remove(UserCode.jwt)
-        editor.apply()
-    }
-    /*
-    fun postPost(image: MultipartBody.Part?, content: MultipartBody.Part, date: MultipartBody.Part,
-    title: MultipartBody.Part, open: MultipartBody.Part, hashMap: HashMap<String, RequestBody>){
-        ApplicationClass.sSharedPreferences.edit().putString(X_ACCESS_TOKEN, "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NDY2MDA5MSwiZXhwIjoxNjc0OTYyNDkxfQ.W7MNMFI43SPbcw5pLhpbsuic0_nCDRcqHKPgEipV9ko")
-
-        val postRetrofitInterface = ApplicationClass.sRetrofit.create(PostRetrofitInterface::class.java)
-        postRetrofitInterface.postPostList(image, content, date, title, open, hashMap)
-            .enqueue(object : Callback<PostListResponse>{
-                override fun onResponse(
-                    call: Call<PostListResponse>,
-                    response: Response<PostListResponse>
-                ) {
-                    val result = response.body()
-                    if(response.isSuccessful){
-                        Log.d("post 성공", "$result")
-                        Log.d("image", "$image")
-                    }
-                    else{
-                        Log.d("post 실패", "$result")
-                        Log.d("image", "$image")
-                        Log.d("content", "$content")
-                        Log.d("date", "$date")
-                        Log.d("title", "$title")
-                        Log.d("open", "$open")
-                        Log.d("hashMap", "$hashMap")
-                    }
-                }
-
-                override fun onFailure(call: Call<PostListResponse>, t: Throwable) {
-                    Log.d("서버연결 실패", t.message.toString())
-                }
-            })
-    }
-    */
-    // API post
 
 }

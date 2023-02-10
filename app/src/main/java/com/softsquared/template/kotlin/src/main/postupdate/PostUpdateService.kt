@@ -1,7 +1,10 @@
 package com.softsquared.template.kotlin.src.main.postupdate
 
 import com.softsquared.template.kotlin.config.ApplicationClass
+import com.softsquared.template.kotlin.src.main.postupdate.models.PostEditResponse
 import com.softsquared.template.kotlin.src.main.postupdate.models.PostUpdateResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,5 +28,23 @@ class PostUpdateService(val postUpdateActivityInterface: PostUpdateActivityInter
                 postUpdateActivityInterface.onGetPostUpdateInfoFailure(t.message ?: "통신 오류")
             }
             })
+    }
+
+    fun postPostUpdateInfo(token: String, image: MultipartBody.Part?, textHashMap: HashMap<String, RequestBody>, id: Int) {
+        api.postPostUpdateInfo(image, textHashMap, id).enqueue(object:
+        Callback<PostEditResponse> {
+            override fun onResponse(
+                call: Call<PostEditResponse>,
+                response: Response<PostEditResponse>
+            ) {
+                postUpdateActivityInterface.onPostPostUpdateInfoSuccess(response.body() as PostEditResponse)
+            }
+
+            override fun onFailure(call: Call<PostEditResponse>, t: Throwable) {
+                postUpdateActivityInterface.onPostPostUpdateInfoFailure(t.message ?: "통신 오류")
+            }
+        }
+
+        )
     }
 }
