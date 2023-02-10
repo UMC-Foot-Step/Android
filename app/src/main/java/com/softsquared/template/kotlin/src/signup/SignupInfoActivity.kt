@@ -57,11 +57,18 @@ class SignupInfoActivity : BaseActivity<ActivitySignupInfoBinding>(ActivitySignu
 
     private fun checkscroll(){
 
-        if(scroll1_flag){
-            binding.nextBtn.isEnabled = scroll2_flag
+        if(scroll1_flag)
+        {
+            if(scroll2_flag){
+                binding.nextBtn.isEnabled = true
+                binding.nextBtn.setTextColor(Color.parseColor("#ffffff"))
+            }else{
+                binding.nextBtn.isEnabled = false
+                binding.nextBtn.setTextColor(Color.parseColor("#000000"))
+            }
         }else {
             binding.nextBtn.isEnabled = false
-
+            binding.nextBtn.setTextColor(Color.parseColor("#000000"))
         }
 
     }

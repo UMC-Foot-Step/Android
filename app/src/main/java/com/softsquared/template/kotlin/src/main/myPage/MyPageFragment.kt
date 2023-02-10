@@ -34,6 +34,7 @@ import com.softsquared.template.kotlin.src.main.myPage.mypageResultFile.Resultmy
 import com.softsquared.template.kotlin.util.getJwt
 import com.softsquared.template.kotlin.util.getRefresh
 import com.softsquared.template.kotlin.util.removeJwt
+import com.softsquared.template.kotlin.util.removeRefresh
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -45,6 +46,9 @@ import java.io.File
 // 메인 - 마이페이지
 class MyPageFragment :
     BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding::bind, R.layout.fragment_my_page){
+
+
+
 
     //호출 시점은 accessToken호출 때
     private val accessToken : String by lazy{
@@ -83,21 +87,25 @@ class MyPageFragment :
         //닉네임 초기설정 = 마이페이지 누를때 서버에서 api로 가져옴.
         //갤러리 부분 수정할때 Glide가 많이 바뀌어서 그냥 하기보다는 물어보라고 하심.
 
-        val imm = context?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+
         //수정버튼
         binding.btnModify.setOnClickListener {
 
+            //텍스트 변경
             binding.txtNickname.visibility = View.INVISIBLE
-
             binding.edtNickname.visibility = View.VISIBLE
-
             binding.btnModify.visibility = View.INVISIBLE
-
             binding.btnModifyOk.visibility = View.VISIBLE
 
+            //나머지 버튼 비활성화
+            binding.imgBtnProfilePlus.isClickable = false
+            binding.btnLogout.isClickable = false
+            binding.btnWithdraw.isClickable = false
+            binding.btnFriend.isClickable = false
+            binding.btnMyFootprint.isClickable = false
+
+            binding.edtNickname.setText(binding.txtNickname.text)
         }
-
-
 
         binding.edtNickname.addTextChangedListener (object : TextWatcher{
 
@@ -124,23 +132,14 @@ class MyPageFragment :
 
         })
 
+        val imm = context?.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         //확인버튼
         binding.btnModifyOk.setOnClickListener {
             with(binding.edtNickname){
                 if(isFocused){
                     clearFocus()
-
                 }
             }
-
-
-            binding.txtNickname.visibility = View.VISIBLE
-
-            binding.edtNickname.visibility = View.INVISIBLE
-
-            binding.btnModifyOk.visibility = View.INVISIBLE
-
-            binding.btnModify.visibility = View.VISIBLE
 
             val aftername = binding.edtNickname.text.toString()
 
@@ -149,9 +148,10 @@ class MyPageFragment :
             }else{
                 binding.txtNickname.text = aftername
             }
-            nicknamechange()
 
             imm.hideSoftInputFromWindow(binding.edtNickname.windowToken, 0)
+
+            nicknamechange()
 
 
         }
@@ -238,16 +238,13 @@ class MyPageFragment :
                 when(code){
                     200->{
                         showCustomToast("이미지 변경 성공!")
-                        binding.btnModifyOk.isEnabled = true
                     }
                 }
             }
 
             override fun onProfileFailure(message: String) {
                 showCustomToast(message)
-//                if("이미 존재하는 닉네임입니다." == message){
-//                    어떤 방식으로 로직을 짜야 버튼을 누르면 토스트 메세지만 뜨고 확인이 안될지 고민중에 있습니다.
-//                }
+
             }
 
         })
@@ -272,13 +269,11 @@ class MyPageFragment :
                             .into(binding.imgMyProfile)
 
 
-
                     }
                 }
             }
-
             override fun onMyPageFailure(message: String) {
-
+                showCustomToast(message)
             }
 
         } )
@@ -293,6 +288,7 @@ class MyPageFragment :
                 when(code){
                     200->{
                         changeNicknameInfo(getNickname().toString())
+                        nicknameChangeSuccess()
                         showCustomToast(result)
                     }
                 }
@@ -304,6 +300,24 @@ class MyPageFragment :
             }
 
         })
+
+    }
+
+    private fun nicknameChangeSuccess(){
+
+        binding.txtNickname.visibility = View.VISIBLE
+
+        binding.edtNickname.visibility = View.INVISIBLE
+
+        binding.btnModifyOk.visibility = View.INVISIBLE
+
+        binding.btnModify.visibility = View.VISIBLE
+
+        binding.imgBtnProfilePlus.isClickable = true
+        binding.btnLogout.isClickable = true
+        binding.btnWithdraw.isClickable = true
+        binding.btnFriend.isClickable = true
+        binding.btnMyFootprint.isClickable = true
 
     }
 
@@ -324,14 +338,14 @@ class MyPageFragment :
                     .load(uri)
                     .into(binding.imgMyProfile)
                 filepath = changeMultipart(getRealPathFormURI(uri!!))
+                changeProfile()
             }
         //사진을 직접 보내기 retrofit multipart
-        //changeProfile()
         }
     private fun changeMultipart(filePath:String):MultipartBody.Part{
         val file = File(filePath)
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-        return MultipartBody.Part.createFormData("image",file.name,requestFile)
+        return MultipartBody.Part.createFormData("profile",file.name,requestFile)
     }
     private fun getRealPathFormURI(uri: Uri):String{
         val buildName = Build.MANUFACTURER
@@ -351,13 +365,13 @@ class MyPageFragment :
 
 
     private fun logout() {
-
+        removeRefresh()
         removeJwt()
     }
 
     private fun withdraw() {
         secceion()
-
+        removeRefresh()
         removeJwt()
     }
 

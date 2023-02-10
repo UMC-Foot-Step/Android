@@ -20,9 +20,9 @@ import com.softsquared.template.kotlin.util.*
 
 class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySignupCheckBinding::inflate) {
 
-    var nicknamecheck = false
-    var checkbox1check = false
-    var checkbox2check = false
+    var nicknamecheck = getSignInNicknameCheck()
+    var checkbox1check = getCheck1()
+    var checkbox2check = getCheck2()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,19 +31,26 @@ class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySig
         var agree_check = findViewById<CheckBox>(R.id.agree_check)
         var authority_check = findViewById<CheckBox>(R.id.authority_check)
 
+        checknext()
 
         checkboxstatus()
 
         agree_check.setOnClickListener {
             val intent = Intent(this@SignupCheckActivity,SignupInfoActivity::class.java)
             saveCheck1(true)
-
+            checknext()
             startActivity(intent)
         }
 
         authority_check.setOnClickListener {
-            saveCheck2(true)
-
+            if(getCheck2()){
+                saveCheck2(false)
+                checkbox2check = false
+            }else{
+                saveCheck2(true)
+                checkbox2check = true
+            }
+            checknext()
         }
 
         signup_btn.setOnClickListener {
@@ -64,10 +71,11 @@ class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySig
                     if(etNickname.length()>2){
                         nicknamecheck = true
                         checknext()
-                        SaveSignInNickname(etNickname.text.toString())
+                        SaveSignInNickname(etNickname.text.toString(),nicknamecheck)
                     }
                     else{
                         nicknamecheck = false
+                        SaveSignInNickname(etNickname.text.toString(),nicknamecheck)
                         checknext()
                     }
 
@@ -83,8 +91,6 @@ class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySig
     }//onCreate
 
     private fun checknext(){
-        checkbox1check = getCheck1()
-        checkbox2check = binding.authorityCheck.isChecked
 
         if(nicknamecheck){
             if(checkbox1check){
@@ -120,7 +126,6 @@ class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySig
 
 
     private fun signUp(){
-        Log.d("Tester", "signUp: 여기까진 왔냐?")
 
         SignUpService().signUp(getUser(),object : SignUpView{
 
@@ -141,15 +146,16 @@ class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySig
                     Toast.makeText(this@SignupCheckActivity,message.toString(), Toast.LENGTH_SHORT)
                         .show()
                     backtoemail()
+                }else if("이메일 형식을 확인해주세요." == message){
+                    Toast.makeText(this@SignupCheckActivity,message.toString(), Toast.LENGTH_SHORT)
+                        .show()
+                    backtoemail()
                 }
-
             }
-
         })
     }
 
     private fun getUser():SignUpForm {
-        Log.d("Tester", "getUser: 가질러 왔냐?")
 //        var user = intent.getSerializableExtra("userData") as SignUpUser
         var id = getSignInId()!!
         var password = getSignInPw()!!

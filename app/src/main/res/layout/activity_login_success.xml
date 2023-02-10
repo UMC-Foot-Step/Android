@@ -47,7 +47,7 @@
         android:background="@drawable/solid_button"
         android:fontFamily="@font/noto_sans"
         android:text="시작"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textAlignment="center"
         android:gravity="center"
         android:textColor="#ffffff"
