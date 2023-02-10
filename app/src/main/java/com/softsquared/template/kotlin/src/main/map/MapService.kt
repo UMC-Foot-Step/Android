@@ -84,4 +84,26 @@ class MapService(val mapFragmentInterface: MapFragment) {
         }
     }
 
+    suspend fun tryGetMapFootStepCity(city :String){
+        var return_map=HashMap<Int,Marker>()
+//        ApplicationClass.sSharedPreferences.edit().putString(X_ACCESS_TOKEN, accessToken).apply()
+
+        val mapRetrofitInterface=ApplicationClass.sRetrofit.create(MapRetrofitInterface::class.java)
+
+        try{
+            val response=mapRetrofitInterface.getMapFootStepCity(city)
+            Log.d("FootStepList", "tryGetMapFootStepCity 되긴하니?")
+
+            if(response!=null)
+                mapFragmentInterface.onGetMapFootStepListSuccess(response as AllResponse)
+            else
+                Log.d("FootStepList", "맵 서비스 City에서의 결과 : ${response.toString()}")
+        }
+        catch (e: Exception) {
+            Log.d("FootStepList", "tryGetMapFootStepCity onGetMapFootStepListFailure "+e.message.toString())
+
+            mapFragmentInterface.onGetMapFootStepListFailure(e.message ?: "통신 오류")
+        }
+    }
+
 }

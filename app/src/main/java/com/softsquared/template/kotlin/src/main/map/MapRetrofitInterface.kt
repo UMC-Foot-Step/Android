@@ -18,4 +18,7 @@ interface MapRetrofitInterface {
     @GET("/footstep/specific/{start-date}/{end-date}")
     suspend fun getMapFootStepSpecific(@Path("start-date") start_date : String, @Path("end-date") end_date:String) : SpecificFstResponse
 
+    @GET("/footstep/city/{city-name}")
+    suspend fun getMapFootStepCity(@Path("city-name")city: String) : AllResponse
+
 }

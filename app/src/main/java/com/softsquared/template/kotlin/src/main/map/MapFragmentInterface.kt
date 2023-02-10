@@ -7,7 +7,7 @@ import com.softsquared.template.kotlin.src.main.map.model.SpecificFstResponse
 
 interface MapFragmentInterface {
 
-    fun onGetMapFootStepListSuccess(response:AllResponse)//:HashMap<Int,Marker>
+    fun onGetMapFootStepListSuccess(response:AllResponse)
 
     fun onGetMapFootStepListFailure(message:String)
 
@@ -15,7 +15,7 @@ interface MapFragmentInterface {
 
     fun onGetMapFootStepPopupFailure(message:String)
 
-    fun onGetMapFootStepSpecificSuccess(response:SpecificFstResponse)
+    suspend fun onGetMapFootStepSpecificSuccess(response:SpecificFstResponse)
 
     fun onGetMapFootStepSpecificFailure(message:String)
 
