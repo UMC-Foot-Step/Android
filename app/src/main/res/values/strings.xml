@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SoftSquared Android Kotlin Template</string>
+    <string name="app_name">당신의 발자취</string>
 
     <!-- Naming Rules -->
     <!-- 도메인명_컴포넌트함축어_용도(=목적) -->
