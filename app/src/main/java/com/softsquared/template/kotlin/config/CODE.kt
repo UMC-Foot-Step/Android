@@ -16,4 +16,5 @@ object UserCode {
     //회원가입 동의정보 스크롤
     const val check1 = "check1"
     const val check2 = "check2"
+    const val nicknamecheck = "nicknamecheck"
 }

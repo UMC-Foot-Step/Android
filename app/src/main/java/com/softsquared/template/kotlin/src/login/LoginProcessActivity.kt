@@ -21,21 +21,22 @@ import com.softsquared.template.kotlin.util.*
 
 class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityLoginProcessBinding::inflate) {
 
+    var id_check = false
+    var pw_check = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        var et_pw = findViewById<EditText>(R.id.et_pw)
-        var login_btn = findViewById<Button>(R.id.login_btn)
-        var register_btn = findViewById<Button>(R.id.register_btn)
+
 
         //로그인 전 제거하고 시작해야 하는 정보
         beforeStartActivity()
 
         // 비밀번호 4자리 이상 입력하지 않았을 경우에는 버튼 활성화 안되고 4자리 이상 입력한 경우에는 버튼 할성화
-        login_btn.isClickable = false
-        login_btn.isEnabled = false
+        binding.loginBtn.isClickable = false
+        binding.loginBtn.isEnabled = false
 
-        et_pw.addTextChangedListener(object : TextWatcher {
+        binding.etPw.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
             }
 
@@ -43,35 +44,73 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (et_pw.length() < 4) {
-                    login_btn.setBackgroundResource(R.drawable.login_button)
-                    login_btn.isClickable = false
-                    login_btn.isEnabled = false
-                } else {
-                    login_btn.setBackgroundResource(R.drawable.solid_button)
-                    login_btn.setTextColor(Color.parseColor("#ffffff"))
-                    login_btn.isClickable = true
-                    login_btn.isEnabled = true
+                if (binding.etPw.length() > 4) {
+                    id_check = true
+                    id_pw_Check()
+                }
+                else{
+                    id_check = false
+                    id_pw_Check()
+                }
+            }
+        })
+
+        binding.etId.addTextChangedListener(object :TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if(binding.etId.length()>4){
+                    pw_check = true
+                    id_pw_Check()
+                }
+                else{
+                    pw_check = false
+                    id_pw_Check()
                 }
             }
 
         })
 
-
-
         // 로그인 버튼 입력 -> 성공한 여부는 나중에 추가할 예정
-        login_btn.setOnClickListener{
+        binding.loginBtn.setOnClickListener{
             login()
         }
 
-        register_btn.setOnClickListener{
+        binding.registerBtn.setOnClickListener{
             startregisterActivity()
         }
 
 
+    }//onCreate
 
+    private fun id_pw_Check(){
+        if(id_check)
+        {
+            if(pw_check){
+                binding.loginBtn.setBackgroundResource(R.drawable.solid_button)
+                binding.loginBtn.setTextColor(Color.parseColor("#ffffff"))
+                binding.loginBtn.isClickable = true
+                binding.loginBtn.isEnabled = true
 
+            }
+            else{
 
+                binding.loginBtn.setBackgroundResource(R.drawable.login_button)
+                binding.loginBtn.isClickable = false
+                binding.loginBtn.isEnabled = false
+
+            }
+        }else{
+            binding.loginBtn.setBackgroundResource(R.drawable.login_button)
+            binding.loginBtn.isClickable = false
+            binding.loginBtn.isEnabled = false
+        }
 
     }
 
@@ -84,7 +123,7 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
                         saveJwt(result!!.grantType + result.jwt)
                         saveRefresh(result!!.grantType + result.refreshJwt)
                         startSuccessActivity()
-                        Log.d("Tester", "onLoginSuccess: 실행됨")
+
                     }
                 }
             }
@@ -92,7 +131,7 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
             override fun onLoginFailure(message: String?) {
                 Toast.makeText(this@LoginProcessActivity,message.toString(),Toast.LENGTH_SHORT)
                     .show()
-                Log.d("Tester", "onLoginFailure: dd")
+
             }
         })
 
@@ -129,6 +168,7 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
         removeSignInId()
         removeSignInPw()
         removeSignInNickname()
+        removeSignInNicknameCheck()
     }
 
 

@@ -1,21 +1,24 @@
 package com.softsquared.template.kotlin.src.main.myPage
 
+import android.annotation.SuppressLint
 import android.util.Log
 import com.softsquared.template.kotlin.config.ApplicationClass
 import com.softsquared.template.kotlin.src.login.TemporApi.RetrofitInterface
 import com.softsquared.template.kotlin.src.main.myPage.mypageResponseFile.ProfileResponse
-import com.softsquared.template.kotlin.src.main.myPage.mypageResponseFile.SecessionResponse
 import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 
 class ProfileService {
 
     private val api = ApplicationClass.sRetrofit.create(RetrofitInterface::class.java)
 
-    fun tryChangeProfile(accessToken : String, profile : MultipartBody.Part, profileView: ProfileView){
+    fun tryChangeProfile(
+        accessToken : String,
+        profile : MultipartBody.Part,
+        profileView: ProfileView
+    ) {
         val profileService = api.profile(accessToken , profile)
             profileService.enqueue(object : Callback<ProfileResponse>{
                 override fun onResponse(

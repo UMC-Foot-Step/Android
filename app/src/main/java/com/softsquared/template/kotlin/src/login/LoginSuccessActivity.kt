@@ -18,6 +18,7 @@ class LoginSuccessActivity : BaseActivity<ActivityLoginSuccessBinding>(ActivityL
 
         start_btn.setOnClickListener{
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
         }
     }
 }
