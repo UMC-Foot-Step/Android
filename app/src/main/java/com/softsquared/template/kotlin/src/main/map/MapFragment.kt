@@ -463,9 +463,10 @@ class MapFragment(var city:String="") :
                     withContext(Dispatchers.IO) {
             //CoroutineScope(Dispatchers.IO).launch {
 
-                tryGetMapFootStepCity(city)
+                        tryGetMapFootStepCity(city)
+                        city=""
                     }
-                    Log.d("FootStepList", "맵 프래그먼트의 onStart()-tryGetMapFootStepCity(city)")
+                    Log.d("FootStepList", "맵 프래그먼트의 onStart()-tryGetMapFootStepCity "+city)
                 }
             }
         }
@@ -555,10 +556,18 @@ class MapFragment(var city:String="") :
 
             val handler = Handler(Looper.getMainLooper())
             handler.postDelayed(Runnable { Toast.makeText(mContext, "조회 결과가 없습니다", Toast.LENGTH_SHORT).show() }, 0)
+            //Toast.makeText(mContext, "조회 결과가 없습니다", Toast.LENGTH_SHORT).show()
         }
 
         else{
             Log.d("FootStepList", "5번째 api ${response.toString()}")
+
+            if(response.result.size==0){
+                //Toast.makeText(mContext, "조회 결과가 없습니다", Toast.LENGTH_SHORT).show()
+                val handler = Handler(Looper.getMainLooper())
+                handler.postDelayed(Runnable { Toast.makeText(mContext, "조회 결과가 없습니다", Toast.LENGTH_SHORT).show() }, 0)
+                return
+            }
 
             CoroutineScope(Dispatchers.Main).launch {
                 Log.d("FootStepList", "CoroutineScope(Dispatchers.Main).launch 진입..???")
@@ -589,6 +598,7 @@ class MapFragment(var city:String="") :
     override fun onGetMapFootStepCityFailure(message: String) {
 //
     }
+
     //onStart에 있음
     override fun onGetMapFootStepListSuccess(response: AllResponse)=runBlocking<Unit> {
         Log.d("FootStepList", "onGetMapFootStepListSuccess 되긴하니??")
@@ -689,8 +699,8 @@ class MapFragment(var city:String="") :
 
         }
 
-                    //val job=launch(Dispatchers.Main){
-                    /*for ((key, value) in marker_hashMap) {
+        //val job=launch(Dispatchers.Main){
+        /*for ((key, value) in marker_hashMap) {
               Log.d("FootStepList", "첫번째 포문 도는 횟수")
 
               if((cnt<result_arr.size)&&key==result_arr[cnt].placeId) {
@@ -703,10 +713,7 @@ class MapFragment(var city:String="") :
             }
             */
 
-
-
         Log.d("FootStepList", "onGetMapFootStepSpecificSuccess 런블락킹 나감")
-
     }
 
     override fun onGetMapFootStepSpecificFailure(message: String) {
