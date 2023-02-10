@@ -18,10 +18,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Log.d("생명주기", "메인의 onCreate()")
+        Log.d("FootStepList", "메인의 onCreate()")
 
-
-        //supportFragmentManager.beginTransaction().replace(R.id.main_frm, MapFragment()).commitAllowingStateLoss()
+        val extras=intent?.extras
+        var placeName=""
+        if(extras!=null) {
+            placeName = extras!!["placeName"] as String
+            Log.d("FootStepList", "메인의 "+placeName)
+        }
+            //supportFragmentManager.beginTransaction().replace(R.id.main_frm, MapFragment()).commitAllowingStateLoss()
 
         binding.mainBtmFab.setOnClickListener {
             val intent = Intent(this@MainActivity, PostActivity::class.java)
@@ -37,7 +42,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                         //if (supportFragmentManager.findFragmentById(R.id.menu_main_btm_nav_map) != null){
                             supportFragmentManager.beginTransaction()
                                //.show(MapFragment())
-                                .replace(R.id.main_frm, MapFragment())
+                                .replace(R.id.main_frm, MapFragment(placeName))
                                 .commitAllowingStateLoss()
                         //}
                     }

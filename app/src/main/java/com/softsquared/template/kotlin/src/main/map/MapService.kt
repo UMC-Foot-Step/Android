@@ -5,6 +5,7 @@ import com.naver.maps.map.overlay.Marker
 import com.softsquared.template.kotlin.config.ApplicationClass
 import com.softsquared.template.kotlin.config.ApplicationClass.Companion.X_ACCESS_TOKEN
 import com.softsquared.template.kotlin.src.main.map.model.AllResponse
+import com.softsquared.template.kotlin.src.main.map.model.CityResponse
 import com.softsquared.template.kotlin.src.main.map.model.PopupResponse
 import com.softsquared.template.kotlin.src.main.map.model.SpecificFstResponse
 import retrofit2.Call
@@ -85,7 +86,6 @@ class MapService(val mapFragmentInterface: MapFragment) {
     }
 
     suspend fun tryGetMapFootStepCity(city :String){
-        var return_map=HashMap<Int,Marker>()
 //        ApplicationClass.sSharedPreferences.edit().putString(X_ACCESS_TOKEN, accessToken).apply()
 
         val mapRetrofitInterface=ApplicationClass.sRetrofit.create(MapRetrofitInterface::class.java)
@@ -95,14 +95,14 @@ class MapService(val mapFragmentInterface: MapFragment) {
             Log.d("FootStepList", "tryGetMapFootStepCity 되긴하니?")
 
             if(response!=null)
-                mapFragmentInterface.onGetMapFootStepListSuccess(response as AllResponse)
+                mapFragmentInterface.onGetMapFootStepCitySuccess(response as CityResponse)
             else
                 Log.d("FootStepList", "맵 서비스 City에서의 결과 : ${response.toString()}")
         }
         catch (e: Exception) {
             Log.d("FootStepList", "tryGetMapFootStepCity onGetMapFootStepListFailure "+e.message.toString())
 
-            mapFragmentInterface.onGetMapFootStepListFailure(e.message ?: "통신 오류")
+            mapFragmentInterface.onGetMapFootStepCityFailure(e.message ?: "통신 오류")
         }
     }
 
