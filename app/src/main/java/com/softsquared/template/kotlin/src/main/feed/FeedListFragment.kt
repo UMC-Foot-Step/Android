@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseFragment
 import com.softsquared.template.kotlin.databinding.FragmentFeedBinding
+import com.softsquared.template.kotlin.src.main.MainActivity
 import com.softsquared.template.kotlin.src.main.feed.info.FeedInfoActivity
 import com.softsquared.template.kotlin.src.main.feed.models.FeedList
 import com.softsquared.template.kotlin.src.main.feed.models.FeedListResponse
@@ -19,6 +20,7 @@ class FeedListFragment :
     BaseFragment<FragmentFeedBinding>(FragmentFeedBinding::bind, R.layout.fragment_feed), FeedListFragmentInterface{
 
     private lateinit var feedListFragment: FeedListFragment
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -49,9 +51,11 @@ class FeedListFragment :
             binding.feedlistRvFeeds.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(activity)
-                adapter = FeedListFragmentAdapter(
-                    feedListResponse.result.feedListDto
-                    , feedListFragment)
+                adapter = activity?.let {
+                    FeedListFragmentAdapter(
+                        feedListResponse.result.feedListDto, feedListFragment, it
+                    )
+                }
             }
         }
 

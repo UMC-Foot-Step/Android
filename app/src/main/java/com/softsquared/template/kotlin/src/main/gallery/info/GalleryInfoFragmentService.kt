@@ -1,6 +1,7 @@
 package com.softsquared.template.kotlin.src.main.gallery.info
 
 
+import android.util.Log
 import com.softsquared.template.kotlin.config.ApplicationClass
 import com.softsquared.template.kotlin.config.BaseResponse
 import com.softsquared.template.kotlin.src.main.Example.HomeRetrofitInterface

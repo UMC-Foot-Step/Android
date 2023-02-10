@@ -1,5 +1,6 @@
 package com.softsquared.template.kotlin.config
 
+import android.util.Log
 import com.softsquared.template.kotlin.config.ApplicationClass.Companion.X_ACCESS_TOKEN
 import com.softsquared.template.kotlin.config.ApplicationClass.Companion.sSharedPreferences
 import okhttp3.Interceptor

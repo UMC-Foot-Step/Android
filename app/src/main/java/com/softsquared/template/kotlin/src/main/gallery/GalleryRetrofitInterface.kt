@@ -7,6 +7,7 @@ import com.softsquared.template.kotlin.src.main.Example.models.SignUpResponse
 import com.softsquared.template.kotlin.src.main.Example.models.UserResponse
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostCommentRequest
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostInfoResponse
+import com.softsquared.template.kotlin.src.main.gallery.models.PostListByDateResponse
 import com.softsquared.template.kotlin.src.main.gallery.models.PostListResponse
 import retrofit2.Call
 import retrofit2.http.*
@@ -57,4 +58,10 @@ interface GalleryRetrofitInterface {
      */
     @GET("footstep/{place_id}/list")
     fun getPostListByPosition(@Path("place_id") place_id: Int) : Call<PostListResponse>
+
+    /*
+        To Do 8. Gallery - 날짜별 특정날짜 게시글 리스트 조회 API 호출
+    */
+    @GET("footstep/gallery/{date}")
+    fun getGalleryPostListByDate(@Path("date") date: String) : Call<PostListByDateResponse>
 }

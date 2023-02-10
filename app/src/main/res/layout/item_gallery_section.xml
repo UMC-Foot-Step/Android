@@ -10,8 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/gallery_tv_year_num"
-        android:textStyle="bold"
-        android:textSize="16sp"
+        android:textStyle="normal"
+        android:textSize="20sp"
         android:textColor="#000000"
 
 
@@ -26,11 +26,11 @@
         android:layout_height="wrap_content"
         android:text="@string/gallery_tv_year"
         android:textColor="#000000"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textStyle="normal"
 
 
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintStart_toEndOf="@+id/gallery_tv_year_num"
         app:layout_constraintTop_toTopOf="@+id/gallery_tv_year_num" />
 
@@ -41,8 +41,8 @@
         android:layout_height="wrap_content"
         android:text="@string/gallery_tv_month_num"
         android:textColor="#000000"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textStyle="normal"
 
 
         android:layout_marginLeft="3dp"
@@ -55,11 +55,11 @@
         android:layout_height="wrap_content"
         android:text="@string/gallery_tv_month"
         android:textColor="#000000"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textStyle="normal"
 
 
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintStart_toEndOf="@+id/gallery_tv_month_num"
         app:layout_constraintTop_toTopOf="@+id/gallery_tv_year_num" />
 
@@ -69,8 +69,8 @@
         android:layout_height="wrap_content"
         android:text="@string/gallery_tv_day_num"
         android:textColor="#000000"
-        android:textSize="16sp"
-        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textStyle="normal"
 
 
         android:layout_marginLeft="3dp"
@@ -83,11 +83,11 @@
         android:layout_height="wrap_content"
         android:text="@string/gallery_tv_day"
         android:textColor="#000000"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textStyle="normal"
 
 
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintStart_toEndOf="@+id/gallery_tv_day_num"
         app:layout_constraintTop_toTopOf="@+id/gallery_tv_year_num" />
 

@@ -1,5 +1,7 @@
 package com.softsquared.template.kotlin.src.main.gallery.info
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -105,11 +107,22 @@ class GalleryInfoFragment (
      */
     override fun onDeletePostCommentSuccess(response: BaseResponse) {
 
-        /*
+        if(response.isSuccess == false) {
+            val builder = AlertDialog.Builder(binding.root.context)
+            builder.setTitle("댓글 삭제하기")
+                .setMessage("타 유저의 댓글을 삭제하실 수가 없습니다.")
+                .setPositiveButton("확인",
+                    DialogInterface.OnClickListener { dialog, id ->
+                    })
+            // 다이얼로그를 띄워주기
+            builder.show()
+        }
+        else {
+            /*
             To Do 1. 게시글 뷰 업데이트 - 정보 상세 조회 API 재호출
          */
-        GalleryInfoService(galleryInfoActivity).getPostInfo(posting_id)
-
+            GalleryInfoService(galleryInfoActivity).getPostInfo(posting_id)
+        }
     }
     override fun onDeletePostCommentFailure(message: String) {
         showCustomToast("API 요청 실패, LogCat 확인")

@@ -1,17 +1,28 @@
 package com.softsquared.template.kotlin.src.main.gallery
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Recycler
+import com.softsquared.template.kotlin.databinding.ItemGalleryExceptionBinding
 import com.softsquared.template.kotlin.databinding.ItemGallerySectionBinding
 import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
 
 class GalleryFragmentAdater(
     private val daySectionFeetStepList: List<SectionModel>,
     private val galleryFragmentInterface: GalleryFragmentInterface
-) : RecyclerView.Adapter<GalleryFragmentAdater.MyViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    // 리사이클러 뷰의 데이터가 존재
+    private val ITEM = 1
+
+    // 리사이클러 뷰의 데이터가 존재하지 않음
+    private val EMPTY = 0
+
+
+    // 데이터가 존재할 때의 뷰홀더
     class MyViewHolder(
         private val binding: ItemGallerySectionBinding,
         val galleryFragmentInterface: GalleryFragmentInterface
@@ -58,15 +69,69 @@ class GalleryFragmentAdater(
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        return MyViewHolder(ItemGallerySectionBinding.inflate(LayoutInflater.from(parent.context),
+
+    /*
+        To Do 2. 데이터가 존재하지 않을 때의 뷰홀더 정의
+     */
+    class EmptyViewHoder(
+        val binding: ItemGalleryExceptionBinding
+    ) : RecyclerView.ViewHolder(binding.root) {
+
+    }
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+
+        return when (viewType) {
+            ITEM ->
+                MyViewHolder(ItemGallerySectionBinding.inflate(LayoutInflater.from(parent.context),
             parent, false), galleryFragmentInterface)
+            EMPTY ->
+                EmptyViewHoder(ItemGalleryExceptionBinding.inflate(LayoutInflater.from(parent.context),
+            parent, false))
+            else -> {
+                throw ClassCastException("Unknown viewType $viewType")
+            }
+        }
+
+//        return MyViewHolder(ItemGallerySectionBinding.inflate(LayoutInflater.from(parent.context),
+//            parent, false), galleryFragmentInterface)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.bind(daySectionFeetStepList[position])
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        when(holder) {
+
+            // ITEM
+            is MyViewHolder -> {
+                holder.bind(daySectionFeetStepList[position])
+            }
+
+            // Empty
+            is EmptyViewHoder -> {
+
+            }
+        }
     }
 
-    override fun getItemCount() = daySectionFeetStepList.size
+
+    /*
+        To Do 1. 데이터 유무에 따른, 리사이클러 뷰 아이템 갯수 설정
+     */
+    override fun getItemCount(): Int {
+        return if (daySectionFeetStepList.size == 0) 1 else daySectionFeetStepList.size
+    }
+
+
+    // 데이터 유무에 따른, 뷰 구현
+    override fun getItemViewType(position: Int): Int {
+//        Log.d("리사이클러 아이템 갯수 체크", getItemCount().toString())
+//        Log.d("리사이클러 값 체크", "지나가?")
+        return if (daySectionFeetStepList.size == 0){
+            EMPTY
+        } else {
+            ITEM
+        }
+    }
+
 
 }

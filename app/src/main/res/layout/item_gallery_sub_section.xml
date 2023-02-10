@@ -10,6 +10,7 @@
         android:id="@+id/gallery_iv_postimg"
         android:layout_width="156dp"
         android:layout_height="156dp"
+        android:scaleType="centerCrop"
 
         android:layout_marginLeft="16dp"
         android:layout_marginTop="10dp"

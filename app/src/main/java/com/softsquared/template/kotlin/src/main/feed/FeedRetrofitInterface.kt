@@ -1,8 +1,10 @@
 package com.softsquared.template.kotlin.src.main.feed
 
 import com.softsquared.template.kotlin.src.main.feed.models.FeedListResponse
+import com.softsquared.template.kotlin.src.main.gallery.models.PostListResponse
 import retrofit2.http.GET
 import retrofit2.Call
+import retrofit2.http.Path
 
 interface FeedRetrofitInterface {
 
@@ -21,6 +23,8 @@ interface FeedRetrofitInterface {
     /*
         To Do 3. 피드 - 특정 유저 피드 리스트 조회 API
     */
+    @GET("footstep/feed/{user-id}")
+    fun getSpecificFeedList(@Path("user-id") user_id: Int) : Call<PostListResponse>
 
 
 }

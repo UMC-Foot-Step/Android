@@ -9,33 +9,69 @@
         android:id="@+id/gallery_title_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/gallery_tv_title"
-
-        android:fontFamily="@font/noto_sans_extrabold"
-        android:textStyle="normal"
-        android:textSize="24sp"
-        android:textColor="#000000"
-        android:layout_marginTop ="5dp"
         android:layout_marginLeft="16dp"
+
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/noto_sans_extrabold"
+        android:text="@string/gallery_tv_title"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="normal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/gallery_feature_txt"
+        android:id="@+id/gallery_feature_all_txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/gallery_tv_feature_1"
 
 
-        android:textStyle="normal"
-        android:textSize="12sp"
-        android:textColor="#000000"
+        android:layout_marginRight="3dp"
         android:gravity="end"
+        android:text="@string/gallery_tv_feature_1"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/gallery_feature_date_txt" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="39dp"
+        android:layout_marginRight="3dp"
+        android:text="@string/gallery_tv_dot"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toStartOf="@+id/gallery_feature_date_txt"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/gallery_feature_date_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-2dp"
+        android:layout_marginRight="3dp"
+        android:text="@string/gallery_tv_feature_2"
+        android:textColor="#000000"
+
+        android:textSize="12sp"
+        android:textStyle="normal"
+        app:layout_constraintEnd_toStartOf="@+id/imageView2"
+        app:layout_constraintTop_toTopOf="@+id/imageView2" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="13dp"
+        android:layout_height="13dp"
         android:layout_marginTop="43dp"
         android:layout_marginRight="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/post_ib_cal" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/gallery_rv_feetstep_list"
@@ -46,5 +82,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
