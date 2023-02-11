@@ -1,5 +1,6 @@
 package com.softsquared.template.kotlin.src.main.postupdate
 
+import com.softsquared.template.kotlin.src.main.postupdate.models.PostEditResponse
 import com.softsquared.template.kotlin.src.main.postupdate.models.PostUpdateResponse
 
 interface PostUpdateActivityInterface {
@@ -8,4 +9,10 @@ interface PostUpdateActivityInterface {
     fun onGetPostUpdateInfoSuccess(response: PostUpdateResponse)
     // 요청 실패
     fun onGetPostUpdateInfoFailure(message: String)
+
+    // 발자취 정호 post api
+    // post 성공
+    fun onPostPostUpdateInfoSuccess(response: PostEditResponse)
+    // post 실패
+    fun onPostPostUpdateInfoFailure(message: String)
 }
