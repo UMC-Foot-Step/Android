@@ -23,8 +23,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
         Log.d("생명주기", "메인의 onCreate()")
 
-
-        //supportFragmentManager.beginTransaction().replace(R.id.main_frm, MapFragment()).commitAllowingStateLoss()
+        var placeNameChk=false
+        val extras=intent?.extras
+        var placeName=""
+        if(extras!=null) {
+            placeName = extras!!["placeName"] as String
+            Log.d("FootStepList", "메인의 "+placeName)
+            placeNameChk=true
+        }
+            //supportFragmentManager.beginTransaction().replace(R.id.main_frm, MapFragment()).commitAllowingStateLoss()
 
         binding.mainBtmFab.setOnClickListener {
             val intent = Intent(this@MainActivity, PostActivity::class.java)
@@ -40,13 +47,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                         //if (supportFragmentManager.findFragmentById(R.id.menu_main_btm_nav_map) != null){
                             supportFragmentManager.beginTransaction()
                                //.show(MapFragment())
-                                .replace(R.id.main_frm, MapFragment())
+                                .replace(R.id.main_frm, MapFragment(placeName))
                                 .commitAllowingStateLoss()
                         //}
                     }
 
                     // 갤러리 (GalleryService에서 더미데이터를 생성하고, GalleryFragment에 더미데이터 전달)
                     R.id.menu_main_btm_nav_gallary -> {
+                        if(placeNameChk==true)
+                            placeName=""
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_frm, GalleryFragment())
                             .commitAllowingStateLoss()
@@ -54,6 +63,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
                     // 피드
                     R.id.menu_main_btm_nav_feed -> {
+                        if(placeNameChk==true)
+                            placeName=""
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_frm, FeedListFragment())
                             .commitAllowingStateLoss()
@@ -61,6 +72,8 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
                     // 마이페이지
                     R.id.menu_main_btm_nav_my_page -> {
+                        if(placeNameChk==true)
+                            placeName=""
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_frm, MyPageFragment())
                             .commitAllowingStateLoss()
@@ -71,8 +84,21 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
             selectedItemId = R.id.menu_main_btm_nav_map
         }
     }
+
     override fun onDestroy() {
         Log.d("생명주기", "메인의 onDestroy()")
         super.onDestroy()
+    }
+
+    override fun onStart() {
+        Log.d("생명주기", "메인의 onStart()")
+
+        super.onStart()
+    }
+
+    override fun onResume() {
+        Log.d("생명주기", "메인의 onResume()")
+
+        super.onResume()
     }
 }
