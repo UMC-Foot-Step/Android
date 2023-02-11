@@ -1,21 +1,28 @@
 package com.softsquared.template.kotlin.src.main.feed
 
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.databinding.ItemFeedPostBinding
+import com.softsquared.template.kotlin.src.main.MainActivity
 import com.softsquared.template.kotlin.src.main.feed.models.FeedList
+import com.softsquared.template.kotlin.src.main.feed.specific.FeedSpecificListFragment
 
 class FeedListFragmentAdapter(
     private val feedList: ArrayList<FeedList>,
-    private val feedListFragmentInterface: FeedListFragmentInterface
+    private val feedListFragmentInterface: FeedListFragmentInterface,
+    private val activity: FragmentActivity
 ) : RecyclerView.Adapter<FeedListFragmentAdapter.MyViewHolder>() {
 
     class MyViewHolder(
         private val binding: ItemFeedPostBinding,
-        private val feedListFragmentInterface: FeedListFragmentInterface
+        private val feedListFragmentInterface: FeedListFragmentInterface,
+        private val activity: FragmentActivity
     ) : RecyclerView.ViewHolder(binding.root){
 
 
@@ -48,6 +55,17 @@ class FeedListFragmentAdapter(
             /*
                 To Do 3. 유저 닉네임 클릭 이벤트
              */
+            binding.feedlistTvUserNickname.setOnClickListener {
+                var fragment = FeedSpecificListFragment()
+                var bundle = Bundle()
+                bundle.putInt("userId", feedList.userId)
+                bundle.putString("userName", feedList.nickName)
+                fragment.arguments = bundle //fragment의 arguments에 데이터를 담은 bundle을 넘겨줌
+
+                activity?.supportFragmentManager!!.beginTransaction()
+                    .replace(R.id.main_frm, fragment)
+                    .commit()
+            }
         }
     }
 
@@ -58,8 +76,7 @@ class FeedListFragmentAdapter(
             ItemFeedPostBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent, false
-            ), feedListFragmentInterface
-        )
+            ), feedListFragmentInterface, activity)
     }
 
     override fun onBindViewHolder(holder: FeedListFragmentAdapter.MyViewHolder, position: Int) {

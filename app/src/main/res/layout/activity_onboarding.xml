@@ -109,6 +109,7 @@
         android:background="@drawable/solid_button"
         android:fontFamily="@font/noto_sans"
         android:text="다음"
+        android:textSize="18sp"
         android:textAlignment="center"
         android:gravity="center"
         android:textColor="#ffffff"

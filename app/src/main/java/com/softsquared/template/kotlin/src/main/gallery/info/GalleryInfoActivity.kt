@@ -94,7 +94,7 @@ class GalleryInfoActivity()
                             .setMessage("해당 게시글을 수정합니다.")
                             .setPositiveButton("확인",
                                 DialogInterface.OnClickListener { dialog, id ->
-                                    showCustomToast("게시글 수정 진행")
+//                                    showCustomToast("게시글 수정 진행")
 
                                     /*
                                         To Do 3.3 게시글 수정 액티비티로 전환
@@ -107,12 +107,12 @@ class GalleryInfoActivity()
                                 })
                             .setNegativeButton("취소",
                                 DialogInterface.OnClickListener { dialog, id ->
-                                    showCustomToast("게시글 수정 취소")
+//                                    showCustomToast("게시글 수정 취소")
                                 })
                         // 다이얼로그를 띄워주기
                         builder.show()
 
-                        showCustomToast("수정하기 버튼 클릭")
+//                        showCustomToast("수정하기 버튼 클릭")
                         // 수정하기 재확인 다이얼로그 띄움
                         // 수정하기 activity로 전환
                     }
@@ -127,7 +127,7 @@ class GalleryInfoActivity()
                             .setMessage("해당 게시글을 삭제합니다.")
                             .setPositiveButton("확인",
                                 DialogInterface.OnClickListener { dialog, id ->
-                                    showCustomToast("게시글 삭제완료")
+//                                    showCustomToast("게시글 삭제완료")
 
                                     /*
                                         To Do 3.2 게시글 삭제 API 구현
@@ -137,7 +137,7 @@ class GalleryInfoActivity()
                                 })
                             .setNegativeButton("취소",
                                 DialogInterface.OnClickListener { dialog, id ->
-                                    showCustomToast("게시글 삭제취소")
+//                                    showCustomToast("게시글 삭제취소")
                                 })
                         // 다이얼로그를 띄워주기
                         builder.show()
@@ -178,7 +178,7 @@ class GalleryInfoActivity()
         binding.galleryTvTitle.text = response.result.postingName
 
         // Fragment에서 뿌릴 데이터 전달
-        supportFragmentManager.beginTransaction().replace(com.softsquared.template.kotlin.R.id.galleryinfo_frm, GalleryInfoFragment(this, response.result, posting_id,)).commitAllowingStateLoss()
+        supportFragmentManager.beginTransaction().replace(com.softsquared.template.kotlin.R.id.galleryinfo_frm, GalleryInfoFragment(this, response.result, posting_id)).commitAllowingStateLoss()
 
     }
     // 정보 상세 조회 API 요청 실패

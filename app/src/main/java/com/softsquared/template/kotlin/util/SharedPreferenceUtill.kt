@@ -117,15 +117,17 @@ fun removeSignInPw(){
     editor.apply()
 }
 
-fun SaveSignInNickname(nickname:String){
+fun SaveSignInNickname(nickname:String,savenickname:Boolean){
     val spf = ApplicationClass.sSharedPreferences
     val editor = spf.edit()
 
     editor.putString(UserCode.nickname,nickname)
+    editor.putBoolean(UserCode.nicknamecheck, savenickname)
     editor.apply()
 }
 
 fun getSignInNickname():String? = ApplicationClass.sSharedPreferences.getString(UserCode.nickname,null)
+fun getSignInNicknameCheck():Boolean = ApplicationClass.sSharedPreferences.getBoolean(UserCode.nicknamecheck,false)
 
 fun removeSignInNickname(){
     val spf = ApplicationClass.sSharedPreferences
@@ -135,6 +137,13 @@ fun removeSignInNickname(){
     editor.apply()
 }
 
+fun removeSignInNicknameCheck(){
+    val spf = ApplicationClass.sSharedPreferences
+    val editor = spf.edit()
+
+    editor.remove(UserCode.nicknamecheck)
+    editor.apply()
+}
 
 
 

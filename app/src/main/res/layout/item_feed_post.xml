@@ -9,6 +9,7 @@
         android:id="@+id/feedlist_iv_feed_img"
         android:layout_width="328dp"
         android:layout_height="328dp"
+        android:scaleType="centerCrop"
 
         android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,14 +21,15 @@
         android:id="@+id/feedlist_tv_user_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/feed_tv_user_name"
-
-
         android:layout_marginTop="3dp"
+
+
+        android:layout_marginLeft="7dp"
+        android:text="@string/feed_tv_user_name"
         android:textColor="#000000"
         android:textSize="14sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/feedlist_iv_feed_img"
+        app:layout_constraintStart_toEndOf="@+id/imageView4"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
@@ -128,6 +130,16 @@
         android:layout_marginTop="5dp"
         app:layout_constraintStart_toStartOf="@+id/feedlist_iv_position"
         app:layout_constraintTop_toBottomOf="@+id/feedlist_iv_position" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="21dp"
+        android:layout_height="21dp"
+
+        android:layout_marginTop="1.5dp"
+        app:layout_constraintStart_toStartOf="@+id/feedlist_iv_feed_img"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/user" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

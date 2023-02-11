@@ -14,22 +14,18 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
-import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
-import com.naver.maps.map.util.FusedLocationSource
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.databinding.ActivitySearchResultBinding
 import com.softsquared.template.kotlin.src.main.gallery.map.MapGalleryActivity
-import com.softsquared.template.kotlin.src.main.map.ResultPopupListMap
 import com.softsquared.template.kotlin.src.main.map.model.PopupResponse2
 import com.softsquared.template.kotlin.src.main.map.model.ResultPopupList2
 
@@ -39,10 +35,10 @@ class SearchResultActivity: BaseActivity<ActivitySearchResultBinding>(ActivitySe
     private lateinit var v1: View
     lateinit var arrData:ResultPopupList2
 
-
     var dataX:Double=0.0
     var dataY:Double=0.0
     var dataTitle:String=""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.d("생명주기", "서치리절트액티비티의 onCreate()")
@@ -95,16 +91,12 @@ class SearchResultActivity: BaseActivity<ActivitySearchResultBinding>(ActivitySe
         super.onLowMemory()
         binding.mapView2?.onLowMemory()
     }
+
     override fun onMapReady(@NonNull naverMap: NaverMap) {
         this.naverMap = naverMap
 
         SearchService(this).tryGetMapSearchFootStep(dataY,dataX)
        // SearchService(this).tryGetMapSearchFootStep(37.5776087830657,126.976896737645)
-
-      /*  naverMap.setOnMapClickListener{  _, coord ->
-            binding.searchPlaceInfo.visibility=View.GONE
-        }
-       */
     }
 
     fun setMarkerClickEvent(
@@ -145,7 +137,7 @@ class SearchResultActivity: BaseActivity<ActivitySearchResultBinding>(ActivitySe
             val imgUrl=arrData.imageUrl
             val postingCount=arrData.postingCount
 
-            val textData: String = "내 발자취 ${postingCount+1}개"
+            val textData: String = "내 발자취 ${postingCount}개"
 
             val spannable = SpannableStringBuilder(textData)
             val boldSpan = StyleSpan(Typeface.BOLD)
@@ -157,7 +149,6 @@ class SearchResultActivity: BaseActivity<ActivitySearchResultBinding>(ActivitySe
             else if(postingCount/10>0) {
                 spannable.setSpan(boldSpan, 6, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                 //Log.d("ddd","marker_num%10>0 : $marker_num 의 결과 : ${marker_num%10}")
-
             }
 
             val colorSpan = ForegroundColorSpan(ContextCompat.getColor(this, R.color.orange))
@@ -167,13 +158,11 @@ class SearchResultActivity: BaseActivity<ActivitySearchResultBinding>(ActivitySe
             else if(postingCount/10>0)
                 spannable.setSpan(colorSpan, 6, 8, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
 
-
             v1.findViewById<TextView>(R.id.feetTextView).text = spannable
 
-            //v1.findViewById<ImageView>(R.id.thumbnailImageView).setImageResource(imgUrl)
-            val Imageview=v1.findViewById<ImageView>(R.id.thumbnailImageView)//.setImageResource(imageList[marker_num%4])
+            val imageView=v1.findViewById<ImageView>(R.id.thumbnailImageView)
 
-            Glide.with(this).load(imgUrl).into(Imageview)
+            Glide.with(this).load(imgUrl).into(imageView)
             v1.setOnClickListener{
                 val intent= Intent(this, MapGalleryActivity::class.java).apply {
                     putExtra("placeId", arrData.placeId)

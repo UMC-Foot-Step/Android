@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="328dp"
+        android:layout_height="244dp"
+        android:background="@drawable/roundsquare"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="25dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="26dp"
+            android:layout_gravity="center"
+            android:src="@drawable/location"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="17dp"
+            android:layout_marginRight="48dp"
+            android:text="당신의 발자취에서 기기 위치에 엑세스하도록 허용하시겠습니까?"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textStyle="normal"
+            android:fontFamily="sans-serif-medium"/>
+
+        <Button
+            android:layout_width="112dp"
+            android:layout_height="20dp"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="26dp"
+            android:layout_gravity="center"
+            android:text="앱 사용중에만 허용"
+            android:textColor="#2764ff"
+            android:textSize="14sp"
+            android:textStyle="normal" />
+
+        <Button
+            android:layout_width="69dp"
+            android:layout_height="20dp"
+            android:text="이번만 허용"
+            android:textColor="#2764ff"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:textSize="14sp"
+            android:textStyle="normal"/>
+
+        <Button
+            android:layout_width="26dp"
+            android:layout_height="20dp"
+            android:text="거부"
+            android:textColor="#2764ff"
+            android:background="@android:color/transparent"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:textSize="14sp"
+            android:textStyle="normal"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

@@ -22,7 +22,8 @@ interface RetrofitInterface {
     fun login(@Body user: User): Call<LoginResponse>
 
     @POST("/reissue")
-    fun reissue(@Body user: User): Call<LoginResponse>
+    fun reissue(@Header("RefreshToken") refreshToken: String
+    ): Call<LoginResponse>
 
 
 
@@ -51,6 +52,8 @@ interface RetrofitInterface {
     @PATCH("/password")
     fun password(@Body user: User): Call <MypageResponse>
 
+
+    @Multipart
     @PATCH("/my-page/profile")
     fun profile(
         @Header("Authorization") accessToken: String,

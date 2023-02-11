@@ -7,10 +7,18 @@ import android.os.Looper
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.RelativeSizeSpan
+import android.util.Log
 import android.widget.TextView
 import com.softsquared.template.kotlin.R
+import com.softsquared.template.kotlin.config.ApplicationClass
 import com.softsquared.template.kotlin.config.BaseActivity
+import com.softsquared.template.kotlin.config.UserCode
 import com.softsquared.template.kotlin.databinding.ActivitySplashBinding
+import com.softsquared.template.kotlin.src.login.DataFile.Result
+import com.softsquared.template.kotlin.src.login.LoginDataSource.NetworkDataSource
+import com.softsquared.template.kotlin.src.login.LoginProcessActivity
+import com.softsquared.template.kotlin.src.login.LoginView
+import com.softsquared.template.kotlin.src.main.MainActivity
 import com.softsquared.template.kotlin.src.onboarding.OnboardingActivity
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {
@@ -19,7 +27,6 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_splash)
 
         textView = findViewById(R.id.text1)
 
@@ -29,9 +36,39 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
         builder.setSpan(sizeSpan, 0, 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         textView.text = builder
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            startActivity(Intent(this, OnboardingActivity::class.java))
-            finish()
-        }, 1500)
+        autoLogin()
+
     }
+
+
+    //자동로그인 기능 but 어째서인지 Splash가 너무 빨리 끝남..
+    fun autoLogin(){
+        Log.d("Tester", "autoLogin: ")
+        val spf = ApplicationClass.sSharedPreferences
+        val refresh = spf.getString(UserCode.refresh,null)
+        if(refresh == null) {
+            Log.d("Tester", "autoLogin: ddd")
+            startActivity(OnboardingActivity::class.java)
+        }
+        else
+            NetworkDataSource().autoLogin(refresh,object : LoginView {
+                override fun onLoginSuccess(code: Int, result: Result?) {
+                    startActivity(MainActivity::class.java)
+                }
+
+                override fun onLoginFailure(message: String?) {
+                    Log.d("Tester", "onLoginFailure: $message")
+                    showCustomToast(message!!)
+                    startActivity(LoginProcessActivity::class.java)
+                }
+            })
+    }
+    private fun startActivity(cls: Class<*>){
+        Handler(Looper.getMainLooper())
+            .postDelayed({
+                startActivity(Intent(this,cls))
+                finish()
+            },1500)
+    }
+
 }

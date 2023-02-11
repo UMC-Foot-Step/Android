@@ -10,6 +10,8 @@
         android:layout_width="328dp"
         android:layout_height="328dp"
         android:layout_marginTop="15dp"
+        android:scaleType="centerCrop"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -155,7 +157,7 @@
 
     <TextView
         android:id="@+id/galleryinfo_tv_post_des"
-        android:layout_width="wrap_content"
+        android:layout_width="345dp"
         android:layout_height="wrap_content"
         android:text="@string/galleryinfo_tv_post_des"
         android:fontFamily="sans-serif-medium"
@@ -163,6 +165,8 @@
         android:textSize="14sp"
         android:textColor="#000000"
 
+        android:maxLines="2"
+        android:ellipsize="end"
         android:layout_marginTop="6dp"
         app:layout_constraintStart_toStartOf="@+id/galleryinfo_tv_post_username"
         app:layout_constraintTop_toBottomOf="@+id/galleryinfo_tv_post_username" />

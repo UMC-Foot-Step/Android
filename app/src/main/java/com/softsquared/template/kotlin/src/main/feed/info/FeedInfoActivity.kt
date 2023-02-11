@@ -82,12 +82,12 @@ class FeedInfoActivity()
                             .setMessage("해당 게시글을 신고합니다.")
                             .setPositiveButton("확인",
                                 DialogInterface.OnClickListener { dialog, id ->
-                                    showCustomToast("신고하기 접수 완료")
+                                    showCustomToast("신고 접수완료")
                                 })
 
                             .setNegativeButton("취소",
                                 DialogInterface.OnClickListener { dialog, id ->
-                                    showCustomToast("신고하기 접수 취소")
+//                                    showCustomToast("신고하기 접수 취소")
                                 })
                         // 다이얼로그를 띄워주기
                         builder.show()
@@ -208,7 +208,20 @@ class FeedInfoActivity()
         /*
             To Do 1. 상세 조회 뷰 업데이트
          */
-        FeedInfoService(this).getPostInfo(posting_id)
+        if(response.isSuccess == false) {
+            val builder = AlertDialog.Builder(binding.root.context)
+            builder.setTitle("댓글 삭제하기")
+                .setMessage("타 유저의 댓글을 삭제하실 수가 없습니다.")
+                .setPositiveButton("확인",
+                    DialogInterface.OnClickListener { dialog, id ->
+                    })
+            // 다이얼로그를 띄워주기
+            builder.show()
+        }
+        else {
+            FeedInfoService(this).getPostInfo(posting_id)
+        }
+
     }
     // 댓글 삭제 API 요청실패 메소드
     override fun onDeletePostCommentFailure(message: String) {

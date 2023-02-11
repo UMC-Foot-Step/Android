@@ -1,5 +1,6 @@
 package com.softsquared.template.kotlin.src.main.gallery
 
+import com.softsquared.template.kotlin.src.main.gallery.models.PostListByDateResponse
 import com.softsquared.template.kotlin.src.main.gallery.models.PostListResponse
 
 // Service에서 API 요청에 대한 응답 값을 Fragment에 전달하기 위한 "중간 인터페이스"
@@ -24,4 +25,11 @@ interface GalleryFragmentInterface {
         동일 장소별 발자취 게시글 리스트 조회 Activity를 테스팅하기 위한 메소드
      */
     fun testChangeMapGalleryActivity()
+
+    /*
+        TO Do 2. 날짜별 특정날짜 게시글 리스트 조회 API 응답 메소드
+     */
+    fun onGetGalleryPostListByDateSuccess(response: PostListByDateResponse)
+
+    fun onGetGalleryPostListByDateFailure(message: String)
 }

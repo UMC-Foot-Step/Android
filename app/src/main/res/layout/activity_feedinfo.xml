@@ -28,6 +28,9 @@
         android:textColor="#000000"
         android:textSize="20sp"
 
+        android:ems="12"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:layout_marginTop="8dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/galleryinfo_btn_back"
@@ -49,6 +52,7 @@
         android:id="@+id/galleryinfo_iv_post_img"
         android:layout_width="328dp"
         android:layout_height="328dp"
+        android:scaleType="centerCrop"
 
         android:layout_marginTop="22dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -196,7 +200,7 @@
 
     <TextView
         android:id="@+id/galleryinfo_tv_post_des"
-        android:layout_width="wrap_content"
+        android:layout_width="345dp"
         android:layout_height="wrap_content"
         android:text="@string/galleryinfo_tv_post_des"
         android:fontFamily="sans-serif-medium"
@@ -204,6 +208,8 @@
         android:textSize="14sp"
         android:textColor="#000000"
 
+        android:maxLines="2"
+        android:ellipsize="end"
         android:layout_marginTop="6dp"
         app:layout_constraintStart_toStartOf="@+id/galleryinfo_tv_post_username"
         app:layout_constraintTop_toBottomOf="@+id/galleryinfo_tv_post_username" />

@@ -66,7 +66,7 @@ class FeedInfoActivityAdapter(
                                 .setMessage("해당 댓글을 삭제합니다.")
                                 .setPositiveButton("확인",
                                     DialogInterface.OnClickListener { dialog, id ->
-                                        feedInfoActivity.showCustomToast("댓글 삭제완료")
+//                                        feedInfoActivity.showCustomToast("댓글 삭제완료")
 
                                         /*
                                             To Do 2.2 댓글 삭제 API 구현
@@ -76,7 +76,7 @@ class FeedInfoActivityAdapter(
 
                                 .setNegativeButton("취소",
                                     DialogInterface.OnClickListener { dialog, id ->
-                                        feedInfoActivity.showCustomToast("댓글 삭제취소")
+//                                        feedInfoActivity.showCustomToast("댓글 삭제취소")
                                     })
                             // 다이얼로그를 띄워주기
                             builder.show()
@@ -95,12 +95,12 @@ class FeedInfoActivityAdapter(
                                 .setMessage("해당 댓글을 신고합니다.")
                                 .setPositiveButton("확인",
                                     DialogInterface.OnClickListener { dialog, id ->
-                                        feedInfoActivity.showCustomToast("신고하기 접수 완료")
+                                        feedInfoActivity.showCustomToast("신고 접수완료")
                                     })
 
                                 .setNegativeButton("취소",
                                     DialogInterface.OnClickListener { dialog, id ->
-                                        feedInfoActivity.showCustomToast("신고하기 접수 취소")
+//                                        feedInfoActivity.showCustomToast("신고하기 접수 취소")
                                     })
                             // 다이얼로그를 띄워주기
                             builder.show()

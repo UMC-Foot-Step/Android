@@ -4,6 +4,7 @@ import android.util.Log
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.ApplicationClass
 import com.softsquared.template.kotlin.config.ApplicationClass.Companion.X_ACCESS_TOKEN
+import com.softsquared.template.kotlin.src.main.gallery.models.PostListByDateResponse
 import com.softsquared.template.kotlin.src.main.gallery.models.PostListResponse
 import com.softsquared.template.kotlin.src.main.gallery.models_sample.ResultFeetStepList
 import com.softsquared.template.kotlin.src.main.gallery.models_sample.SectionModel
@@ -67,6 +68,44 @@ class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
 
             })
     }
+
+
+    /*
+        To Do 3. 갤러리 날짜별 게시글 리스트 조회 API 연결
+    */
+    fun getPostListByDate(date: String){
+
+        val galleryRetrofitInterFace =
+            ApplicationClass.sRetrofit.create(GalleryRetrofitInterface::class.java)
+        galleryRetrofitInterFace.getGalleryPostListByDate(date).enqueue(object : Callback<PostListByDateResponse> {
+
+            // API 요청 에러 & 요청 성공 시 실행
+            override fun onResponse(
+                call: Call<PostListByDateResponse>,
+                response: Response<PostListByDateResponse>
+            ) {
+
+                Log.d("지나가니?", "어? 지나가?")
+
+                // 요청 객체 예외처리
+                if (response.body() != null) {
+                    galleryFragmentInterface.onGetGalleryPostListByDateSuccess(response.body() as PostListByDateResponse)
+                } else {
+                    Log.d("게시글이 존재하지 않음.", response.message())
+                }
+            }
+
+
+            // API 응답에러가 발생 시 실행
+            override fun onFailure(call: Call<PostListByDateResponse>, t: Throwable) {
+                galleryFragmentInterface.onGetGalleryPostListByDateFailure(t.message ?: "통신 오류")
+            }
+
+        })
+    }
+
+}
+
 
 
 
@@ -280,5 +319,3 @@ class GalleryService (val galleryFragmentInterface: GalleryFragmentInterface) {
 
 
 
-
-}

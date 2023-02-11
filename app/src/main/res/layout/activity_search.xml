@@ -64,8 +64,10 @@
             android:id="@+id/searchPosIv"
             android:layout_width="wrap_content"
             android:layout_height="35dp"
-            android:layout_gravity="right|center_vertical"
             android:background="@android:color/transparent"
+            android:scaleType="centerCrop"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="10dp"
             app:srcCompat="@drawable/search_position_iv" />
     </FrameLayout>
 
