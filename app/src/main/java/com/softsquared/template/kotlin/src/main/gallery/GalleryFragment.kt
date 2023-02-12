@@ -351,6 +351,8 @@ class GalleryFragment :
         else {
 
 
+            var idx: Int = 0
+
             // 카테고리 별 게시글 리스트 데이터 - ArrayList 객체 생성
             val sectionFeetStepList = ArrayList<PostList>()
 
@@ -358,14 +360,15 @@ class GalleryFragment :
             while (z > 0) {
 
                 sectionFeetStepList.add(
-                    response.result.post_list[0]
+                    response.result.post_list[idx]
                 )
                 z--
+                idx++
             }
 
             daySectionFeetStepList.add(
                 SectionModel(
-                    response.result.post_list[0].recordDate,
+                    response.result.post_list[idx - 1].recordDate,
                     sectionFeetStepList
                 )
             )
