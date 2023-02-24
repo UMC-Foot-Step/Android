@@ -5,16 +5,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.widget.Button
-import android.widget.EditText
-import androidx.core.widget.addTextChangedListener
-import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
-import com.softsquared.template.kotlin.databinding.ActivityMainPostBinding
 import com.softsquared.template.kotlin.databinding.ActivitySignupBinding
-import com.softsquared.template.kotlin.src.signup.DataFile.SignUpForm
-import com.softsquared.template.kotlin.src.signup.DataFile.SignUpUser
 import com.softsquared.template.kotlin.util.SaveSignInId
 import com.softsquared.template.kotlin.util.SaveSignInPw
 

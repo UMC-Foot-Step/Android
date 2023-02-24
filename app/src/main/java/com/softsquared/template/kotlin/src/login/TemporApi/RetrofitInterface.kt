@@ -49,8 +49,10 @@ interface RetrofitInterface {
         @Body changeNicknameInfo: changeNicknameInfo,
         @Header("Authorization") accessToken: String): Call<NicknameResponse>
 
-    @PATCH("/password")
-    fun password(@Body user: User): Call <MypageResponse>
+    @PATCH("/my-page/password")
+    fun password(
+        @Body changePasswordInfo: changePasswordInfo,
+        @Header("Authorization") accessToken: String): Call <passwordResponse>
 
 
     @Multipart

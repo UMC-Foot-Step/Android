@@ -162,6 +162,15 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
+        <!-- MyPage Activity 추가-->
+        <activity
+            android:name=".src.main.myPage.ChangePasswordActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+
+
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"

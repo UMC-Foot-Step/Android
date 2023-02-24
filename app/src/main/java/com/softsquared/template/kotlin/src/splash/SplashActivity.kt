@@ -20,13 +20,14 @@ import com.softsquared.template.kotlin.src.login.LoginProcessActivity
 import com.softsquared.template.kotlin.src.login.LoginView
 import com.softsquared.template.kotlin.src.main.MainActivity
 import com.softsquared.template.kotlin.src.onboarding.OnboardingActivity
+import com.softsquared.template.kotlin.util.getRefresh
+import com.softsquared.template.kotlin.util.removeRefresh
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {
     lateinit var textView:TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
 
         textView = findViewById(R.id.text1)
 
@@ -43,9 +44,8 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
 
     //자동로그인 기능 but 어째서인지 Splash가 너무 빨리 끝남..
     fun autoLogin(){
-        Log.d("Tester", "autoLogin: ")
-        val spf = ApplicationClass.sSharedPreferences
-        val refresh = spf.getString(UserCode.refresh,null)
+        Log.d("Tester", "autoLogin: dd")
+        val refresh = getRefresh()
         if(refresh == null) {
             Log.d("Tester", "autoLogin: ddd")
             startActivity(OnboardingActivity::class.java)
@@ -53,6 +53,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
         else
             NetworkDataSource().autoLogin(refresh,object : LoginView {
                 override fun onLoginSuccess(code: Int, result: Result?) {
+                    Log.d("Tester", "onLoginSuccess: ㅇㅅㅇ")
                     startActivity(MainActivity::class.java)
                 }
 

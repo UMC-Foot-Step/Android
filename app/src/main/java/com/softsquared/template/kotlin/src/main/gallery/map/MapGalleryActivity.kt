@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.databinding.ActivityMapgalleryBinding
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoActivity
-import com.softsquared.template.kotlin.src.main.gallery.info.models_sample.FeetStepInfoResponse
 import com.softsquared.template.kotlin.src.main.gallery.models.PostList
 import com.softsquared.template.kotlin.src.main.gallery.models.PostListResponse
 import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel

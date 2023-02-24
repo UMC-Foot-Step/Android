@@ -6,7 +6,6 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -16,8 +15,6 @@ import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.config.BaseResponse
 import com.softsquared.template.kotlin.databinding.ActivityFeedinfoBinding
-import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoFragmentAdapter
-import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoService
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostCommentRequest
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostInfoResponse
 

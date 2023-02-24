@@ -2,17 +2,12 @@ package com.softsquared.template.kotlin.src.signup
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
-import androidx.core.content.ContentProviderCompat.requireContext
-import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
-import com.softsquared.template.kotlin.databinding.ActivityMainPostBinding
 import com.softsquared.template.kotlin.databinding.ActivitySignupSuccessBinding
 import com.softsquared.template.kotlin.src.login.DataFile.Result
 import com.softsquared.template.kotlin.src.login.DataFile.User
 import com.softsquared.template.kotlin.src.login.LoginDataSource.NetworkDataSource
-import com.softsquared.template.kotlin.src.login.LoginProcessActivity
 import com.softsquared.template.kotlin.src.login.LoginView
 import com.softsquared.template.kotlin.src.main.MainActivity
 import com.softsquared.template.kotlin.util.getSignInId

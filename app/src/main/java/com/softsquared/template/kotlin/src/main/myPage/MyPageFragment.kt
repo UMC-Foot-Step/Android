@@ -3,15 +3,11 @@ package com.softsquared.template.kotlin.src.main.myPage
 
 import android.app.Activity.*
 import android.app.AlertDialog
-import android.content.ContentResolver
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
-import android.provider.CalendarContract.Attendees.query
-import android.provider.CalendarContract.Reminders.query
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
@@ -22,8 +18,6 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContentResolverCompat.query
-import androidx.core.content.contentValuesOf
 import com.bumptech.glide.Glide
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseFragment
@@ -35,10 +29,8 @@ import com.softsquared.template.kotlin.util.getJwt
 import com.softsquared.template.kotlin.util.getRefresh
 import com.softsquared.template.kotlin.util.removeJwt
 import com.softsquared.template.kotlin.util.removeRefresh
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
@@ -101,7 +93,6 @@ class MyPageFragment :
             binding.imgBtnProfilePlus.isClickable = false
             binding.btnLogout.isClickable = false
             binding.btnWithdraw.isClickable = false
-            binding.btnFriend.isClickable = false
             binding.btnMyFootprint.isClickable = false
 
             binding.edtNickname.setText(binding.txtNickname.text)
@@ -224,6 +215,16 @@ class MyPageFragment :
             }
         }
 
+        //비밀번호 변경
+        binding.btnPasswordChange.setOnClickListener {
+            Log.d("Tester", "onViewCreated: ㅁㄴㅇㄻㄴㄹㅇㅁㄹㄹ")
+            val intent = Intent(activity,ChangePasswordActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
+
 
 
     }//onCreate
@@ -316,7 +317,6 @@ class MyPageFragment :
         binding.imgBtnProfilePlus.isClickable = true
         binding.btnLogout.isClickable = true
         binding.btnWithdraw.isClickable = true
-        binding.btnFriend.isClickable = true
         binding.btnMyFootprint.isClickable = true
 
     }
