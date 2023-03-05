@@ -26,7 +26,6 @@ interface RetrofitInterface {
     ): Call<LoginResponse>
 
 
-
     //회원가입
     @POST("/join")
     fun join(@Body user: SignUpForm): Call<SignUpResponse>

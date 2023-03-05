@@ -46,6 +46,8 @@ fun removeRefresh(){
     editor.apply()
 }
 
+
+
 fun saveCheck1(status:Boolean){
     val spf = ApplicationClass.sSharedPreferences
     val editor = spf.edit()
