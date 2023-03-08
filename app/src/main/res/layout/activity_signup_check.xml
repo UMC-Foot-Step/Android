@@ -108,23 +108,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5015">
 
-        <TextView
-            android:id="@+id/authority_txt"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:fontFamily="@font/noto_sans"
-            android:text="접근 권한 허용"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:textStyle="normal"
-            android:layout_weight="1"/>
-
-        <CheckBox
-            android:id="@+id/authority_check"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true" />
-
 
     </LinearLayout>
 
