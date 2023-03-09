@@ -32,6 +32,14 @@
     <string name="post_sw_text">공개</string>
     <string name="post_btn_text">작성하기</string>
     <string name="post_edit_tv_title">수정하기</string>
+    <string name="post_tv_back">발자취 기록하기를 취소하시겠습니까?
+작성 취소 선택시, 작성된 글은 저장되지 않습니다.
+    </string>
+    <string name="post_edit_tv_back">발자취 수정하기를 취소하시겠습니까?
+작성 취소 선택시, 작성된 글은 저장되지 않습니다.
+    </string>
+    <string name="post_tv_back_cancel">취소</string>
+    <string name="post_tv_back_ok">확인</string>
 
     <!-- Calender -->
     <string name="cal_tv_fragment_title">날짜 선택</string>

@@ -20,6 +20,7 @@ import com.softsquared.template.kotlin.src.login.LoginProcessActivity
 import com.softsquared.template.kotlin.src.login.LoginView
 import com.softsquared.template.kotlin.src.main.MainActivity
 import com.softsquared.template.kotlin.src.onboarding.OnboardingActivity
+import com.softsquared.template.kotlin.util.removeRefresh
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {
     lateinit var textView:TextView
@@ -46,6 +47,9 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
         Log.d("Tester", "autoLogin: ")
         val spf = ApplicationClass.sSharedPreferences
         val refresh = spf.getString(UserCode.refresh,null)
+
+        // removeRefresh()
+
         if(refresh == null) {
             Log.d("Tester", "autoLogin: ddd")
             startActivity(OnboardingActivity::class.java)

@@ -109,15 +109,19 @@ class PostSearchPositionActivity : BaseActivity<ActivitySearchPositionBinding>(A
         if(!searchResult?.documents.isNullOrEmpty()){
             // 검색 결과 있음
             listItems.clear()
+
             for (document in searchResult!!.documents) {
-                // 결과를 리사이클러 뷰에 추가
-                val item = PositionData(
-                    document.place_name,
-                    document.road_address_name,
-                    document.x.toDouble(),
-                    document.y.toDouble()
-                )
-                listItems.add(item)
+                // 도로명 주소가 있는 경우에만 검색
+                if(!document.road_address_name.isNullOrEmpty()){
+                    // 결과를 리사이클러 뷰에 추가
+                    val item = PositionData(
+                        document.place_name,
+                        document.road_address_name,
+                        document.x.toDouble(),
+                        document.y.toDouble()
+                    )
+                    listItems.add(item)
+                }
             }
             listAdapter.notifyDataSetChanged()
             binding.searchPosTvResultCount.text = listItems.size.toString()
