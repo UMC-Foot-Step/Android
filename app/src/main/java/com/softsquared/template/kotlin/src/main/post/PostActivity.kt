@@ -146,7 +146,7 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
         binding.postBtnPost.setOnClickListener {
             content = binding.postEtContent.text.toString()
             title = binding.postEtTitle.text.toString()
-            setData(content!!, title!!, address!!, latitude!!, longitude!!, name!!, tvYear, tvMonth, tvDay, swChecked)
+            setData(content!!, title!!, address!!, latitude!!, longitude!!, name!!, tvYear, tvMonth, tvDay, swChecked)//api 날림
             finish()
         }
 
@@ -253,7 +253,11 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
     override fun onPostPostInfoSuccess(response: PostResponse) {
         Log.d("Success", "$response")
         Log.d("post date", "$tvYear-$tvMonth-$tvDay")
-        if(response.code==200) showCustomToast("작성하기 완료")
+        if (response.code == 200) {
+            Log.d("데이터로드", "PostActivity 작성하기 완료")
+
+            showCustomToast("작성하기 완료")
+        }
     }
 
     override fun onPostPostInfoFailure(message: String) {
