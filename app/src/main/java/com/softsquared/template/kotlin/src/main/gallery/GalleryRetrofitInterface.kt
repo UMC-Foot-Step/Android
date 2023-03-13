@@ -69,4 +69,12 @@ interface GalleryRetrofitInterface {
     @POST("footstep/{comment-id}/comment-report")
     fun reportComment(@Path("comment-id") comment_id: Int,
                       @Body createReportDto: createReportDto) : Call<ReportResponse>
+
+    /*
+        To Do 10. 유저 신고
+
+    @POST("{users-id}/users-report")
+    fun reportUser(@Path("users-id") users_id: Int,
+                      @Body createReportDto: createReportDto) : Call<ReportResponse>
+     */
 }

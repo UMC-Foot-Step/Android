@@ -22,6 +22,7 @@ import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.config.BaseResponse
 import com.softsquared.template.kotlin.databinding.ActivityFeedinfoBinding
 import com.softsquared.template.kotlin.src.main.feed.models.ReportResponse
+import com.softsquared.template.kotlin.src.main.feed.models.createReportDto
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoFragmentAdapter
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoService
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostCommentRequest
@@ -112,7 +113,7 @@ class FeedInfoActivity()
                                 if(selectedNum==0){
                                     showCustomToast("게시글 신고하기")
                                     // bottomSheetDialog - 신고사유
-                                    reportDialogPosting()
+                                    reportDialogPosting(posting_id)
                                     // api 연결 성공
                                 }
                                 else{
@@ -272,7 +273,7 @@ class FeedInfoActivity()
     }
 
     // 신고 사유 bottomSheetDialog
-    private fun reportDialogPosting() {
+    private fun reportDialogPosting(posting_id:Int) {
         // val dialog = BottomSheetDialog(this)
         // dialog.setContentView(R.layout.dialog_report)
 
@@ -296,20 +297,45 @@ class FeedInfoActivity()
     
         // 확인
         btnCheck.setOnClickListener {
+            var reasonNum=0
             when(reportGroup.checkedRadioButtonId){
-                R.id.btn_report_0 -> showCustomToast("0번 신고사유")
-                R.id.btn_report_1 -> showCustomToast("1번 신고사유")
-                R.id.btn_report_2 -> showCustomToast("2번 신고사유")
-                R.id.btn_report_3 -> showCustomToast("3번 신고사유")
-                R.id.btn_report_4 -> showCustomToast("4번 신고사유")
-                R.id.btn_report_5 -> showCustomToast("5번 신고사유")
-                R.id.btn_report_6 -> showCustomToast("6번 신고사유")
+                R.id.btn_report_0 -> {
+                    showCustomToast("0번 신고사유")
+                    reasonNum=0
+                }
+                R.id.btn_report_1 -> {
+                    showCustomToast("1번 신고사유")
+                    reasonNum=1
+                }
+                R.id.btn_report_2 -> {
+                    showCustomToast("2번 신고사유")
+                    reasonNum=2
+                }
+                R.id.btn_report_3 -> {
+                    showCustomToast("3번 신고사유")
+                    reasonNum=3
+                }
+                R.id.btn_report_4 -> {
+                    showCustomToast("4번 신고사유")
+                    reasonNum=4
+                }
+                R.id.btn_report_5 -> {
+                    showCustomToast("5번 신고사유")
+                    reasonNum=5
+                }
+                R.id.btn_report_6 -> {
+                    showCustomToast("6번 신고사유")
+                    reasonNum=6
+                }
 
             }
+            FeedInfoService(feedInfoActivity).ReportPost(
+                createReportDto(reasonNumber = reasonNum, targetNumber = 1),posting_id,
+            )
             // bottomSheetDialog 닫기
             bottomSheetDialog.dismiss()
             // 게시글 신고 완료 alertDialog
-            reportSuccessPosting()
+
 
         }
     }
@@ -383,26 +409,38 @@ class FeedInfoActivity()
         // 다이얼로그 띄우기
         builder.show()
     }
-
-    override fun onReportCommentSuccess(response: ReportResponse) {
-        Log.d("reportProcess", "onReportCommentSuccess ${response.toString()}")
-
+    // 댓글 신고 완료
+    private fun reportSuccessComment() {
         val builder = AlertDialog.Builder(binding.root.context)
             .setMessage("댓글 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
             .setPositiveButton("확인",
                 DialogInterface.OnClickListener { dialog, id ->
-                    showCustomToast("신고 접수완료")
+                    feedInfoActivity.showCustomToast("신고 접수완료")
                 }
             )
 
         // 다이얼로그 띄우기
         builder.show()
-
-
     }
+    override fun onReportCommentSuccess(response: ReportResponse) {
+        Log.d("reportProcess", "onReportCommentSuccess ${response.toString()}")
+
+        reportSuccessComment()
+    }
+
 
     override fun onReportCommentFailure(message: String) {
         showCustomToast("API 요청 실패, LogCat 확인")
         Log.d("reportProcess", message)
     }
+
+    override fun onReportPostSuccess(response: ReportResponse) {
+        Log.d("reportProcess", "oonReportPostSuccess ${response.toString()}")
+
+        reportSuccessPosting()
+    }
+
+    override fun onReportPostFailure(message: String) {
+        showCustomToast("API 요청 실패, LogCat 확인")
+        Log.d("reportProcess", message)    }
 }

@@ -3,6 +3,7 @@ package com.softsquared.template.kotlin.src.main.feed.info
 import android.util.Log
 import com.softsquared.template.kotlin.config.ApplicationClass
 import com.softsquared.template.kotlin.config.BaseResponse
+import com.softsquared.template.kotlin.src.main.feed.FeedRetrofitInterface
 import com.softsquared.template.kotlin.src.main.feed.models.ReportResponse
 import com.softsquared.template.kotlin.src.main.feed.models.createReportDto
 import com.softsquared.template.kotlin.src.main.gallery.GalleryRetrofitInterface
@@ -121,7 +122,28 @@ class FeedInfoService(val feedInfoActivityInterface: FeedInfoActivityInterface) 
     
     
     // To Do 5.2 댓글 - 유저 신고하기
+    // To Do 6. 게시글 신고하기
 
+    fun ReportPost(createReportDto: createReportDto,posting_id: Int){
+        val feedRetrofitInterFace =
+            ApplicationClass.sRetrofit.create(FeedRetrofitInterface::class.java)
+        feedRetrofitInterFace.ReportPost(createReportDto,posting_id).enqueue(object : Callback<ReportResponse> {
+            override fun onResponse(
+                call: Call<ReportResponse>,
+                response: Response<ReportResponse>
+            ) {
+                Log.d("reportProcess", "ReportPost onResponse")
+
+                feedInfoActivityInterface.onReportPostSuccess(response.body() as ReportResponse)
+            }
+
+            override fun onFailure(call: Call<ReportResponse>, t: Throwable) {
+                Log.d("reportProcess", "ReportPost onFailure")
+
+                feedInfoActivityInterface.onReportPostFailure(t.message ?: "통신 오류")
+            }
+        })
+    }
 
 
 }

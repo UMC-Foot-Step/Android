@@ -35,7 +35,15 @@ interface FeedRetrofitInterface {
         To Do 4. 발자취 신고
      */
     @POST("footstep/{posting-id}/posting-report")
-    fun reportPost(@Body createReportDto: createReportDto,
+    fun ReportPost(@Body createReportDto: createReportDto,
                    @Path("posting-id") posting_id: Int) : Call<ReportResponse>
 
+    /*
+        To Do 5. 유저 신고
+
+    @POST("{users-id}/users-report")
+    fun reportUser(@Path("users-id") users_id: Int,
+                   @Body createReportDto: createReportDto) : Call<ReportResponse>
+
+     */
 }

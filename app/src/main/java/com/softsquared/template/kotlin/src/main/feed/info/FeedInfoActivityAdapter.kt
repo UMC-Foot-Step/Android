@@ -228,7 +228,7 @@ class FeedInfoActivityAdapter(
                 // bottomSheetDialog 닫기
                 bottomSheetDialog.dismiss()
                 // 댓글 신고 완료
-                reportSuccessComment()
+                //reportSuccessComment()
             }
         }
 
@@ -289,6 +289,7 @@ class FeedInfoActivityAdapter(
                     }
 
                 }
+
                 // bottomSheetDialog 닫기
                 bottomSheetDialog.dismiss()
                 // 댓글 신고 완료
@@ -298,6 +299,7 @@ class FeedInfoActivityAdapter(
 
 
         // 댓글 신고 완료
+        /*
         private fun reportSuccessComment() {
             val builder = AlertDialog.Builder(feedInfoActivity)
                 .setMessage("댓글 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
@@ -310,6 +312,7 @@ class FeedInfoActivityAdapter(
             // 다이얼로그 띄우기
             builder.show()
         }
+         */
 
         // 유저 신고 완료
         private fun reportSuccessUser() {

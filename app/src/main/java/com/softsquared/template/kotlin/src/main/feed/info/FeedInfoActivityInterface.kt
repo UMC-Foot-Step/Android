@@ -42,5 +42,10 @@ interface FeedInfoActivityInterface {
     // 유저 신고하기 API 요청 성공
     
     // 유저 신고하기 API 요청 실패
-    
+
+    //게시글 신고하기
+    fun onReportPostSuccess(response:ReportResponse)
+    fun onReportPostFailure(message: String)
+
+
 }
