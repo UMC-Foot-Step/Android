@@ -147,6 +147,7 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
             content = binding.postEtContent.text.toString()
             title = binding.postEtTitle.text.toString()
             setData(content!!, title!!, address!!, latitude!!, longitude!!, name!!, tvYear, tvMonth, tvDay, swChecked)
+
             finish()
         }
 
