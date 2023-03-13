@@ -88,5 +88,13 @@ class FeedInfoService(val feedInfoActivityInterface: FeedInfoActivityInterface) 
         })
     }
 
+    // To Do 5. 댓글 신고하기
+    // To Do 5.1 댓글 - 댓글 신고하기
+    
+    
+    
+    // To Do 5.2 댓글 - 유저 신고하기
+
+
 
 }

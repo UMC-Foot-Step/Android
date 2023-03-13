@@ -28,4 +28,18 @@ interface FeedInfoActivityInterface {
         댓글 & 좋아요 클릭 API 요청 실패
      */
     fun onDeletePostFailure(message: String)
+
+    // 댓글 - 댓글 신고하기
+    // 댓글 신고하기 API 요청 성공
+    
+    // 댓글 신고하기 API 요청 실패
+    
+    
+    
+    // 댓글 - 유저 신고하기
+    
+    // 유저 신고하기 API 요청 성공
+    
+    // 유저 신고하기 API 요청 실패
+    
 }

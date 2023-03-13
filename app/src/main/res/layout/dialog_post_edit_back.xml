@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_gravity="center">
+        android:layout_gravity="center" >
 
         <TextView
             android:layout_width="319dp"
@@ -19,10 +19,10 @@
             android:layout_marginLeft="22dp"
             android:layout_marginRight="12dp"
             android:layout_marginBottom="10dp"
-
             android:textSize="15sp"
             android:text="@string/post_edit_tv_back"
             android:textColor="@color/black" />
+
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
             android:layout_marginBottom="11dp">
 
             <Button
-                android:id="@+id/btn_post_back_cancel"
+                android:id="@+id/btn_post_edit_back_cancel"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
                 android:background="@color/whiteForBackground"
@@ -40,7 +40,7 @@
                 android:textColor="@color/orange" />
 
             <Button
-                android:id="@+id/btn_post_back_ok"
+                android:id="@+id/btn_post_edit_back_ok"
                 android:layout_width="60dp"
                 android:layout_height="30dp"
                 android:background="@color/whiteForBackground"
