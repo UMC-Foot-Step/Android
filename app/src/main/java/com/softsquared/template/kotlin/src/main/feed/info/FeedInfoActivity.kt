@@ -111,21 +111,14 @@ class FeedInfoActivity()
                                 if(selectedNum==0){
                                     showCustomToast("게시글 신고하기")
                                     // bottomSheetDialog - 신고사유
-                                    if(reportDialog()==1){
-                                        reportSuccessposting()
-                                    }
+                                    reportDialogPosting()
                                     // api 연결 성공
-
                                 }
                                 else{
                                     showCustomToast("유저 신고하기")
                                     // bottomSheetDialog - 신고사유
-                                    if(reportDialog()==1){
-                                        // api 연결 성공
-                                        reportSuccessUser()
-                                    }
+                                    reportDialogUser()
                                 }
-
                             }
                             .setNegativeButton("취소",
                             DialogInterface.OnClickListener { dialog, id ->
@@ -278,7 +271,7 @@ class FeedInfoActivity()
     }
 
     // 신고 사유 bottomSheetDialog
-    private fun reportDialog(): Int {
+    private fun reportDialogPosting() {
         // val dialog = BottomSheetDialog(this)
         // dialog.setContentView(R.layout.dialog_report)
 
@@ -314,13 +307,57 @@ class FeedInfoActivity()
             }
             // bottomSheetDialog 닫기
             bottomSheetDialog.dismiss()
+            // 게시글 신고 완료 alertDialog
+            reportSuccessPosting()
+
         }
-        return 1
+    }
+    // 유저
+    private fun reportDialogUser() {
+        // val dialog = BottomSheetDialog(this)
+        // dialog.setContentView(R.layout.dialog_report)
+
+        val bottomSheet = layoutInflater.inflate(R.layout.dialog_report, null)
+        // 스타일 둥글게 적용
+        val bottomSheetDialog = BottomSheetDialog(this, R.style.calTheme_Custom)
+        // 닫기
+        val btnClose = bottomSheet.findViewById<ImageButton>(R.id.btn_report_close)
+        // 확인
+        val btnCheck = bottomSheet.findViewById<Button>(R.id.reportBtnCheck)
+        // 신고사유
+        val reportGroup = bottomSheet.findViewById<RadioGroup>(R.id.report_group)
+
+        bottomSheetDialog.setContentView(bottomSheet)
+        bottomSheetDialog.show()
+
+        // 닫기
+        btnClose.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+
+        // 확인
+        btnCheck.setOnClickListener {
+            when(reportGroup.checkedRadioButtonId){
+                R.id.btn_report_0 -> showCustomToast("0번 신고사유")
+                R.id.btn_report_1 -> showCustomToast("1번 신고사유")
+                R.id.btn_report_2 -> showCustomToast("2번 신고사유")
+                R.id.btn_report_3 -> showCustomToast("3번 신고사유")
+                R.id.btn_report_4 -> showCustomToast("4번 신고사유")
+                R.id.btn_report_5 -> showCustomToast("5번 신고사유")
+                R.id.btn_report_6 -> showCustomToast("6번 신고사유")
+
+            }
+            // bottomSheetDialog 닫기
+            bottomSheetDialog.dismiss()
+            // 유저 신고 완료 alertDialog
+            reportSuccessUser()
+
+        }
     }
 
     // 게시글 신고 완료
-    private fun reportSuccessposting() {
-        val builder = AlertDialog.Builder(this)
+    private fun reportSuccessPosting() {
+        val builder = AlertDialog.Builder(binding.root.context)
             .setMessage("게시글 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
             .setPositiveButton("확인", 
                 DialogInterface.OnClickListener { dialog, id -> 
@@ -334,7 +371,7 @@ class FeedInfoActivity()
 
     // 유저 신고 완료
     private fun reportSuccessUser() {
-        val builder = AlertDialog.Builder(this)
+        val builder = AlertDialog.Builder(binding.root.context)
             .setMessage("유저 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
             .setPositiveButton("확인",
                 DialogInterface.OnClickListener { dialog, id ->
