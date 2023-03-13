@@ -2,6 +2,7 @@ package com.softsquared.template.kotlin.src.main.post
 
 import android.app.AlertDialog
 import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -66,25 +67,7 @@ class PostActivity
 
         // 뒤로가기 버튼 누르면 뒤로 가기 dialog
         binding.postIbBack.setOnClickListener {
-            val myDialog = layoutInflater.inflate(R.layout.dialog_post_back, null)
-            val build = AlertDialog.Builder(this).setView(myDialog)
-            val dialog = build.create()
-            dialog.show()
-
-            // 확인 - 작성하기 중단
-            val okButton = myDialog.findViewById<Button>(R.id.btn_post_back_ok)
-            okButton.setOnClickListener {
-                showCustomToast("작성하기 취소 완료")
-                dialog.dismiss()
-                // activity 종료하기
-                finish()
-            }
-            // 취소 - 계속 작성하기
-            val cancelButton = myDialog.findViewById<Button>(R.id.btn_post_back_cancel)
-            cancelButton.setOnClickListener {
-                showCustomToast("작성하기 진행 중")
-                dialog.dismiss()
-            }
+            backDialog()
         }
 
         // 사진 삭제 imageButton
@@ -167,8 +150,19 @@ class PostActivity
         binding.postBtnPost.setOnClickListener {
             content = binding.postEtContent.text.toString()
             title = binding.postEtTitle.text.toString()
-            setData(content!!, title!!, address!!, latitude!!, longitude!!, name!!, tvYear, tvMonth, tvDay, swChecked)
-            finish()
+
+            // 모든 값이 존재하는지 확인
+            // content, title, address, latitude, longitude, name만 확인 필요
+            // 모든 값이 존재한다면 setData
+            if(content != null && title != null && address != null && latitude != 0.0 && longitude != 0.0 && name != null){
+                setData(content!!, title!!, address!!, latitude!!, longitude!!, name!!, tvYear, tvMonth, tvDay, swChecked)
+                finish()
+            }
+
+            else{
+                // alertDialog 작성
+                btnPostDialog()
+            }
         }
 
         if(intent.hasExtra("positionTitle")){
@@ -184,6 +178,16 @@ class PostActivity
             binding.postBtnLoc.text = intent.getStringExtra("positionTitle")
         }
     }
+
+    // 뒤로 가기(물리키)
+    override fun onBackPressed() {
+        // 기존 뒤로가기 막기 위해 주석 처리 필요
+        // super.onBackPressed()
+
+        // dialog 실행
+        backDialog()
+    }
+
     private fun dataSet(year: Int, month: Int, day: Int){
         tvYear = year
         tvMonth = month
@@ -282,6 +286,41 @@ class PostActivity
     override fun onPostPostInfoFailure(message: String) {
         showCustomToast("API 요청 실패, LogCat 확인")
         Log.d("Why fail?", message)
+    }
+
+    // 작성하기 계속 or 취소 dialog 작성
+    private fun backDialog() {
+        val myDialog = layoutInflater.inflate(R.layout.dialog_post_back, null)
+        val build = AlertDialog.Builder(this).setView(myDialog)
+        val dialog = build.create()
+        dialog.show()
+
+        // 확인 - 작성하기 중단
+        val okButton = myDialog.findViewById<Button>(R.id.btn_post_back_ok)
+        okButton.setOnClickListener {
+            showCustomToast("작성하기 취소 완료")
+            dialog.dismiss()
+            // activity 종료하기
+            finish()
+        }
+        // 취소 - 계속 작성하기
+        val cancelButton = myDialog.findViewById<Button>(R.id.btn_post_back_cancel)
+        cancelButton.setOnClickListener {
+            showCustomToast("작성하기 진행 중")
+            dialog.dismiss()
+        }
+    }
+
+    // 모든 내용의 값이 없는 경우 alertDialog
+    private fun btnPostDialog() {
+        val builder = AlertDialog.Builder(this)
+            .setTitle("발자취 기록하기")
+            .setMessage("모든 내용이 입력되지 않았습니다. 모든 내용을 입력해주십시오. \n모든 내용이 입력되어야 기록할 수 있습니다.")
+            .setPositiveButton("확인",
+                DialogInterface.OnClickListener { dialog, which ->
+                    showCustomToast("빠짐없이 입력해주세요.")
+                })
+        builder.show()
     }
 
     /*
