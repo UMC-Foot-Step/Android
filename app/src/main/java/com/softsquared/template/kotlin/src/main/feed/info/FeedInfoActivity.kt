@@ -21,6 +21,7 @@ import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.config.BaseResponse
 import com.softsquared.template.kotlin.databinding.ActivityFeedinfoBinding
+import com.softsquared.template.kotlin.src.main.feed.models.ReportResponse
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoFragmentAdapter
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoService
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostCommentRequest
@@ -383,4 +384,25 @@ class FeedInfoActivity()
         builder.show()
     }
 
+    override fun onReportCommentSuccess(response: ReportResponse) {
+        Log.d("reportProcess", "onReportCommentSuccess ${response.toString()}")
+
+        val builder = AlertDialog.Builder(binding.root.context)
+            .setMessage("댓글 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
+            .setPositiveButton("확인",
+                DialogInterface.OnClickListener { dialog, id ->
+                    showCustomToast("신고 접수완료")
+                }
+            )
+
+        // 다이얼로그 띄우기
+        builder.show()
+
+
+    }
+
+    override fun onReportCommentFailure(message: String) {
+        showCustomToast("API 요청 실패, LogCat 확인")
+        Log.d("reportProcess", message)
+    }
 }

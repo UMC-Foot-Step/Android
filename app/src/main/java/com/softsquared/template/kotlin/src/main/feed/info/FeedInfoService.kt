@@ -1,7 +1,10 @@
 package com.softsquared.template.kotlin.src.main.feed.info
 
+import android.util.Log
 import com.softsquared.template.kotlin.config.ApplicationClass
 import com.softsquared.template.kotlin.config.BaseResponse
+import com.softsquared.template.kotlin.src.main.feed.models.ReportResponse
+import com.softsquared.template.kotlin.src.main.feed.models.createReportDto
 import com.softsquared.template.kotlin.src.main.gallery.GalleryRetrofitInterface
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostCommentRequest
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostInfoResponse
@@ -90,7 +93,31 @@ class FeedInfoService(val feedInfoActivityInterface: FeedInfoActivityInterface) 
 
     // To Do 5. 댓글 신고하기
     // To Do 5.1 댓글 - 댓글 신고하기
-    
+    fun ReportComment(comment_id:Int,createReportDto: createReportDto){
+        val GalleryRetrofitInterface =
+            ApplicationClass.sRetrofit.create(GalleryRetrofitInterface::class.java)
+        Log.d("reportProcess", "ReportComment 안쪽직전진입")
+
+        GalleryRetrofitInterface.reportComment(comment_id,createReportDto).enqueue(object :
+            Callback<ReportResponse> {
+
+            override fun onResponse(
+                call: Call<ReportResponse>,
+                response: Response<ReportResponse>
+            ) {
+                feedInfoActivityInterface.onReportCommentSuccess(response.body() as ReportResponse)
+                Log.d("reportProcess", "ReportComment onResponse")
+
+            }
+
+            override fun onFailure(call: Call<ReportResponse>, t: Throwable) {
+                feedInfoActivityInterface.onReportCommentFailure(t.message ?: "통신 오류")
+                Log.d("reportProcess", "ReportComment onFailure")
+
+            }
+
+        })
+    }
     
     
     // To Do 5.2 댓글 - 유저 신고하기
