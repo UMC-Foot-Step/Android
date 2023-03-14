@@ -3,7 +3,9 @@ package com.softsquared.template.kotlin.src.main.post
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softsquared.template.kotlin.databinding.ActivitySearchPositionBinding
@@ -37,11 +39,13 @@ class PostSearchPositionActivity : BaseActivity<ActivitySearchPositionBinding>(A
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val view = binding.root
 
         // 리사이클러뷰
         binding.searchPosRv.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.searchPosRv.adapter = listAdapter
+
+        // 검색창 editText enter 이벤트
+        setListenerEditText()
 
         // 리스트 아이템 클릭시
         listAdapter.setItemClickListener(object: ListAdapter.OnItemClickListener{
@@ -58,23 +62,42 @@ class PostSearchPositionActivity : BaseActivity<ActivitySearchPositionBinding>(A
             }
         })
 
+
         // 검색 icon 눌렀을 때
-        binding.searchPosIv.setOnClickListener {
-            keyword = binding.searchPosEtPlace.text.toString()
-            searchKeyword(keyword)
-
-        }
-
-
+        clickSearchIcon()
 
         // x버튼 누르면 뒤로 가기
         binding.searchPosIbQuit.setOnClickListener {
             finish()
         }
 
-
-
     }
+    // 엔터 이벤트
+    private fun setListenerEditText() {
+        binding.searchPosEtPlace.setOnKeyListener{ view, keyCode, event ->
+            // Enter Key Action
+            if (event.action == KeyEvent.ACTION_DOWN
+                && keyCode == KeyEvent.KEYCODE_ENTER) {
+                // 키패드 내리기
+                val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(binding.searchPosEtPlace.windowToken, 0)
+                // 검색 버튼 누르기
+                keyword = binding.searchPosEtPlace.text.toString()
+                searchKeyword(keyword)
+                true
+            }
+            false
+        }
+    }
+
+    // 검색 icon 눌렀을 때
+    private fun clickSearchIcon() {
+        binding.searchPosIv.setOnClickListener {
+            keyword = binding.searchPosEtPlace.text.toString()
+            searchKeyword(keyword)
+        }
+    }
+
     // 키워드 검색 함수
     private fun searchKeyword(keyword: String){
         val retrofit = Retrofit.Builder() // Retrofit 구성
@@ -109,15 +132,19 @@ class PostSearchPositionActivity : BaseActivity<ActivitySearchPositionBinding>(A
         if(!searchResult?.documents.isNullOrEmpty()){
             // 검색 결과 있음
             listItems.clear()
+
             for (document in searchResult!!.documents) {
-                // 결과를 리사이클러 뷰에 추가
-                val item = PositionData(
-                    document.place_name,
-                    document.road_address_name,
-                    document.x.toDouble(),
-                    document.y.toDouble()
-                )
-                listItems.add(item)
+                // 도로명 주소가 있는 경우에만 검색
+                if(!document.road_address_name.isNullOrEmpty()){
+                    // 결과를 리사이클러 뷰에 추가
+                    val item = PositionData(
+                        document.place_name,
+                        document.road_address_name,
+                        document.x.toDouble(),
+                        document.y.toDouble()
+                    )
+                    listItems.add(item)
+                }
             }
             listAdapter.notifyDataSetChanged()
             binding.searchPosTvResultCount.text = listItems.size.toString()

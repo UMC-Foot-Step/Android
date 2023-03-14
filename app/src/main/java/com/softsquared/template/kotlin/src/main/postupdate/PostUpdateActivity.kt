@@ -1,5 +1,6 @@
 package com.softsquared.template.kotlin.src.main.postupdate
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
@@ -82,9 +83,28 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
         // api 값 요청
         PostUpdateService(this).getPostUpdateInfo(token, postingId)
 
-        // 뒤로가기 버튼 누르면 뒤로 가기
+        // 뒤로가기 버튼 누르면 뒤로 가기 dialog
         binding.editIbBack.setOnClickListener {
-            finish()
+            val myDialog = layoutInflater.inflate(R.layout.dialog_post_edit_back, null)
+            val build = AlertDialog.Builder(this).setView(myDialog)
+            val dialog = build.create()
+            dialog.show()
+
+            // 확인 - 수정하기 중단
+            val okButton = myDialog.findViewById<Button>(R.id.btn_post_edit_back_ok)
+            okButton.setOnClickListener {
+                showCustomToast("수정하기 취소 완료")
+                dialog.dismiss()
+                // activity 종료하기
+                finish()
+            }
+
+            // 취소 - 수정하기 계속 진행
+            val cancelButton = myDialog.findViewById<Button>(R.id.btn_post_edit_back_cancel)
+            cancelButton.setOnClickListener {
+                showCustomToast("수정하기 진행 중")
+                dialog.dismiss()
+            }
         }
 
         // 사진 삭제

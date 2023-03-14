@@ -1,5 +1,7 @@
 package com.softsquared.template.kotlin.src.main.post
 
+import android.app.AlertDialog
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -26,7 +28,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.File
 import java.time.LocalDate
 
-class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBinding::inflate), PostActivityInterface {
+class PostActivity
+    : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBinding::inflate), PostActivityInterface {
     // datepicker
     private val today = LocalDate.now()
     private var tvYear = today.year
@@ -61,9 +64,27 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 뒤로가기 버튼 누르면 뒤로가기..!
+        // 뒤로가기 버튼 누르면 뒤로 가기 dialog
         binding.postIbBack.setOnClickListener {
-            finish()
+            val myDialog = layoutInflater.inflate(R.layout.dialog_post_back, null)
+            val build = AlertDialog.Builder(this).setView(myDialog)
+            val dialog = build.create()
+            dialog.show()
+
+            // 확인 - 작성하기 중단
+            val okButton = myDialog.findViewById<Button>(R.id.btn_post_back_ok)
+            okButton.setOnClickListener {
+                showCustomToast("작성하기 취소 완료")
+                dialog.dismiss()
+                // activity 종료하기
+                finish()
+            }
+            // 취소 - 계속 작성하기
+            val cancelButton = myDialog.findViewById<Button>(R.id.btn_post_back_cancel)
+            cancelButton.setOnClickListener {
+                showCustomToast("작성하기 진행 중")
+                dialog.dismiss()
+            }
         }
 
         // 사진 삭제 imageButton
@@ -154,6 +175,8 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
             binding.postBtnLoc.text = intent.getStringExtra("positionTitle")
         }
     }
+
+
     override fun onRestart() {
         super.onRestart()
         // 장소 제목 불러오기
@@ -264,4 +287,34 @@ class PostActivity : BaseActivity<ActivityMainPostBinding>(ActivityMainPostBindi
         showCustomToast("API 요청 실패, LogCat 확인")
         Log.d("Why fail?", message)
     }
+
+    /*
+    private fun dialog(view: View){
+        // 다이얼로그
+        val myDialog = layoutInflater.inflate(R.layout.dialog_post_back, null)
+        val build = AlertDialog.Builder(view.context).setView(myDialog)
+        val dialog = build.create()
+        dialog.show()
+
+        // ok
+        val okButton = myDialog.findViewById<Button>(R.id.btn_post_back_ok)
+        okButton.setOnClickListener {
+            showCustomToast("작성하기 취소 완료")
+            dialog.dismiss()
+            finish()
+        }
+
+        // cancel
+        val cancelButton = myDialog.findViewById<Button>(R.id.btn_post_back_cancel)
+        cancelButton.setOnClickListener {
+            showCustomToast("작성하기 진행")
+            dialog.dismiss()
+        }
+    }
+    */
+
+
+
 }
+
+

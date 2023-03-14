@@ -8,14 +8,21 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.ImageButton
 import android.widget.PopupMenu
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.config.BaseResponse
 import com.softsquared.template.kotlin.databinding.ActivityFeedinfoBinding
+import com.softsquared.template.kotlin.src.main.feed.models.ReportResponse
+import com.softsquared.template.kotlin.src.main.feed.models.createReportDto
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoFragmentAdapter
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoService
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostCommentRequest
@@ -77,6 +84,7 @@ class FeedInfoActivity()
                         /*
                             To Do 3.2 신고하기 다이얼로그 구현
                         */
+                        /*
                         val builder = AlertDialog.Builder(binding.root.context)
                         builder.setTitle("게시글 신고하기")
                             .setMessage("해당 게시글을 신고합니다.")
@@ -90,6 +98,34 @@ class FeedInfoActivity()
 //                                    showCustomToast("신고하기 접수 취소")
                                 })
                         // 다이얼로그를 띄워주기
+                        builder.show()
+                        */
+                        val reportItems = arrayOf("게시글", "유저(유저가 쓴 모든 콘텐츠가 삭제됩니다.)")
+                        var selectedItem: String? = null
+                        var selectedNum: Int = 0
+                        val builder = AlertDialog.Builder(this)
+                            .setTitle("신고대상")
+                            .setSingleChoiceItems(reportItems, -1) { dialog, which ->
+                                selectedNum = which
+                                selectedItem = reportItems[which]
+                            }
+                            .setPositiveButton("확인") { dialog, which ->
+                                if(selectedNum==0){
+                                    showCustomToast("게시글 신고하기")
+                                    // bottomSheetDialog - 신고사유
+                                    reportDialogPosting(posting_id)
+                                    // api 연결 성공
+                                }
+                                else{
+                                    showCustomToast("유저 신고하기")
+                                    // bottomSheetDialog - 신고사유
+                                    reportDialogUser()
+                                }
+                            }
+                            .setNegativeButton("취소",
+                            DialogInterface.OnClickListener { dialog, id ->
+                                showCustomToast("신고하기 취소")
+                            })
                         builder.show()
                     }
                 }
@@ -235,4 +271,176 @@ class FeedInfoActivity()
         Log.d("API 요청 실패", message)
         showCustomToast(message)
     }
+
+    // 신고 사유 bottomSheetDialog
+    private fun reportDialogPosting(posting_id:Int) {
+        // val dialog = BottomSheetDialog(this)
+        // dialog.setContentView(R.layout.dialog_report)
+
+        val bottomSheet = layoutInflater.inflate(R.layout.dialog_report, null)
+        // 스타일 둥글게 적용
+        val bottomSheetDialog = BottomSheetDialog(this, R.style.calTheme_Custom)
+        // 닫기
+        val btnClose = bottomSheet.findViewById<ImageButton>(R.id.btn_report_close)
+        // 확인
+        val btnCheck = bottomSheet.findViewById<Button>(R.id.reportBtnCheck)
+        // 신고사유
+        val reportGroup = bottomSheet.findViewById<RadioGroup>(R.id.report_group)
+
+        bottomSheetDialog.setContentView(bottomSheet)
+        bottomSheetDialog.show()
+        
+        // 닫기
+        btnClose.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+    
+        // 확인
+        btnCheck.setOnClickListener {
+            var reasonNum=0
+            when(reportGroup.checkedRadioButtonId){
+                R.id.btn_report_0 -> {
+                    showCustomToast("0번 신고사유")
+                    reasonNum=0
+                }
+                R.id.btn_report_1 -> {
+                    showCustomToast("1번 신고사유")
+                    reasonNum=1
+                }
+                R.id.btn_report_2 -> {
+                    showCustomToast("2번 신고사유")
+                    reasonNum=2
+                }
+                R.id.btn_report_3 -> {
+                    showCustomToast("3번 신고사유")
+                    reasonNum=3
+                }
+                R.id.btn_report_4 -> {
+                    showCustomToast("4번 신고사유")
+                    reasonNum=4
+                }
+                R.id.btn_report_5 -> {
+                    showCustomToast("5번 신고사유")
+                    reasonNum=5
+                }
+                R.id.btn_report_6 -> {
+                    showCustomToast("6번 신고사유")
+                    reasonNum=6
+                }
+
+            }
+            FeedInfoService(feedInfoActivity).ReportPost(
+                createReportDto(reasonNumber = reasonNum, targetNumber = 1),posting_id,
+            )
+            // bottomSheetDialog 닫기
+            bottomSheetDialog.dismiss()
+            // 게시글 신고 완료 alertDialog
+
+
+        }
+    }
+    // 유저
+    private fun reportDialogUser() {
+        // val dialog = BottomSheetDialog(this)
+        // dialog.setContentView(R.layout.dialog_report)
+
+        val bottomSheet = layoutInflater.inflate(R.layout.dialog_report, null)
+        // 스타일 둥글게 적용
+        val bottomSheetDialog = BottomSheetDialog(this, R.style.calTheme_Custom)
+        // 닫기
+        val btnClose = bottomSheet.findViewById<ImageButton>(R.id.btn_report_close)
+        // 확인
+        val btnCheck = bottomSheet.findViewById<Button>(R.id.reportBtnCheck)
+        // 신고사유
+        val reportGroup = bottomSheet.findViewById<RadioGroup>(R.id.report_group)
+
+        bottomSheetDialog.setContentView(bottomSheet)
+        bottomSheetDialog.show()
+
+        // 닫기
+        btnClose.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+
+        // 확인
+        btnCheck.setOnClickListener {
+            when(reportGroup.checkedRadioButtonId){
+                R.id.btn_report_0 -> showCustomToast("0번 신고사유")
+                R.id.btn_report_1 -> showCustomToast("1번 신고사유")
+                R.id.btn_report_2 -> showCustomToast("2번 신고사유")
+                R.id.btn_report_3 -> showCustomToast("3번 신고사유")
+                R.id.btn_report_4 -> showCustomToast("4번 신고사유")
+                R.id.btn_report_5 -> showCustomToast("5번 신고사유")
+                R.id.btn_report_6 -> showCustomToast("6번 신고사유")
+
+            }
+            // bottomSheetDialog 닫기
+            bottomSheetDialog.dismiss()
+            // 유저 신고 완료 alertDialog
+            reportSuccessUser()
+
+        }
+    }
+
+    // 게시글 신고 완료
+    private fun reportSuccessPosting() {
+        val builder = AlertDialog.Builder(binding.root.context)
+            .setMessage("게시글 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
+            .setPositiveButton("확인", 
+                DialogInterface.OnClickListener { dialog, id -> 
+                    showCustomToast("신고 접수완료")
+                }
+            )
+        
+        // 다이얼로그 띄우기
+        builder.show()
+    }
+
+    // 유저 신고 완료
+    private fun reportSuccessUser() {
+        val builder = AlertDialog.Builder(binding.root.context)
+            .setMessage("유저 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
+            .setPositiveButton("확인",
+                DialogInterface.OnClickListener { dialog, id ->
+                    showCustomToast("신고 접수완료")
+                }
+            )
+
+        // 다이얼로그 띄우기
+        builder.show()
+    }
+    // 댓글 신고 완료
+    private fun reportSuccessComment() {
+        val builder = AlertDialog.Builder(binding.root.context)
+            .setMessage("댓글 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
+            .setPositiveButton("확인",
+                DialogInterface.OnClickListener { dialog, id ->
+                    feedInfoActivity.showCustomToast("신고 접수완료")
+                }
+            )
+
+        // 다이얼로그 띄우기
+        builder.show()
+    }
+    override fun onReportCommentSuccess(response: ReportResponse) {
+        Log.d("reportProcess", "onReportCommentSuccess ${response.toString()}")
+
+        reportSuccessComment()
+    }
+
+
+    override fun onReportCommentFailure(message: String) {
+        showCustomToast("API 요청 실패, LogCat 확인")
+        Log.d("reportProcess", message)
+    }
+
+    override fun onReportPostSuccess(response: ReportResponse) {
+        Log.d("reportProcess", "oonReportPostSuccess ${response.toString()}")
+
+        reportSuccessPosting()
+    }
+
+    override fun onReportPostFailure(message: String) {
+        showCustomToast("API 요청 실패, LogCat 확인")
+        Log.d("reportProcess", message)    }
 }

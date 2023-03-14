@@ -55,6 +55,8 @@
             android:layout_height="44dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="60dp"
+            android:inputType="text"
+            android:maxLines="1"
             android:textSize="18sp"
             android:hint="@string/search_loc_et_search_hint"
             android:layout_gravity="center_vertical"
