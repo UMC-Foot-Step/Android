@@ -32,6 +32,10 @@
     <string name="post_sw_text">공개</string>
     <string name="post_btn_text">작성하기</string>
     <string name="post_edit_tv_title">수정하기</string>
+    <string name="post_tv_back">"발자취 기록하기를 취소하시겠습니까? \n작성 취소 선택시, 작성된 글은 저장되지 않습니다."</string>
+    <string name="post_edit_tv_back">"발자취 수정하기를 취소하시겠습니까? \n작성 취소 선택시, 작성된 글은 저장되지 않습니다."</string>
+    <string name="post_tv_back_cancel">취소</string>
+    <string name="post_tv_back_ok">확인</string>
 
     <!-- Calender -->
     <string name="cal_tv_fragment_title">날짜 선택</string>
@@ -87,5 +91,18 @@
     <string name= "feed_tv_title">피드</string>
     <string name= "feed_tv_user_name">닉네임</string>
     <string name= "feed_spcificlist_tv_title">유저 닉네임</string>
+
+    <!--report-->
+    <string name="report_reason_title">신고 사유</string>
+    <string name="report_reason_0">욕설이나 차별 혐오성 글</string>
+    <string name="report_reason_1">음란, 선정성으로 유해한 글</string>
+    <string name="report_reason_2">불법 정보를 포함한 글</string>
+    <string name="report_reason_3">영리목적/스팸홍보/도배글</string>
+    <string name="report_reason_4">개인 정보를 노출하는 글</string>
+    <string name="report_reason_5">폭력/차별적/불쾌한 글</string>
+    <string name="report_reason_6">기타</string>
+    <string name="report_result_user">"유저 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)"</string>
+    <string name="report_result_comment">"댓글 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)"</string>
+    <string name="report_result_posting">"게시글 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)"</string>
 
 </resources>

@@ -3,11 +3,15 @@ package com.softsquared.template.kotlin.src.main.feed
 import android.util.Log
 import com.softsquared.template.kotlin.config.ApplicationClass
 import com.softsquared.template.kotlin.src.main.feed.models.FeedListResponse
+import com.softsquared.template.kotlin.src.main.feed.models.ReportResponse
+import com.softsquared.template.kotlin.src.main.feed.models.createReportDto
 import com.softsquared.template.kotlin.src.main.gallery.GalleryRetrofitInterface
 import com.softsquared.template.kotlin.src.main.gallery.models.PostListResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.Body
+import retrofit2.http.Path
 
 class FeedListService(val feedListFragmentInterface: FeedListFragmentInterface) {
 
@@ -40,8 +44,4 @@ class FeedListService(val feedListFragmentInterface: FeedListFragmentInterface) 
         })
 
     }
-
-
-
-
 }

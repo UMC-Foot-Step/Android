@@ -45,9 +45,11 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
 
     //자동로그인 기능 but 어째서인지 Splash가 너무 빨리 끝남..
     fun autoLogin(){
+
         Log.d("Tester", "autoLogin: dd")
         val refresh = getRefresh()
         Log.d("Tester", "autoLogin: $refresh")
+
         if(refresh == null) {
             Log.d("Tester", "autoLogin: ddd")
             startActivity(OnboardingActivity::class.java)

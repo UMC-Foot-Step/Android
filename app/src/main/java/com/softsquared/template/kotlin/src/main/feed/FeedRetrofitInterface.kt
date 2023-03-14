@@ -1,9 +1,13 @@
 package com.softsquared.template.kotlin.src.main.feed
 
 import com.softsquared.template.kotlin.src.main.feed.models.FeedListResponse
+import com.softsquared.template.kotlin.src.main.feed.models.ReportResponse
+import com.softsquared.template.kotlin.src.main.feed.models.createReportDto
 import com.softsquared.template.kotlin.src.main.gallery.models.PostListResponse
 import retrofit2.http.GET
 import retrofit2.Call
+import retrofit2.http.Body
+import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface FeedRetrofitInterface {
@@ -27,4 +31,19 @@ interface FeedRetrofitInterface {
     fun getSpecificFeedList(@Path("user-id") user_id: Int) : Call<PostListResponse>
 
 
+    /*
+        To Do 4. 발자취 신고
+     */
+    @POST("footstep/{posting-id}/posting-report")
+    fun ReportPost(@Body createReportDto: createReportDto,
+                   @Path("posting-id") posting_id: Int) : Call<ReportResponse>
+
+    /*
+        To Do 5. 유저 신고
+
+    @POST("{users-id}/users-report")
+    fun reportUser(@Path("users-id") users_id: Int,
+                   @Body createReportDto: createReportDto) : Call<ReportResponse>
+
+     */
 }
