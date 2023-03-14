@@ -11,6 +11,7 @@ import com.softsquared.template.kotlin.src.main.gallery.info.models_sample.FeetS
 import com.softsquared.template.kotlin.src.main.gallery.models.PostList
 import com.softsquared.template.kotlin.src.main.gallery.models.PostListResponse
 import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
+import com.softsquared.template.kotlin.src.main.post.PostActivity
 
 
 class MapGalleryActivity : BaseActivity<ActivityMapgalleryBinding>(ActivityMapgalleryBinding::inflate),
@@ -41,7 +42,8 @@ class MapGalleryActivity : BaseActivity<ActivityMapgalleryBinding>(ActivityMapga
             To Do 4. 발자취 기록하기 액티비티로 전환
          */
         binding.mapgalleryBtnPost.setOnClickListener {
-
+            val intent = Intent(this, PostActivity::class.java)
+            startActivity(intent)
         }
 
     }

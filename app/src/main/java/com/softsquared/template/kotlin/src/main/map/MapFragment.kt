@@ -44,6 +44,7 @@ import com.softsquared.template.kotlin.src.main.map.model.SpecificFstResponse
 import com.softsquared.template.kotlin.src.main.map.search.SearchActivity
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.GlobalScope.coroutineContext
 import java.time.LocalDate
 import java.time.Month
 import kotlin.properties.Delegates
@@ -120,7 +121,7 @@ class MapFragment(var city:String="") :
             super.onAttach(context)
 
             mContext = context
-            Log.d("FootStepList", "맵 프래그먼트의 onAttach city "+city)
+            Log.d("데이터로드", "맵 프래그먼트의 onAttach city +"+city)
         }
     }
 
@@ -241,15 +242,34 @@ class MapFragment(var city:String="") :
 
                         setCalBtnClickEventCnk = false
                     }
-                    Log.d("FootStepList", "Calender 뭐지 ${data1} ${data2}")
+                    Log.d("데이터로드", "btnChk-Calender 뭐지 ${data1} ${data2}")
 
                     val job = launch {
+                        // CoroutineScope(Dispatchers.IO).launch {
                         withContext(Dispatchers.IO) {
                             tryGetMapFootStepSpecific(data1, data2)
-                            Log.d("FootStepList", "Calender 런블락킹 들어갔냐")
+                            Log.d("데이터로드", "btnChk 코루틴마지막")
                         }
                     }
-                    job.join()
+                    //job.join()
+                    Log.d("데이터로드", "btnChk 런블락킹 마지막")
+
+                }
+                CoroutineScope(Dispatchers.Main).launch {
+
+                    for ((key, value) in marker_hashMap) {
+                        if (marker_mapChk[key] == false) {
+                            value.map = null
+
+                            Log.d("데이터로드", "두번째 포문 안보이는 마커 ${key}")
+                        } else {
+                            marker_mapChk[key] = false
+                            value.map = naverMap
+
+                            Log.d("데이터로드", "두번째 포문 보이는 마커 ${key}")
+                        }
+                    }
+                }
 
                     btnR.isChecked = false
                     btnR2.isChecked = false
@@ -261,9 +281,10 @@ class MapFragment(var city:String="") :
                     cal_date2.text = today.toString()
 
                     bottomSheetDialog.dismiss()
-                    Log.d("FootStepList", "Calender 런블락킹 안끝남??")
 
-                }
+                    Log.d("데이터로드", "btnChk 끝남")
+
+
             }
         }
 
@@ -280,7 +301,7 @@ class MapFragment(var city:String="") :
         binding.btnPosition.setOnClickListener {
             if(firstRun) {
                 for ((key, value) in marker_hashMap) {
-                    Log.d("FootStepList", "해시마커 포문 안되니+ $key")
+                    Log.d("데이터로드", "binding.btnPosition-해시마커 포문 + $key")
                     value.map = naverMap
                 }
             }
@@ -350,21 +371,23 @@ class MapFragment(var city:String="") :
 
     override fun onStart() = runBlocking<Unit>{
         super.onStart()
-        Log.d("FootStepList","맵 프래그먼트의 onStart()")
+        Log.d("데이터로드","맵 프래그먼트의 onStart()")
 
         val startJob = launch {
             withContext(Dispatchers.IO) {
                 tryGetMapFootStepList()
-                //Log.d("FootStepList","맵 프래그먼트의 onStart()-subRoutine")
 
-                Log.d("FootStepList", "onStart()-tryGetMapFootStepList 지나감")
+                Log.d("데이터로드", "onStart()-tryGetMapFootStepList 지나감")
             }
         }
         startJob.join()
-        Log.d("FootStepList", "onStart startJob.join() 지나감 startJob.isActive ${startJob.isActive}")
+        Log.d("데이터로드", "onStart startJob.join()지나감 startJob.isActive : ${startJob.isActive}")
 
         binding.mapView.onStart()
-        Log.d("FootStepList", "onStart 런블락킹")
+        Log.d("데이터로드", "onStart 런블락킹")
+    }
+    private suspend fun tryGetMapFootStepList(){
+        MapService(this).tryGetMapFootStepList()
     }
 
     private suspend fun tryGetMapFootStepCity(city:String){
@@ -373,14 +396,14 @@ class MapFragment(var city:String="") :
 
     override fun onResume() {
         super.onResume()
-        Log.d("FootStepList","맵 프래그먼트의 onResume()")
+        Log.d("데이터로드","맵 프래그먼트의 onResume()")
 
         if(firstRun){
             //Log.d("생명주기","맵 프래그먼트의 onResume()")
             CoroutineScope(Dispatchers.Main).launch {
                 //subRoutine4()
                 for ((key, value) in marker_hashMap) {
-                    Log.d("FootStepList", "onResume() 해시마커 포문 안되니+ $key")
+                    Log.d("데이터로드", "onResume() 해시마커 포문 되니+ $key")
                     value.map = naverMap
                     marker_mapChk[key]=false
                     value.setOnClickListener {
@@ -392,8 +415,9 @@ class MapFragment(var city:String="") :
         }
 
         binding.mapView.onResume()
-        Log.d("FootStepList", "onResume() 런블락킹 마지막")
+        Log.d("데이터로드", "onResume() 런블락킹 마지막")
     }
+
 
     override fun onPause() {
         super.onPause()
@@ -416,24 +440,9 @@ class MapFragment(var city:String="") :
         binding.mapView.onLowMemory()
     }
 
-    private suspend fun tryGetMapFootStepList(){
-        MapService(this).tryGetMapFootStepList()
-    }
-
-    private fun subRoutine4(){
-        for ((key, value) in marker_hashMap) {
-            Log.d("FootStepList", "onResume() 해시마커 포문 안되니+ $key")
-            value.map = naverMap
-            marker_mapChk[key]=false
-            value.setOnClickListener {
-                setMarkerClickEvent(key, value, value.tag as Boolean)
-                true
-            }
-        }
-    }
 
     override fun onMapReady(@NonNull naverMap: NaverMap) {
-        Log.d("FootStepList", "onMapReady")
+        Log.d("데이터로드", "onMapReady")
         //Log.d("생명주기", "onMapReady")
 
         if (!firstRun) {
@@ -442,12 +451,14 @@ class MapFragment(var city:String="") :
 
         this.naverMap = naverMap
 
-        Log.d("FootStepList", "해시마커 포문직전")
+       // val mapScope= CoroutineScope()
 
 //onStart에 있음
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.Main).launch{
+            Log.d("데이터로드", "CoroutineScope(Dispatchers.Main).launch ${Thread.currentThread().name}")
+
             for ((key, value) in marker_hashMap) {
-                Log.d("FootStepList", "해시마커 포문 안되니+ $key")
+                Log.d("데이터로드", "onMapReady 해시마커 포문 되니+ $key")
                 value.map = naverMap
                 marker_mapChk[key] = false
                 value.setOnClickListener {
@@ -457,19 +468,31 @@ class MapFragment(var city:String="") :
             }
         }
 
-        if (city != "") {
-            runBlocking {
-                launch {
-                    withContext(Dispatchers.IO) {
-            //CoroutineScope(Dispatchers.IO).launch {
 
-                        tryGetMapFootStepCity(city)
-                        city=""
+                // }
+                // }
+                /*
+                CoroutineScope(Dispatchers.Main).launch {
+                    for ((key, value) in marker_hashMap) {
+                        if (marker_mapChk[key] == false) {
+                            value.map = null
+
+                            Log.d("데이터로드", "onMapReady 두번째 포문 안보이는 마커 ${key}")
+                        } else {
+                            marker_mapChk[key] = false
+
+                            Log.d("데이터로드", "onMapReady 두번째 포문 보이는 마커 ${key}")
+                        }
                     }
-                    Log.d("FootStepList", "맵 프래그먼트의 onStart()-tryGetMapFootStepCity "+city)
                 }
-            }
-        }
+
+                 */
+
+
+
+        displayCityOutput()
+        Log.d("데이터로드", "onMapReady if (city !=  { 끝남")
+
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
@@ -478,6 +501,25 @@ class MapFragment(var city:String="") :
         }
     }
 
+    fun displayCityOutput(){
+        if (city != "") {
+            // runBlocking {
+            //    launch {
+            //        withContext(Dispatchers.IO) {
+            Log.d("데이터로드", "displayCityOutput " + city)
+
+            CoroutineScope(Dispatchers.IO).launch {
+                Log.d(
+                    "데이터로드",
+                    "CoroutineScope(Dispatchers.IO).launch ${Thread.currentThread().name}"
+                )
+
+                tryGetMapFootStepCity(city)
+                city = ""
+            }
+            Log.d("데이터로드", "displayCityOutput-tryGetMapFootStepCity " + city)
+        }
+    }
     private suspend fun tryGetMapFootStepPopup(
         placeId:Int
     ) {
@@ -504,9 +546,9 @@ class MapFragment(var city:String="") :
                 imageUrl=  marker_info_hashMap[placeId]!!.imageUrl
             }
             else
-                Log.d("FootStepList", "실패")
+                Log.d("데이터로드", "실패")
 
-            Log.d("FootStepList", "코루틴 진입후+ ${postingCount} ${locationName} ${imageUrl}")
+            Log.d("데이터로드", "onMapReady onResume 진입후 marker_info_hashmap에 담김+ ${postingCount} ${locationName} ${imageUrl}")
 
             val textData: String = "내 발자취 ${postingCount}개"
 
@@ -548,11 +590,11 @@ class MapFragment(var city:String="") :
         }
     }
 
-    override fun onGetMapFootStepCitySuccess(response: CityResponse) {
-        Log.d("FootStepList", "onGetMapFootStepCitySuccess 되긴하니??")
+    override suspend fun onGetMapFootStepCitySuccess(response: CityResponse) {
+        Log.d("데이터로드", "onGetMapFootStepCitySuccess 되긴하니??")
 
         if (response.result == null) {
-            Log.d("FootStepList", "5번째 api null")
+            Log.d("데이터로드", "5번째 api null")
 
             val handler = Handler(Looper.getMainLooper())
             handler.postDelayed(Runnable { Toast.makeText(mContext, "조회 결과가 없습니다", Toast.LENGTH_SHORT).show() }, 0)
@@ -560,7 +602,7 @@ class MapFragment(var city:String="") :
         }
 
         else{
-            Log.d("FootStepList", "5번째 api ${response.toString()}")
+            Log.d("데이터로드", "5번째 api ${response.toString()}")
 
             if(response.result.size==0){
                 //Toast.makeText(mContext, "조회 결과가 없습니다", Toast.LENGTH_SHORT).show()
@@ -570,28 +612,32 @@ class MapFragment(var city:String="") :
             }
 
             CoroutineScope(Dispatchers.Main).launch {
-                Log.d("FootStepList", "CoroutineScope(Dispatchers.Main).launch 진입..???")
+                Log.d("데이터로드", "CoroutineScope(Dispatchers.Main).launch 진입..???")
 
                 for (result_arr in response.result) {
 
                     marker_mapChk[result_arr.placeId] = true
 
-                    Log.d("FootStepList", "첫번째 포문 보이는 마커 ${result_arr.placeId}")
+                    Log.d("데이터로드", "onGetMapFootStepCitySuccess 첫번째 포문 보이는 마커 ${result_arr.placeId}")
 
                 }
 
-                for ((key, value) in marker_hashMap) {
+                 for ((key, value) in marker_hashMap) {
                     if (marker_mapChk[key] == false) {
                         value.map = null
 
-                        Log.d("FootStepList", "두번째 포문 안보이는 마커 ${key}")
+                        Log.d("데이터로드", "onGetMapFootStepCitySuccess 두번째 포문 안보이는 마커 ${key}")
                     } else {
                         marker_mapChk[key] = false
+                        value.map = naverMap
 
-                        Log.d("FootStepList", "두번째 포문 보이는 마커 ${key}")
+                        Log.d("데이터로드", "onGetMapFootStepCitySuccess 두번째 포문 보이는 마커 ${key}")
                     }
                 }
             }
+
+
+           // }
         }
     }
 
@@ -601,7 +647,7 @@ class MapFragment(var city:String="") :
 
     //onStart에 있음
     override fun onGetMapFootStepListSuccess(response: AllResponse)=runBlocking<Unit> {
-        Log.d("FootStepList", "onGetMapFootStepListSuccess 되긴하니??")
+        Log.d("데이터로드", "onGetMapFootStepListSuccess 되긴하니??")
 
         for (result_arr in response.result) {
             marker_hashMap[result_arr.placeId] = Marker().apply {
@@ -617,7 +663,7 @@ class MapFragment(var city:String="") :
                 }
                 job.join()
 
-                Log.d("FootStepList", "서브루틴1 placeId: ${result_arr.placeId}")
+                Log.d("데이터로드", "onGetMapFootStepListSuccess 마지막 placeId: ${result_arr.placeId}")
             }
         }
     }
@@ -628,11 +674,11 @@ class MapFragment(var city:String="") :
 
     override fun onGetMapFootStepPopupSuccess(response: PopupResponse,placeId:Int) =runBlocking<Unit>{
         val job = launch {
-            Log.d("FootStepList", "서브루틴 2 마커로...+ ${response.result}")
+            Log.d("데이터로드", "onGetMapFootStepPopupSuccess + ${response.result}")
         }
         job.join()
 
-        Log.d("FootStepList", "서브루틴 2 마커로..")
+        //Log.d("데이터로드", "서브루틴 2 마커로..")
 
         if(!marker_info_hashMap.containsKey(placeId)) {
             val arrData = ResultPopupListMap(
@@ -643,8 +689,8 @@ class MapFragment(var city:String="") :
             marker_info_hashMap[placeId] = arrData
         }
         Log.d(
-            "FootStepList",
-            "서브루틴 2 해시맵에 데이터 담김+ ${marker_info_hashMap[placeId]!!.loacationName} " +
+            "데이터로드",
+            "onGetMapFootStepPopupSuccess 마지막 + ${marker_info_hashMap[placeId]!!.loacationName} " +
                         "${marker_info_hashMap[placeId]!!.postingCount} ${marker_info_hashMap[placeId]!!.imageUrl}")
 
     }
@@ -654,10 +700,10 @@ class MapFragment(var city:String="") :
     }
 
     override suspend fun onGetMapFootStepSpecificSuccess(response: SpecificFstResponse) {//=runBlocking<Unit>{
-        Log.d("FootStepList", "onGetMapFootStepSpecificSuccess 되긴하니?")
+        Log.d("데이터로드", "onGetMapFootStepSpecificSuccess 되긴하니?")
 
             if (response.result == null) {
-                Log.d("FootStepList", "4번째 api null")
+                Log.d("데이터로드", "4번째 api null")
                 val handler = Handler(
                     Looper.getMainLooper()
                 )
@@ -668,34 +714,37 @@ class MapFragment(var city:String="") :
                         Toast.LENGTH_SHORT
                     ).show()
                 }, 0)
+                Log.d("데이터로드", "조회 결과가 없습니다")
+
             }
 
 
         else {
-            Log.d("FootStepList", "4번째 api ${response.toString()}")
+            Log.d("데이터로드", "4번째 api ${response.toString()}")
 
-                Log.d("FootStepList", "첫번째 포문 못나간건강???")
 
-                CoroutineScope(Dispatchers.Main).launch {
-                    Log.d("FootStepList", "CoroutineScope(Dispatchers.Main).launch 진입..???")
+              //  CoroutineScope(Dispatchers.Main).launch {
+                    //Log.d("데이터로드", "onGetMapFootStepSpecificSuccess의 CoroutineScope 진입..???")
 
                     for (result_arr in response.result.allPlaceDto) {
 
                         marker_mapChk[result_arr.placeId] = true
-                        Log.d("FootStepList", "첫번째 포문 보이는 마커 ${result_arr.placeId}")
+                        Log.d("데이터로드", "첫번째 포문 보이는 마커 ${result_arr.placeId}")
                     }
 
-                    for ((key, value) in marker_hashMap) {
+                    /*for ((key, value) in marker_hashMap) {
                         if (marker_mapChk[key] == false) {
                             value.map = null
 
-                            Log.d("FootStepList", "두번째 포문 안보이는 마커 ${key}")
+                            Log.d("데이터로드", "두번째 포문 안보이는 마커 ${key}")
                         } else {
                             marker_mapChk[key] = false
-                            Log.d("FootStepList", "두번째 포문 보이는 마커 ${key}")
+                            Log.d("데이터로드", "두번째 포문 보이는 마커 ${key}")
                         }
                     }
-                }
+
+                     */
+             //   }
 
         }
 
@@ -713,7 +762,7 @@ class MapFragment(var city:String="") :
             }
             */
 
-        Log.d("FootStepList", "onGetMapFootStepSpecificSuccess 런블락킹 나감")
+        Log.d("데이터로드", "onGetMapFootStepSpecificSuccess 런블락킹 나감")
     }
 
     override fun onGetMapFootStepSpecificFailure(message: String) {

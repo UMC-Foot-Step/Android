@@ -99,7 +99,7 @@
     <string name="report_reason_2">불법 정보를 포함한 글</string>
     <string name="report_reason_3">영리목적/스팸홍보/도배글</string>
     <string name="report_reason_4">개인 정보를 노출하는 글</string>
-    <string name="report_reason_5">폭력/차별적/불쾌한 글글</string>
+    <string name="report_reason_5">폭력/차별적/불쾌한 글</string>
     <string name="report_reason_6">기타</string>
     <string name="report_result_user">"유저 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)"</string>
     <string name="report_result_comment">"댓글 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)"</string>

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.databinding.ItemGalleryinfoCommentBinding
+import com.softsquared.template.kotlin.src.main.feed.models.createReportDto
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoActivity
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoFragment
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoFragmentAdapter
@@ -124,7 +125,7 @@ class FeedInfoActivityAdapter(
                                     if(selectedNum==0){
                                         feedInfoActivity.showCustomToast("댓글 신고하기")
                                         // bottomSheetDialog - 신고사유
-                                        reportDialogComment()
+                                        reportDialogComment(commentList.commentId)
 
                                     }
                                     // 유저를 누르고 확인 버튼
@@ -164,7 +165,7 @@ class FeedInfoActivityAdapter(
 
         // 신고하기 이유 BottomSheetDialog
         // 댓글
-        private fun reportDialogComment() {
+        private fun reportDialogComment(commentId:Int) {
             // val dialog = BottomSheetDialog(this)
             // dialog.setContentView(R.layout.dialog_report)
 
@@ -188,20 +189,46 @@ class FeedInfoActivityAdapter(
 
             // 확인
             btnCheck.setOnClickListener {
+                var reasonNum=0
                 when(reportGroup.checkedRadioButtonId){
-                    R.id.btn_report_0 -> feedInfoActivity.showCustomToast("0번 신고사유")
-                    R.id.btn_report_1 -> feedInfoActivity.showCustomToast("1번 신고사유")
-                    R.id.btn_report_2 -> feedInfoActivity.showCustomToast("2번 신고사유")
-                    R.id.btn_report_3 -> feedInfoActivity.showCustomToast("3번 신고사유")
-                    R.id.btn_report_4 -> feedInfoActivity.showCustomToast("4번 신고사유")
-                    R.id.btn_report_5 -> feedInfoActivity.showCustomToast("5번 신고사유")
-                    R.id.btn_report_6 -> feedInfoActivity.showCustomToast("6번 신고사유")
+                    R.id.btn_report_0 -> {
+                        feedInfoActivity.showCustomToast("0번 신고사유")
+                        reasonNum=0
+                    }
+                    R.id.btn_report_1 -> {
+                        feedInfoActivity.showCustomToast("1번 신고사유")
+                        reasonNum=1
+                    }
+                    R.id.btn_report_2 -> {
+                        feedInfoActivity.showCustomToast("2번 신고사유")
+                        reasonNum=2
+                    }
+                    R.id.btn_report_3 -> {
+                        feedInfoActivity.showCustomToast("3번 신고사유")
+                        reasonNum=3
+                    }
+                    R.id.btn_report_4 -> {
+                        feedInfoActivity.showCustomToast("4번 신고사유")
+                        reasonNum=4
+                    }
+                    R.id.btn_report_5 -> {
+                        feedInfoActivity.showCustomToast("5번 신고사유")
+                        reasonNum=5
+                    }
+                    R.id.btn_report_6 -> {
+                        feedInfoActivity.showCustomToast("6번 신고사유")
+                        reasonNum=6
+                    }
 
                 }
+                FeedInfoService(feedInfoActivity).ReportComment(commentId,
+                    createReportDto(reasonNumber = reasonNum, targetNumber = 2))
+
+
                 // bottomSheetDialog 닫기
                 bottomSheetDialog.dismiss()
                 // 댓글 신고 완료
-                reportSuccessComment()
+                //reportSuccessComment()
             }
         }
 
@@ -230,16 +257,39 @@ class FeedInfoActivityAdapter(
 
             // 확인
             btnCheck.setOnClickListener {
+                var reasonNum=0
                 when(reportGroup.checkedRadioButtonId){
-                    R.id.btn_report_0 -> feedInfoActivity.showCustomToast("0번 신고사유")
-                    R.id.btn_report_1 -> feedInfoActivity.showCustomToast("1번 신고사유")
-                    R.id.btn_report_2 -> feedInfoActivity.showCustomToast("2번 신고사유")
-                    R.id.btn_report_3 -> feedInfoActivity.showCustomToast("3번 신고사유")
-                    R.id.btn_report_4 -> feedInfoActivity.showCustomToast("4번 신고사유")
-                    R.id.btn_report_5 -> feedInfoActivity.showCustomToast("5번 신고사유")
-                    R.id.btn_report_6 -> feedInfoActivity.showCustomToast("6번 신고사유")
+                    R.id.btn_report_0 -> {
+                        feedInfoActivity.showCustomToast("0번 신고사유")
+                        reasonNum=0
+                    }
+                    R.id.btn_report_1 -> {
+                        feedInfoActivity.showCustomToast("1번 신고사유")
+                        reasonNum=1
+                    }
+                    R.id.btn_report_2 -> {
+                        feedInfoActivity.showCustomToast("2번 신고사유")
+                        reasonNum=2
+                    }
+                    R.id.btn_report_3 -> {
+                        feedInfoActivity.showCustomToast("3번 신고사유")
+                        reasonNum=3
+                    }
+                    R.id.btn_report_4 -> {
+                        feedInfoActivity.showCustomToast("4번 신고사유")
+                        reasonNum=4
+                    }
+                    R.id.btn_report_5 -> {
+                        feedInfoActivity.showCustomToast("5번 신고사유")
+                        reasonNum=5
+                    }
+                    R.id.btn_report_6 -> {
+                        feedInfoActivity.showCustomToast("6번 신고사유")
+                        reasonNum=6
+                    }
 
                 }
+
                 // bottomSheetDialog 닫기
                 bottomSheetDialog.dismiss()
                 // 댓글 신고 완료
@@ -249,6 +299,7 @@ class FeedInfoActivityAdapter(
 
 
         // 댓글 신고 완료
+        /*
         private fun reportSuccessComment() {
             val builder = AlertDialog.Builder(feedInfoActivity)
                 .setMessage("댓글 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
@@ -261,6 +312,7 @@ class FeedInfoActivityAdapter(
             // 다이얼로그 띄우기
             builder.show()
         }
+         */
 
         // 유저 신고 완료
         private fun reportSuccessUser() {

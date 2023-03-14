@@ -12,6 +12,7 @@ import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseFragment
 import com.softsquared.template.kotlin.config.BaseResponse
 import com.softsquared.template.kotlin.databinding.FragmentGalleryinfoBinding
+import com.softsquared.template.kotlin.src.main.feed.models.ReportResponse
 import com.softsquared.template.kotlin.src.main.gallery.GalleryService
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostCommentRequest
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostInfoResponse
@@ -101,7 +102,6 @@ class GalleryInfoFragment (
 
     }
 
-
     /*
         발자취 게시글 댓글 삭제 API 메소드
      */
@@ -127,5 +127,28 @@ class GalleryInfoFragment (
     override fun onDeletePostCommentFailure(message: String) {
         showCustomToast("API 요청 실패, LogCat 확인")
         Log.d("왜 실패 했니?", message)
+    }
+    // 댓글 신고 완료
+    private fun reportSuccessComment() {
+        val builder = AlertDialog.Builder(galleryInfoActivity)
+            .setMessage("댓글 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
+            .setPositiveButton("확인",
+                DialogInterface.OnClickListener { dialog, id ->
+                    galleryInfoFragment.showCustomToast("신고 접수완료")
+                }
+            )
+
+        // 다이얼로그 띄우기
+        builder.show()
+    }
+    override fun onReportCommentSuccess(response: ReportResponse) {
+        Log.d("reportProcess", "onReportCommentSuccess ${response.toString()}")
+
+        reportSuccessComment()
+    }
+
+    override fun onReportCommentFailure(message: String) {
+        showCustomToast("API 요청 실패, LogCat 확인")
+        Log.d("reportProcess", message)
     }
 }

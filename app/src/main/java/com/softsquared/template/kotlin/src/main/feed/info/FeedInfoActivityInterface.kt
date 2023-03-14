@@ -1,6 +1,7 @@
 package com.softsquared.template.kotlin.src.main.feed.info
 
 import com.softsquared.template.kotlin.config.BaseResponse
+import com.softsquared.template.kotlin.src.main.feed.models.ReportResponse
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostInfoResponse
 
 interface FeedInfoActivityInterface {
@@ -31,9 +32,9 @@ interface FeedInfoActivityInterface {
 
     // 댓글 - 댓글 신고하기
     // 댓글 신고하기 API 요청 성공
-    
+    fun onReportCommentSuccess(response: ReportResponse)
     // 댓글 신고하기 API 요청 실패
-    
+    fun onReportCommentFailure(message: String)
     
     
     // 댓글 - 유저 신고하기
@@ -41,5 +42,10 @@ interface FeedInfoActivityInterface {
     // 유저 신고하기 API 요청 성공
     
     // 유저 신고하기 API 요청 실패
-    
+
+    //게시글 신고하기
+    fun onReportPostSuccess(response:ReportResponse)
+    fun onReportPostFailure(message: String)
+
+
 }

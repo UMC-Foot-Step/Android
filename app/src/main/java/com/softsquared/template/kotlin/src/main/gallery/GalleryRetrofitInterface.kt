@@ -1,10 +1,8 @@
 package com.softsquared.template.kotlin.src.main.gallery
 
-import com.softsquared.template.kotlin.config.ApplicationClass.Companion.X_ACCESS_TOKEN
 import com.softsquared.template.kotlin.config.BaseResponse
-import com.softsquared.template.kotlin.src.main.Example.models.PostSignUpRequest
-import com.softsquared.template.kotlin.src.main.Example.models.SignUpResponse
-import com.softsquared.template.kotlin.src.main.Example.models.UserResponse
+import com.softsquared.template.kotlin.src.main.feed.models.ReportResponse
+import com.softsquared.template.kotlin.src.main.feed.models.createReportDto
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostCommentRequest
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostInfoResponse
 import com.softsquared.template.kotlin.src.main.gallery.models.PostListByDateResponse
@@ -64,4 +62,19 @@ interface GalleryRetrofitInterface {
     */
     @GET("footstep/gallery/{date}")
     fun getGalleryPostListByDate(@Path("date") date: String) : Call<PostListByDateResponse>
+
+    /*
+        To Do 9. 댓글 신고
+     */
+    @POST("footstep/{comment-id}/comment-report")
+    fun reportComment(@Path("comment-id") comment_id: Int,
+                      @Body createReportDto: createReportDto) : Call<ReportResponse>
+
+    /*
+        To Do 10. 유저 신고
+
+    @POST("{users-id}/users-report")
+    fun reportUser(@Path("users-id") users_id: Int,
+                      @Body createReportDto: createReportDto) : Call<ReportResponse>
+     */
 }

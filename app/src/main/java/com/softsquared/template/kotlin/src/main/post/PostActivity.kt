@@ -151,6 +151,7 @@ class PostActivity
             content = binding.postEtContent.text.toString()
             title = binding.postEtTitle.text.toString()
 
+
             // 모든 값이 존재하는지 확인
             // content, title, address, latitude, longitude, name만 확인 필요
             // 모든 값이 존재한다면 setData
@@ -163,6 +164,7 @@ class PostActivity
                 // alertDialog 작성
                 btnPostDialog()
             }
+
         }
 
         if(intent.hasExtra("positionTitle")){
@@ -280,7 +282,11 @@ class PostActivity
     override fun onPostPostInfoSuccess(response: PostResponse) {
         Log.d("Success", "$response")
         Log.d("post date", "$tvYear-$tvMonth-$tvDay")
-        if(response.code==200) showCustomToast("작성하기 완료")
+        if (response.code == 200) {
+            Log.d("데이터로드", "PostActivity 작성하기 완료")
+
+            showCustomToast("작성하기 완료")
+        }
     }
 
     override fun onPostPostInfoFailure(message: String) {
