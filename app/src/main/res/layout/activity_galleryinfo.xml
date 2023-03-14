@@ -29,7 +29,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12.4dp"
-
             android:ems="12"
             android:maxLines="1"
             android:ellipsize="end"
