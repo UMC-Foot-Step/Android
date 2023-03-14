@@ -13,8 +13,6 @@ class NicknameService {
 
    private val api = ApplicationClass.sRetrofit.create(RetrofitInterface::class.java)
 
-
-
    fun trychangeNickname(accessToken : String, changeNicknameInfo: changeNicknameInfo, nicknameView: NicknameView){
       val nicknameService = api.nickname(changeNicknameInfo, accessToken)
       Log.d("Tester", "trychangeNickname: $changeNicknameInfo")

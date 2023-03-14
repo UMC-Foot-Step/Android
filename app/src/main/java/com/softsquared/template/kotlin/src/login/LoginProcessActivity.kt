@@ -5,13 +5,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
-import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
-import com.softsquared.template.kotlin.config.UserCode
 import com.softsquared.template.kotlin.databinding.ActivityLoginProcessBinding
 import com.softsquared.template.kotlin.src.login.DataFile.Result
 import com.softsquared.template.kotlin.src.login.DataFile.User

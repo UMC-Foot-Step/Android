@@ -13,6 +13,7 @@ import com.softsquared.template.kotlin.src.main.myPage.MyPageFragment
 import com.softsquared.template.kotlin.src.main.post.PostActivity
 import com.softsquared.template.kotlin.src.main.postupdate.PostUpdateActivity
 
+
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
 
     override fun onCreate(savedInstanceState: Bundle?) {

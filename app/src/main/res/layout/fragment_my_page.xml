@@ -170,35 +170,6 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp">
-
-            <Button
-                android:id="@+id/btn_friend"
-                android:layout_width="match_parent"
-                android:layout_height="39dp"
-                android:background="@drawable/top_stroke"
-                android:gravity="center|left"
-                android:paddingLeft="8dp"
-                android:text="친구"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="normal" />
-
-            <TextView
-                android:id="@+id/txt_friend_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center|left"
-                android:layout_marginLeft="51dp"
-                android:text="999"
-                android:textColor="@color/orange"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <Button
                 android:id="@+id/btn_my_footprint"
@@ -222,6 +193,25 @@
                 android:textColor="@color/orange"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp">
+
+            <Button
+                android:id="@+id/btn_password_change"
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:background="@drawable/top_stroke"
+                android:gravity="center|left"
+                android:paddingLeft="8dp"
+                android:text="비밀번호 변경"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+
         </FrameLayout>
 
         <Button

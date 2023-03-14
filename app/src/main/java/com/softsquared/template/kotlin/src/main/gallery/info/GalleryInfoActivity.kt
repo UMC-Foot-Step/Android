@@ -5,18 +5,12 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.widget.Button
 import android.widget.PopupMenu
-import android.widget.TextView
-import android.widget.Toast
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.config.BaseResponse
 import com.softsquared.template.kotlin.databinding.ActivityGalleryinfoBinding
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostInfoResponse
-import com.softsquared.template.kotlin.src.main.gallery.info.models_sample.FeetStepInfoResponse
 import com.softsquared.template.kotlin.src.main.postupdate.PostUpdateActivity
 
 
