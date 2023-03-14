@@ -2,6 +2,7 @@ package com.softsquared.template.kotlin.src.main.postupdate
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -85,26 +86,7 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
 
         // 뒤로가기 버튼 누르면 뒤로 가기 dialog
         binding.editIbBack.setOnClickListener {
-            val myDialog = layoutInflater.inflate(R.layout.dialog_post_edit_back, null)
-            val build = AlertDialog.Builder(this).setView(myDialog)
-            val dialog = build.create()
-            dialog.show()
-
-            // 확인 - 수정하기 중단
-            val okButton = myDialog.findViewById<Button>(R.id.btn_post_edit_back_ok)
-            okButton.setOnClickListener {
-                showCustomToast("수정하기 취소 완료")
-                dialog.dismiss()
-                // activity 종료하기
-                finish()
-            }
-
-            // 취소 - 수정하기 계속 진행
-            val cancelButton = myDialog.findViewById<Button>(R.id.btn_post_edit_back_cancel)
-            cancelButton.setOnClickListener {
-                showCustomToast("수정하기 진행 중")
-                dialog.dismiss()
-            }
+            backDialog()
         }
 
         // 사진 삭제
@@ -186,8 +168,20 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
         binding.editBtnPost.setOnClickListener{
             content = binding.editEtContent.text.toString()
             title = binding.editEtTitle.text.toString()
-            setData(content!!, title!!, address!!, latitude!!, longitude!!, name!!, tvYear, tvMonth, tvDay, swChecked)
-            finish()
+
+            // 모든 값이 존재하는지 확인
+            // content, title, address, latitude, longitude, name만 확인 필요
+            // 모든 값이 존재한다면 setData
+            if(content != null && title != null && address != null && latitude != 0.0 && longitude != 0.0 && name != null){
+                setData(content!!, title!!, address!!, latitude!!, longitude!!, name!!, tvYear, tvMonth, tvDay, swChecked)
+                finish()
+            }
+
+            else{
+                // alertDialog 작성
+                btnPostDialog()
+            }
+
         }
 
         if(intent.hasExtra("positionTitle")){
@@ -195,11 +189,45 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
         }
     }
 
+
+
     override fun onRestart() {
         super.onRestart()
         // 장소 제목 불러오기
         if(intent.hasExtra("positionTitle")){
             binding.editBtnLoc.text = intent.getStringExtra("positionTitle")
+        }
+    }
+
+    override fun onBackPressed() {
+        // 뒤로가기 물리키 막기
+        // super.onBackPressed()
+
+        // 뒤로가기 dialog 실행
+        backDialog()
+    }
+
+    // 뒤로가기 dialog
+    private fun backDialog() {
+        val myDialog = layoutInflater.inflate(R.layout.dialog_post_edit_back, null)
+        val build = AlertDialog.Builder(this).setView(myDialog)
+        val dialog = build.create()
+        dialog.show()
+
+        // 확인 - 수정하기 중단
+        val okButton = myDialog.findViewById<Button>(R.id.btn_post_edit_back_ok)
+        okButton.setOnClickListener {
+            showCustomToast("수정하기 취소 완료")
+            dialog.dismiss()
+            // activity 종료하기
+            finish()
+        }
+
+        // 취소 - 수정하기 계속 진행
+        val cancelButton = myDialog.findViewById<Button>(R.id.btn_post_edit_back_cancel)
+        cancelButton.setOnClickListener {
+            showCustomToast("수정하기 진행 중")
+            dialog.dismiss()
         }
     }
 
@@ -378,6 +406,18 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
         tvMonth = today.monthValue
         tvDay = today.dayOfMonth
         dataSet(tvYear, tvMonth, tvDay)
+    }
+
+    // 모든 내용의 값이 없는 경우 alertDialog
+    private fun btnPostDialog() {
+        val builder = AlertDialog.Builder(this)
+            .setTitle("발자취 수정하기")
+            .setMessage("모든 내용이 입력되지 않았습니다. 모든 내용을 입력해주십시오. \n모든 내용이 입력되어야 기록할 수 있습니다.")
+            .setPositiveButton("확인",
+                DialogInterface.OnClickListener { dialog, which ->
+                    showCustomToast("빠짐없이 입력해주세요.")
+                })
+        builder.show()
     }
 
 
