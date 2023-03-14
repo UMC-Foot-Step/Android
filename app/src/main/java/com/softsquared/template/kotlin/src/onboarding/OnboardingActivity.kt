@@ -42,6 +42,7 @@ class OnboardingActivity : BaseActivity<ActivityOnboardingBinding>(ActivityOnboa
                 onboarding_btn.text = "시작하기"
             } else{
                 startActivity(Intent(this, LoginProcessActivity::class.java))
+                finish()
             }
         }
 

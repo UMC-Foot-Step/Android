@@ -151,7 +151,6 @@ class PostActivity
             content = binding.postEtContent.text.toString()
             title = binding.postEtTitle.text.toString()
 
-
             // 모든 값이 존재하는지 확인
             // content, title, address, latitude, longitude, name만 확인 필요
             // 모든 값이 존재한다면 setData
@@ -164,6 +163,7 @@ class PostActivity
                 // alertDialog 작성
                 btnPostDialog()
             }
+
 
         }
 

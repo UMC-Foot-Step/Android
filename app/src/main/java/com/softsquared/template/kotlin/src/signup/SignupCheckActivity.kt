@@ -19,14 +19,12 @@ class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySig
 
     var nicknamecheck = getSignInNicknameCheck()
     var checkbox1check = getCheck1()
-    var checkbox2check = getCheck2()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         var signup_btn = findViewById<Button>(R.id.signUp_btn)
         var agree_check = findViewById<CheckBox>(R.id.agree_check)
-        var authority_check = findViewById<CheckBox>(R.id.authority_check)
 
         checknext()
 
@@ -39,16 +37,7 @@ class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySig
             startActivity(intent)
         }
 
-        authority_check.setOnClickListener {
-            if(getCheck2()){
-                saveCheck2(false)
-                checkbox2check = false
-            }else{
-                saveCheck2(true)
-                checkbox2check = true
-            }
-            checknext()
-        }
+
 
         signup_btn.setOnClickListener {
             signUp()
@@ -91,14 +80,8 @@ class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySig
 
         if(nicknamecheck){
             if(checkbox1check){
-                if(checkbox2check){
-                    binding.signUpBtn.isEnabled = true
-                    binding.signUpBtn.setTextColor(Color.parseColor("#ffffff"))
-                }
-                else{
-                    binding.signUpBtn.isEnabled = false
-                    binding.signUpBtn.setTextColor(Color.parseColor("#000000"))
-                }
+                binding.signUpBtn.isEnabled = true
+                binding.signUpBtn.setTextColor(Color.parseColor("#ffffff"))
             }
             else{
                 binding.signUpBtn.isEnabled = false
@@ -116,7 +99,6 @@ class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySig
         binding.etNickname.setText(getSignInNickname())
 
 
-        binding.authorityCheck.isChecked = getCheck2()
 
     }
 

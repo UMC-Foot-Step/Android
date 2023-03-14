@@ -24,8 +24,6 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-
-
         //로그인 전 제거하고 시작해야 하는 정보
         beforeStartActivity()
 
@@ -120,7 +118,6 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
                         saveJwt(result!!.grantType + result.jwt)
                         saveRefresh(result!!.grantType + result.refreshJwt)
                         startSuccessActivity()
-
                     }
                 }
             }
@@ -131,7 +128,6 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
 
             }
         })
-
     }
 
     private fun getUser(): User {

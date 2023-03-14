@@ -22,6 +22,7 @@ import com.softsquared.template.kotlin.src.main.MainActivity
 import com.softsquared.template.kotlin.src.onboarding.OnboardingActivity
 import com.softsquared.template.kotlin.util.getRefresh
 import com.softsquared.template.kotlin.util.removeRefresh
+import com.softsquared.template.kotlin.util.saveRefresh
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {
     lateinit var textView:TextView
@@ -47,6 +48,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
 
         Log.d("Tester", "autoLogin: dd")
         val refresh = getRefresh()
+        Log.d("Tester", "autoLogin: $refresh")
 
         if(refresh == null) {
             Log.d("Tester", "autoLogin: ddd")
@@ -55,8 +57,10 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
         else
             NetworkDataSource().autoLogin(refresh,object : LoginView {
                 override fun onLoginSuccess(code: Int, result: Result?) {
-                    Log.d("Tester", "onLoginSuccess: ㅇㅅㅇ")
+                    Log.d("Tester", "onLoginSuccess: $result")
                     startActivity(MainActivity::class.java)
+                    result?.let { saveRefresh(result.grantType + result.refreshJwt) }
+                    //let,apply,run : !!=위험, 코틀린에 맞는 문법을 사용해 위험요소 제거
                 }
 
                 override fun onLoginFailure(message: String?) {
@@ -73,5 +77,20 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                 finish()
             },1500)
     }
-
 }
+
+//백그라운드 실행 없이 바로 자동로그인 실행되는 방법 찾기
+
+
+
+
+
+
+
+
+
+
+
+
+
+

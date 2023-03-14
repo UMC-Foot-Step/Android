@@ -105,20 +105,6 @@
         android:textColor="#000000"
         android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.6359"
-        android:text="비밀번호 찾기"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        android:textStyle="normal"
-        android:fontFamily="@font/inter"/>
-
     <Button
         android:id="@+id/register_btn"
         android:layout_width="284dp"

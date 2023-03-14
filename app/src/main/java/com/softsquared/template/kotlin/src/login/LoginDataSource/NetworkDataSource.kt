@@ -44,18 +44,22 @@ class NetworkDataSource {
     fun autoLogin(jwt:String,loginView: LoginView){
         api.reissue(jwt).enqueue(object : Callback<LoginResponse>{
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                Log.d("Tester", "onResponse: dddd${response}")
                 if(response.isSuccessful && response.code() == 200){
                     val loginResponse: LoginResponse = response.body()!!
-
+                    Log.d("Tester", "onResponse: $loginResponse")
                     when(val code = loginResponse.code){
-                        200->loginView.onLoginSuccess(code,null)
+                        200->loginView.onLoginSuccess(code,loginResponse.result)
                         else -> loginView.onLoginFailure(response.message())
                     }
                 }
             }
 
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable)
-                    = loginView.onLoginFailure(t.message)
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable){
+                loginView.onLoginFailure(t.message)
+                Log.d("Tester", "onFailure: ${t}")
+            }
+
 
 
         })
