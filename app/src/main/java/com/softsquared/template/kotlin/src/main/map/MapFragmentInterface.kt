@@ -23,7 +23,7 @@ interface MapFragmentInterface {
     fun onGetMapFootStepSpecificFailure(message:String)
 
 
-    fun onGetMapFootStepCitySuccess(response: CityResponse)
+    suspend fun onGetMapFootStepCitySuccess(response: CityResponse)
 
     fun onGetMapFootStepCityFailure(message:String)
 

@@ -9,7 +9,7 @@ import com.softsquared.template.kotlin.src.main.MainActivity
 
 class AreaActivity : BaseActivity<ActivityAreaBinding>(ActivityAreaBinding::inflate)
 {
-    lateinit var placeName:String
+    var placeName=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val intent=intent
@@ -116,7 +116,7 @@ class AreaActivity : BaseActivity<ActivityAreaBinding>(ActivityAreaBinding::infl
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("FootStepList","AreaActivity onDestroy() "+placeName)
+        Log.d("생명주기","AreaActivity onDestroy() "+placeName)
     }
 }
 

@@ -13,10 +13,7 @@ import com.softsquared.template.kotlin.src.main.myPage.MyPageFragment
 import com.softsquared.template.kotlin.src.main.post.PostActivity
 import com.softsquared.template.kotlin.src.main.postupdate.PostUpdateActivity
 
-
-
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,10 +25,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         var placeName=""
         if(extras!=null) {
             placeName = extras!!["placeName"] as String
-            Log.d("FootStepList", "메인의 "+placeName)
+            Log.d("생명주기", "메인의 "+placeName)
             placeNameChk=true
         }
-            //supportFragmentManager.beginTransaction().replace(R.id.main_frm, MapFragment()).commitAllowingStateLoss()
+        //supportFragmentManager.beginTransaction().replace(R.id.main_frm, MapFragment()).commitAllowingStateLoss()
 
         binding.mainBtmFab.setOnClickListener {
             val intent = Intent(this@MainActivity, PostActivity::class.java)
@@ -45,17 +42,23 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
                     // 지도
                     R.id.menu_main_btm_nav_map -> {
                         //if (supportFragmentManager.findFragmentById(R.id.menu_main_btm_nav_map) != null){
-                            supportFragmentManager.beginTransaction()
+                        Log.d("생명주기", "메인의 네비게이션바의"+placeName)
+
+                        supportFragmentManager.beginTransaction()
                                //.show(MapFragment())
                                 .replace(R.id.main_frm, MapFragment(placeName))
                                 .commitAllowingStateLoss()
+                        placeName = ""
+                        placeNameChk=false
                         //}
                     }
 
                     // 갤러리 (GalleryService에서 더미데이터를 생성하고, GalleryFragment에 더미데이터 전달)
                     R.id.menu_main_btm_nav_gallary -> {
-                        if(placeNameChk==true)
-                            placeName=""
+                        if(placeNameChk==true) {
+                            placeName = ""
+                            placeNameChk=false
+                        }
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_frm, GalleryFragment())
                             .commitAllowingStateLoss()
@@ -63,8 +66,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
                     // 피드
                     R.id.menu_main_btm_nav_feed -> {
-                        if(placeNameChk==true)
+                        if(placeNameChk==true){
                             placeName=""
+                            placeNameChk=false
+                        }
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_frm, FeedListFragment())
                             .commitAllowingStateLoss()
@@ -72,8 +77,10 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
                     // 마이페이지
                     R.id.menu_main_btm_nav_my_page -> {
-                        if(placeNameChk==true)
+                        if(placeNameChk==true){
                             placeName=""
+                            placeNameChk=false
+                        }
                         supportFragmentManager.beginTransaction()
                             .replace(R.id.main_frm, MyPageFragment())
                             .commitAllowingStateLoss()
