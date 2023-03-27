@@ -456,7 +456,7 @@ class MapFragment(var city:String="") :
 //onStart에 있음
         CoroutineScope(Dispatchers.Default).launch{
 
-            Log.d("데이터로드", "CoroutineScope(Dispatchers.Main).launch ${Thread.currentThread().name}")
+            Log.d("데이터로드", "CoroutineScope(Dispatchers.Default).launch ${Thread.currentThread().name}")
             withContext(Dispatchers.Main) {
                 for ((key, value) in marker_hashMap) {
                     Log.d("데이터로드", "onMapReady 해시마커 포문 되니+ $key")
@@ -512,7 +512,7 @@ class MapFragment(var city:String="") :
             withContext(Dispatchers.IO){
                 Log.d(
                     "데이터로드",
-                    "CoroutineScope(Dispatchers.IO).launch ${Thread.currentThread().name}"
+                    "withContext(Dispatchers.IO).launch ${Thread.currentThread().name}"
                 )
 
                 tryGetMapFootStepCity(city)
