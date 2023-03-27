@@ -454,18 +454,21 @@ class MapFragment(var city:String="") :
        // val mapScope= CoroutineScope()
 
 //onStart에 있음
-        CoroutineScope(Dispatchers.Main).launch{
-            Log.d("데이터로드", "CoroutineScope(Dispatchers.Main).launch ${Thread.currentThread().name}")
+        CoroutineScope(Dispatchers.Default).launch{
 
-            for ((key, value) in marker_hashMap) {
-                Log.d("데이터로드", "onMapReady 해시마커 포문 되니+ $key")
-                value.map = naverMap
-                marker_mapChk[key] = false
-                value.setOnClickListener {
-                    setMarkerClickEvent(key, value, value.tag as Boolean)
-                    true
+            Log.d("데이터로드", "CoroutineScope(Dispatchers.Main).launch ${Thread.currentThread().name}")
+            withContext(Dispatchers.Main) {
+                for ((key, value) in marker_hashMap) {
+                    Log.d("데이터로드", "onMapReady 해시마커 포문 되니+ $key")
+                    value.map = naverMap
+                    marker_mapChk[key] = false
+                    value.setOnClickListener {
+                        setMarkerClickEvent(key, value, value.tag as Boolean)
+                        true
+                    }
                 }
             }
+            displayCityOutput()
         }
 
 
@@ -490,7 +493,7 @@ class MapFragment(var city:String="") :
 
 
 
-        displayCityOutput()
+        //displayCityOutput()
         Log.d("데이터로드", "onMapReady if (city !=  { 끝남")
 
         naverMap.locationSource = locationSource
@@ -501,14 +504,12 @@ class MapFragment(var city:String="") :
         }
     }
 
-    fun displayCityOutput(){
+    suspend fun displayCityOutput(){
         if (city != "") {
-            // runBlocking {
-            //    launch {
-            //        withContext(Dispatchers.IO) {
+
             Log.d("데이터로드", "displayCityOutput " + city)
 
-            CoroutineScope(Dispatchers.IO).launch {
+            withContext(Dispatchers.IO){
                 Log.d(
                     "데이터로드",
                     "CoroutineScope(Dispatchers.IO).launch ${Thread.currentThread().name}"
@@ -611,15 +612,15 @@ class MapFragment(var city:String="") :
                 return
             }
 
-            CoroutineScope(Dispatchers.Main).launch {
-                Log.d("데이터로드", "CoroutineScope(Dispatchers.Main).launch 진입..???")
+            //CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.Main){
+                Log.d("데이터로드", "withContext(Dispatchers.Main).launch 진입..???")
 
                 for (result_arr in response.result) {
 
                     marker_mapChk[result_arr.placeId] = true
 
                     Log.d("데이터로드", "onGetMapFootStepCitySuccess 첫번째 포문 보이는 마커 ${result_arr.placeId}")
-
                 }
 
                  for ((key, value) in marker_hashMap) {
