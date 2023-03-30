@@ -119,12 +119,12 @@ class MapFragment(var city:String="") :
 
 
     override fun onAttach(context: Context) {
-        runBlocking {
+        //runBlocking {
             super.onAttach(context)
 
             mContext = context
             Log.d("데이터로드", "맵 프래그먼트의 onAttach city +"+city)
-        }
+        //}
     }
 
     private fun initButtonView() {
@@ -396,23 +396,40 @@ class MapFragment(var city:String="") :
     }
 
 
-    override fun onStart() = runBlocking<Unit>{
+    override fun onStart() {//= runBlocking<Unit>{
         super.onStart()
         Log.d("데이터로드","맵 프래그먼트의 onStart()")
+        CoroutineScope(Dispatchers.Default).launch{
 
-        val startJob = launch {
+        //val startJob = launch {
             withContext(Dispatchers.IO) {
                 tryGetMapFootStepList()
 
                 Log.d("데이터로드", "onStart()-tryGetMapFootStepList 지나감")
             }
+/*
+            withContext(Dispatchers.Main){
+                for ((key, value) in marker_hashMap) {
+                    Log.d("데이터로드", "onStart 해시마커 포문 되니+ $key")
+                    value.map = naverMap
+                    marker_mapChk[key] = false
+                    value.setOnClickListener {
+                        setMarkerClickEvent(key, value, value.tag as Boolean)
+                        true
+                    }
+                }
+            }
         }
-        startJob.join()
-        Log.d("데이터로드", "onStart startJob.join()지나감 startJob.isActive : ${startJob.isActive}")
+
+ */
+        }
+        //startJob.join()
+        //Log.d("데이터로드", "onStart startJob.join()지나감 startJob.isActive : ${startJob.isActive}")
 
         binding.mapView.onStart()
-        Log.d("데이터로드", "onStart 런블락킹")
+        Log.d("데이터로드", "onStart 끝남")
     }
+
     private suspend fun tryGetMapFootStepList(){
         MapService(this).tryGetMapFootStepList()
     }
@@ -441,8 +458,10 @@ class MapFragment(var city:String="") :
             }
         }
 
+
+
         binding.mapView.onResume()
-        Log.d("데이터로드", "onResume() 런블락킹 마지막")
+        Log.d("데이터로드", "onResume() 마지막")
     }
 
 
@@ -484,6 +503,7 @@ class MapFragment(var city:String="") :
         CoroutineScope(Dispatchers.Default).launch{
 
             Log.d("데이터로드", "CoroutineScope(Dispatchers.Default).launch ${Thread.currentThread().name}")
+
             withContext(Dispatchers.Main) {
                 for ((key, value) in marker_hashMap) {
                     Log.d("데이터로드", "onMapReady 해시마커 포문 되니+ $key")
@@ -495,6 +515,8 @@ class MapFragment(var city:String="") :
                     }
                 }
             }
+
+
             displayCityOutput()
         }
         // }
@@ -671,7 +693,7 @@ class MapFragment(var city:String="") :
     }
 
     //onStart에 있음
-    override fun onGetMapFootStepListSuccess(response: AllResponse)=runBlocking<Unit> {
+    override suspend fun onGetMapFootStepListSuccess(response: AllResponse){//=runBlocking<Unit> {
         Log.d("데이터로드", "onGetMapFootStepListSuccess 되긴하니??")
 
         for (result_arr in response.result) {
@@ -681,12 +703,12 @@ class MapFragment(var city:String="") :
                 icon = OverlayImage.fromResource(R.drawable.footstep_orange3)
                 tag = false
 
-                val job = launch {
-                    withContext(Dispatchers.IO) {
-                        tryGetMapFootStepPopup(result_arr.placeId)
-                    }
-                }
-                job.join()
+               // val job = launch {
+                 //   withContext(Dispatchers.IO) {
+                tryGetMapFootStepPopup(result_arr.placeId)
+                   // }
+                //}
+                //job.join()
 
                 Log.d("데이터로드", "onGetMapFootStepListSuccess 마지막 placeId: ${result_arr.placeId}")
             }
@@ -697,11 +719,11 @@ class MapFragment(var city:String="") :
         //showCustomToast("onGetMapFootStepListSuccess 오류 : $message")
     }
 
-    override fun onGetMapFootStepPopupSuccess(response: PopupResponse,placeId:Int) =runBlocking<Unit>{
-        val job = launch {
-            Log.d("데이터로드", "onGetMapFootStepPopupSuccess + ${response.result}")
-        }
-        job.join()
+    override suspend fun onGetMapFootStepPopupSuccess(response: PopupResponse,placeId:Int){//} =runBlocking<Unit>{
+     //   val job = launch {
+            Log.d("데이터로드", "onGetMapFootStepPopupSuccess")
+       // }
+        //job.join()
 
         //Log.d("데이터로드", "서브루틴 2 마커로..")
 
@@ -716,7 +738,7 @@ class MapFragment(var city:String="") :
         Log.d(
             "데이터로드",
             "onGetMapFootStepPopupSuccess 마지막 + ${marker_info_hashMap[placeId]!!.loacationName} " +
-                    "${marker_info_hashMap[placeId]!!.postingCount} ${marker_info_hashMap[placeId]!!.imageUrl}")
+                    "${marker_info_hashMap[placeId]!!.postingCount}")// ${marker_info_hashMap[placeId]!!.imageUrl}")
 
     }
 
