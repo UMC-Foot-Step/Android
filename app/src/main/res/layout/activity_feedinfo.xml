@@ -22,7 +22,7 @@
         android:id="@+id/gallery_tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
+        android:layout_marginHorizontal="12dp"
         android:layout_toEndOf="@+id/galleryinfo_btn_back"
         android:text="@string/gallery_tv_post_title"
         android:textColor="#000000"
@@ -161,11 +161,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/galleryinfo_rv_comment"
         android:layout_width="match_parent"
-        android:layout_height="230dp"
+        android:layout_height="0dp"
         android:layout_marginTop="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/galleryinfo_tv_post_des" />
+        app:layout_constraintTop_toBottomOf="@+id/galleryinfo_tv_post_des"
+        app:layout_constraintBottom_toTopOf="@+id/galleryinfo_et_comment"/>
 
 
     <Button
@@ -217,22 +218,30 @@
 
     <EditText
         android:id="@+id/galleryinfo_et_comment"
-        android:layout_width="370dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
+
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         android:width="200dp"
         android:background="@drawable/shape_et_comment"
         android:hint="@string/galleryinfo_et_comment_hint"
+
+        android:paddingRight="63dp"
         android:paddingLeft="14dp"
+
         android:scrollHorizontally="true"
+
         android:textColor="@color/black"
         android:textColorHint="#d9d9d9"
         android:textSize="14sp"
         android:textStyle="normal"
 
-        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/galleryinfo_rv_comment"
-        app:layout_constraintStart_toStartOf="@+id/galleryinfo_rv_comment">
+        app:layout_constraintStart_toStartOf="@+id/galleryinfo_rv_comment"
+        app:layout_constraintTop_toBottomOf="@+id/galleryinfo_rv_comment">
 
     </EditText>
 
