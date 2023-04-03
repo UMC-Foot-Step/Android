@@ -15,5 +15,5 @@ interface FeedListFragmentInterface {
     /*
         To Do 2. FeedInfoActivity로 전환
      */
-    fun changeFeedInfoActivity(postIdx: Int)
+    fun changeFeedInfoActivity(postIdx: Int,userId:Int)
 }

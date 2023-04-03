@@ -12,17 +12,18 @@ import com.softsquared.template.kotlin.src.main.gallery.models.SectionModel
 
 class FeedSpecificListFragmentAdapter(
     private val daySectionFeetStepList: List<SectionModel>,
-    private val feedSpecificListFragmentInterface: FeedSpecificListFragmentInterface
+    private val feedSpecificListFragmentInterface: FeedSpecificListFragmentInterface,
+    private val userIdFromFragment:Int
 ) : RecyclerView.Adapter<FeedSpecificListFragmentAdapter.MyViewHolder>() {
 
 
     class MyViewHolder(
         private val binding: ItemGallerySectionBinding,
-        val feedSpecificListFragmentInterface: FeedSpecificListFragmentInterface
+        val feedSpecificListFragmentInterface: FeedSpecificListFragmentInterface,
+        val userId:Int
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(sectionModel: SectionModel) {
-
 
             /*
                 To Do 1. 날짜 데이터 ~년 ~월 ~일 뷰 형태로 뿌리기
@@ -50,7 +51,7 @@ class FeedSpecificListFragmentAdapter(
             binding.galleryItemRvSectionList.apply {
                 setHasFixedSize(true)
                 layoutManager = GridLayoutManager(binding.root.context,2)
-                adapter = FeedSpecificListFragmentSubAdapter(sectionModel.day_post_list, feedSpecificListFragmentInterface)
+                adapter = FeedSpecificListFragmentSubAdapter(sectionModel.day_post_list, feedSpecificListFragmentInterface,userId)
 
                 // RecyclerView Item 구분선 넣기
 //                addItemDecoration(
@@ -66,7 +67,7 @@ class FeedSpecificListFragmentAdapter(
         return MyViewHolder(
             ItemGallerySectionBinding.inflate(
                 LayoutInflater.from(parent.context),
-            parent, false), feedSpecificListFragmentInterface)
+            parent, false), feedSpecificListFragmentInterface,userIdFromFragment)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {

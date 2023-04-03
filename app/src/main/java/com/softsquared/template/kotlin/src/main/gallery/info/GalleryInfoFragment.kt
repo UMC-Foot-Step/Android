@@ -18,6 +18,9 @@ import com.softsquared.template.kotlin.src.main.gallery.info.models.PostCommentR
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostInfoResponse
 import com.softsquared.template.kotlin.src.main.gallery.info.models.ResultPostInfo
 import com.softsquared.template.kotlin.src.main.gallery.info.models_sample.FeetStepInfoResponse
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 // GalleryInfoFragment 생성자 = 발자취 게시글 상세 정보 (게시글 정보 & 댓글 리스트)
 class GalleryInfoFragment (
@@ -128,26 +131,57 @@ class GalleryInfoFragment (
         showCustomToast("API 요청 실패, LogCat 확인")
         Log.d("왜 실패 했니?", message)
     }
+
     // 댓글 신고 완료
     private fun reportSuccessComment() {
         val builder = AlertDialog.Builder(galleryInfoActivity)
             .setMessage("댓글 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
             .setPositiveButton("확인",
                 DialogInterface.OnClickListener { dialog, id ->
-                    galleryInfoFragment.showCustomToast("신고 접수완료")
+                    //galleryInfoFragment.showCustomToast("신고 접수완료")
+                    showCustomToast("신고 접수완료")
                 }
             )
 
         // 다이얼로그 띄우기
         builder.show()
     }
+
+    // 유저 신고 완료
+    private fun reportSuccessUser() {
+        val builder = AlertDialog.Builder(binding.root.context)
+            .setMessage("유저 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
+            .setPositiveButton("확인",
+                DialogInterface.OnClickListener { dialog, id ->
+                    //galleryInfoFragment.showCustomToast("신고 접수완료")
+                    showCustomToast("신고 접수완료")
+                }
+            )
+
+        // 다이얼로그 띄우기
+        builder.show()
+    }
+
     override fun onReportCommentSuccess(response: ReportResponse) {
         Log.d("reportProcess", "onReportCommentSuccess ${response.toString()}")
-
-        reportSuccessComment()
+        CoroutineScope(Dispatchers.Main).launch {
+            reportSuccessComment()
+        }
     }
 
     override fun onReportCommentFailure(message: String) {
+        showCustomToast("API 요청 실패, LogCat 확인")
+        Log.d("reportProcess", message)
+    }
+
+    override fun onReportUserSuccess(response: ReportResponse) {
+        Log.d("reportProcess", "onReportUserSuccess ${response.toString()}")
+        CoroutineScope(Dispatchers.Main).launch {
+            reportSuccessUser()
+        }
+    }
+
+    override fun onReportUserFailure(message: String) {
         showCustomToast("API 요청 실패, LogCat 확인")
         Log.d("reportProcess", message)
     }

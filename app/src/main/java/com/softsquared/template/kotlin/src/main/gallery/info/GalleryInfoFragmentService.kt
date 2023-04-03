@@ -37,6 +37,7 @@ class GalleryInfoFragmentService(val galleryInfoFragmentInterface: GalleryInfoFr
         })
     }
 
+    //댓글 신고 API
     fun ReportComment(comment_id:Int,createReportDto:createReportDto){
         val GalleryRetrofitInterface =
             ApplicationClass.sRetrofit.create(GalleryRetrofitInterface::class.java)
@@ -56,6 +57,33 @@ class GalleryInfoFragmentService(val galleryInfoFragmentInterface: GalleryInfoFr
 
             override fun onFailure(call: Call<ReportResponse>, t: Throwable) {
                 galleryInfoFragmentInterface.onReportCommentFailure(t.message ?: "통신 오류")
+                Log.d("reportProcess", "ReportComment onFailure")
+
+            }
+
+        })
+    }
+
+    //유저 신고 API
+    fun ReportUser(user_id:Int,createReportDto:createReportDto){
+        val GalleryRetrofitInterface =
+            ApplicationClass.sRetrofit.create(GalleryRetrofitInterface::class.java)
+        Log.d("reportProcess", "ReportComment 안쪽직전진입")
+
+        GalleryRetrofitInterface.reportUser(user_id,createReportDto).enqueue(object :
+            Callback<ReportResponse> {
+
+            override fun onResponse(
+                call: Call<ReportResponse>,
+                response: Response<ReportResponse>
+            ) {
+                galleryInfoFragmentInterface.onReportUserSuccess(response.body() as ReportResponse)
+                Log.d("reportProcess", "ReportComment onResponse")
+
+            }
+
+            override fun onFailure(call: Call<ReportResponse>, t: Throwable) {
+                galleryInfoFragmentInterface.onReportUserFailure(t.message ?: "통신 오류")
                 Log.d("reportProcess", "ReportComment onFailure")
 
             }

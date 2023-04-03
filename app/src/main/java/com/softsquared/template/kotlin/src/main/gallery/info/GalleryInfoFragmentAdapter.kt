@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.databinding.ItemGalleryinfoCommentBinding
+import com.softsquared.template.kotlin.src.main.feed.info.FeedInfoService
 import com.softsquared.template.kotlin.src.main.feed.models.ReportResponse
 import com.softsquared.template.kotlin.src.main.feed.models.createReportDto
 import com.softsquared.template.kotlin.src.main.gallery.info.models.CommentList
@@ -124,7 +125,7 @@ class GalleryInfoFragmentAdapter(
                                     else{
                                         galleryInfoFragment.showCustomToast("유저 신고하기")
                                         // bottomSheetDialog - 신고사유
-                                        reportDialogUser()
+                                        reportDialogUser(commentList.usersId)
                                     }
                                 }
                                 .setNegativeButton("취소",
@@ -227,7 +228,7 @@ class GalleryInfoFragmentAdapter(
 
         }
         // 유저
-        private fun reportDialogUser() {
+        private fun reportDialogUser(userId:Int) {
             val bottomSheet = galleryInfoFragment.layoutInflater.inflate(R.layout.dialog_report, null)
             // 스타일 둥글게 적용
             val bottomSheetDialog = BottomSheetDialog(galleryInfoActivity, R.style.calTheme_Custom)
@@ -279,12 +280,14 @@ class GalleryInfoFragmentAdapter(
                         reasonNum=6
                     }
 
-
                 }
+                GalleryInfoFragmentService(galleryInfoFragment).ReportUser(
+                    userId,createReportDto(reasonNumber = reasonNum, targetNumber = 0)
+                )
                 // bottomSheetDialog 닫기
                 bottomSheetDialog.dismiss()
                 // 댓글 신고 완료
-                reportSuccessUser()
+                //reportSuccessUser()
             }
 
         }
@@ -304,19 +307,6 @@ class GalleryInfoFragmentAdapter(
         }
 
         */
-        // 유저 신고 완료
-        private fun reportSuccessUser() {
-            val builder = AlertDialog.Builder(galleryInfoActivity)
-                .setMessage("유저 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
-                .setPositiveButton("확인",
-                    DialogInterface.OnClickListener { dialog, id ->
-                        galleryInfoFragment.showCustomToast("신고 접수완료")
-                    }
-                )
-
-            // 다이얼로그 띄우기
-            builder.show()
-        }
 
     }
 

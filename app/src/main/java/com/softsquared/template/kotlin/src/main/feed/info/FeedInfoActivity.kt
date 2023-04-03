@@ -26,12 +26,17 @@ import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoFragment
 import com.softsquared.template.kotlin.src.main.gallery.info.GalleryInfoService
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostCommentRequest
 import com.softsquared.template.kotlin.src.main.gallery.info.models.PostInfoResponse
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class FeedInfoActivity()
     : BaseActivity<ActivityFeedinfoBinding>(ActivityFeedinfoBinding::inflate),
     FeedInfoActivityInterface{
 
     private var posting_id: Int = 0
+    private var userId: Int = 0
+
     private lateinit var feedInfoActivity: FeedInfoActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +50,7 @@ class FeedInfoActivity()
         // 상세 조회 게시글 idx 받기
         val intent = intent
         posting_id = intent.getIntExtra("posting-id",0)
+        userId = intent.getIntExtra("userId",0)
 
 
 
@@ -363,20 +369,45 @@ class FeedInfoActivity()
 
         // 확인
         btnCheck.setOnClickListener {
+            var reasonNum=0
             when(reportGroup.checkedRadioButtonId){
-                R.id.btn_report_0 -> showCustomToast("0번 신고사유")
-                R.id.btn_report_1 -> showCustomToast("1번 신고사유")
-                R.id.btn_report_2 -> showCustomToast("2번 신고사유")
-                R.id.btn_report_3 -> showCustomToast("3번 신고사유")
-                R.id.btn_report_4 -> showCustomToast("4번 신고사유")
-                R.id.btn_report_5 -> showCustomToast("5번 신고사유")
-                R.id.btn_report_6 -> showCustomToast("6번 신고사유")
+                R.id.btn_report_0 -> {
+                    showCustomToast("0번 신고사유")
+                    reasonNum=0
+                }
+                R.id.btn_report_1 -> {
+                    showCustomToast("1번 신고사유")
+                    reasonNum=1
+                }
+                R.id.btn_report_2 -> {
+                    showCustomToast("2번 신고사유")
+                    reasonNum=2
+                }
+                R.id.btn_report_3 -> {
+                    showCustomToast("3번 신고사유")
+                    reasonNum=3
+                }
+                R.id.btn_report_4 -> {
+                    showCustomToast("4번 신고사유")
+                    reasonNum=4
+                }
+                R.id.btn_report_5 -> {
+                    showCustomToast("5번 신고사유")
+                    reasonNum=5
+                }
+                R.id.btn_report_6 -> {
+                    showCustomToast("6번 신고사유")
+                    reasonNum=6
+                }
 
             }
+            FeedInfoService(feedInfoActivity).ReportUser(
+                userId,createReportDto(reasonNumber = reasonNum, targetNumber = 0)
+            )
             // bottomSheetDialog 닫기
             bottomSheetDialog.dismiss()
             // 유저 신고 완료 alertDialog
-            reportSuccessUser()
+           // reportSuccessUser()
 
         }
     }
@@ -408,6 +439,7 @@ class FeedInfoActivity()
         // 다이얼로그 띄우기
         builder.show()
     }
+
     // 댓글 신고 완료
     private fun reportSuccessComment() {
         val builder = AlertDialog.Builder(binding.root.context)
@@ -421,25 +453,46 @@ class FeedInfoActivity()
         // 다이얼로그 띄우기
         builder.show()
     }
+
+    //댓글신고 api
     override fun onReportCommentSuccess(response: ReportResponse) {
         Log.d("reportProcess", "onReportCommentSuccess ${response.toString()}")
 
         reportSuccessComment()
     }
 
-
     override fun onReportCommentFailure(message: String) {
         showCustomToast("API 요청 실패, LogCat 확인")
         Log.d("reportProcess", message)
     }
 
+
+    //유저신고 api
+    override fun onReportUserSuccess(response: ReportResponse) {
+        Log.d("reportProcess", "onReportUserSuccess ${response.toString()}")
+
+        CoroutineScope(Dispatchers.Main).launch {
+            reportSuccessUser()
+        }
+    }
+
+    override fun onReportUserFailure(message: String) {
+        showCustomToast("API 요청 실패, LogCat 확인")
+        Log.d("reportProcess", message)
+    }
+
+
+    //게시물신고 api
     override fun onReportPostSuccess(response: ReportResponse) {
         Log.d("reportProcess", "oonReportPostSuccess ${response.toString()}")
 
-        reportSuccessPosting()
+        CoroutineScope(Dispatchers.Main).launch {
+            reportSuccessPosting()
+        }
     }
 
     override fun onReportPostFailure(message: String) {
         showCustomToast("API 요청 실패, LogCat 확인")
-        Log.d("reportProcess", message)    }
+        Log.d("reportProcess", "FeedInfo "+message)
+    }
 }

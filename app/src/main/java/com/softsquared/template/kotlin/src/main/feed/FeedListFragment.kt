@@ -69,9 +69,11 @@ class FeedListFragment :
     /*
         To Do 2. FeedInfoActivity 전환 메소드
     */
-    override fun changeFeedInfoActivity(postIdx: Int) {
+    override fun changeFeedInfoActivity(postIdx: Int,userId:Int) {
         val intent = Intent(activity, FeedInfoActivity::class.java)
         intent.putExtra("posting-id", postIdx)
+        intent.putExtra("userId", userId)
+
         startActivity(intent)
     }
 }

@@ -132,7 +132,7 @@ class FeedInfoActivityAdapter(
                                     else{
                                         feedInfoActivity.showCustomToast("유저 신고하기")
                                         // bottomSheetDialog - 신고사유
-                                        reportDialogUser()
+                                        reportDialogUser(commentList.usersId)
                                     }
                                 }
                                 .setNegativeButton("취소",
@@ -233,7 +233,7 @@ class FeedInfoActivityAdapter(
         }
 
         // 유저
-        private fun reportDialogUser() {
+        private fun reportDialogUser(userId:Int) {
             // val dialog = BottomSheetDialog(this)
             // dialog.setContentView(R.layout.dialog_report)
 
@@ -289,11 +289,13 @@ class FeedInfoActivityAdapter(
                     }
 
                 }
+                FeedInfoService(feedInfoActivity).ReportUser(userId,
+                    createReportDto(reasonNumber = reasonNum, targetNumber = 0))
 
                 // bottomSheetDialog 닫기
                 bottomSheetDialog.dismiss()
                 // 댓글 신고 완료
-                reportSuccessUser()
+               // reportSuccessUser()
             }
         }
 
@@ -314,19 +316,7 @@ class FeedInfoActivityAdapter(
         }
          */
 
-        // 유저 신고 완료
-        private fun reportSuccessUser() {
-            val builder = AlertDialog.Builder(feedInfoActivity)
-                .setMessage("유저 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
-                .setPositiveButton("확인",
-                    DialogInterface.OnClickListener { dialog, id ->
-                        feedInfoActivity.showCustomToast("신고 접수완료")
-                    }
-                )
 
-            // 다이얼로그 띄우기
-            builder.show()
-        }
 
     }
 
@@ -350,7 +340,6 @@ class FeedInfoActivityAdapter(
 
     // 신고 사유 bottomSheetDialog
     // 댓글
-
 
 
 

@@ -70,7 +70,7 @@ class FeedSpecificListFragment :
     /*
         To Do 1. 특정 유저 피드 리스트 조회 API 응답 메소드
      */
-    override fun onGetSpecificFeedListSuccess(response: PostListResponse) {
+    override fun onGetSpecificFeedListSuccess(response: PostListResponse,userId:Int) {
 
 
         // 게시글 예외처리 - 게시글이 존재하지 않을 떄
@@ -114,7 +114,7 @@ class FeedSpecificListFragment :
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(activity)
 //            (layoutManager as LinearLayoutManager).setStackFromEnd(true)
-                adapter = FeedSpecificListFragmentAdapter(daySectionFeetStepList, feedSpecificListFragment)
+                adapter = FeedSpecificListFragmentAdapter(daySectionFeetStepList, feedSpecificListFragment,userId)
             }
 
         }
@@ -129,9 +129,11 @@ class FeedSpecificListFragment :
     /*
         To Do 2. 특정 피드 게시글 상세 정보 조회 액티비티 전환 메소드
      */
-    override fun changeFeedInfoActivity(post_id: Int) {
+    override fun changeFeedInfoActivity(post_id: Int,userId:Int) {
         val intent = Intent(activity, FeedInfoActivity::class.java)
         intent.putExtra("posting-id", post_id)
+        intent.putExtra("userId", userId)
+
         startActivity(intent)
     }
 

@@ -26,7 +26,7 @@ class FeedSpecificListService(val FeedSpecificListFragmentInterface: FeedSpecifi
             ) {
                 // 요청 객체 예외처리
                 if (response.body() != null) {
-                    FeedSpecificListFragmentInterface.onGetSpecificFeedListSuccess(response.body() as PostListResponse)
+                    FeedSpecificListFragmentInterface.onGetSpecificFeedListSuccess(response.body() as PostListResponse,userId)
                 } else {
                     Log.d("게시글 Null 에러", response.message())
                 }
