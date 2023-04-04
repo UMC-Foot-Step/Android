@@ -38,10 +38,12 @@
         android:layout_height="15dp"
         android:layout_marginRight="4.3dp"
         android:background="@color/not_visible"
-        app:layout_constraintBottom_toBottomOf="@+id/feedlist_tv_feed_title"
+        app:layout_constraintBottom_toTopOf="@+id/feedlist_iv_comment"
         app:layout_constraintEnd_toStartOf="@+id/feedlist_tv_like_cnt"
-        app:layout_constraintTop_toTopOf="@+id/feedlist_tv_feed_title"
-        app:srcCompat="@drawable/ic_postlike_btn_selected" />
+
+        app:layout_constraintTop_toBottomOf="@+id/feedlist_iv_feed_img"
+        app:srcCompat="@drawable/ic_postlike_btn_selected"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
         android:id="@+id/feedlist_tv_like_cnt"
@@ -109,12 +111,20 @@
         android:id="@+id/feedlist_tv_feed_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="9dp"
+        android:layout_marginRight="8dp"
+
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:ems="15"
+
         android:text="@string/gallery_tv_post_title"
         android:textColor="#000000"
+
         android:textSize="14sp"
         android:textStyle="normal"
 
-        android:layout_marginTop="9dp"
+        app:layout_constraintRight_toLeftOf="@+id/gallery_btn_like"
         app:layout_constraintStart_toStartOf="@+id/feedlist_iv_feed_img"
         app:layout_constraintTop_toBottomOf="@+id/feedlist_iv_feed_img" />
 
@@ -143,3 +153,12 @@
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+<!--
+        app:layout_constraintTop_toTopOf="@+id/feedlist_tv_feed_title"
+        app:layout_constraintBottom_toBottomOf="@+id/feedlist_tv_feed_title"
+
+
+        android:ems="20"
+        android:maxLines="1"
+        android:ellipsize="end"
+-->
