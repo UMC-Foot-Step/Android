@@ -53,6 +53,9 @@ class MapFragment(var city:String="") :
     BaseFragment<FragmentMapBinding>(FragmentMapBinding::bind, R.layout.fragment_map),
     OnMapReadyCallback,MapFragmentInterface {
 
+    private var job1: Deferred<Unit>? = null
+    private var job2: Deferred<Unit>? = null
+
     // datepicker
     private val today = LocalDate.now()
     private var tvYear = today.year
@@ -396,10 +399,10 @@ class MapFragment(var city:String="") :
     }
 
 
-    override fun onStart() {//= runBlocking<Unit>{
+    override fun onStart(){// = CoroutineScope(Dispatchers.Default).async{
         super.onStart()
         Log.d("데이터로드","맵 프래그먼트의 onStart()")
-        CoroutineScope(Dispatchers.Default).launch{
+        job1=CoroutineScope(Dispatchers.Default).async{
 
         //val startJob = launch {
             withContext(Dispatchers.IO) {
@@ -441,10 +444,11 @@ class MapFragment(var city:String="") :
     override fun onResume() {
         super.onResume()
         Log.d("데이터로드","맵 프래그먼트의 onResume()")
-
         if(firstRun){
             //Log.d("생명주기","맵 프래그먼트의 onResume()")
-            CoroutineScope(Dispatchers.Main).launch {
+            job2=CoroutineScope(Dispatchers.Main).async {
+                job1?.await()
+
                 //subRoutine4()
                 for ((key, value) in marker_hashMap) {
                     Log.d("데이터로드", "onResume() 해시마커 포문 되니+ $key")
@@ -491,9 +495,9 @@ class MapFragment(var city:String="") :
         Log.d("데이터로드", "onMapReady")
         //Log.d("생명주기", "onMapReady")
 
-        if (!firstRun) {
-            firstRun = true
-        }
+       // if (!firstRun) {
+       //     firstRun = true
+       // }
 
         this.naverMap = naverMap
 
@@ -501,8 +505,18 @@ class MapFragment(var city:String="") :
 
 //onStart에 있음
         CoroutineScope(Dispatchers.Default).launch{
+            if(firstRun){
+                job2?.await()
+                Log.d("데이터로드", "onMapReady job2?.await")
 
-            Log.d("데이터로드", "CoroutineScope(Dispatchers.Default).launch ${Thread.currentThread().name}")
+            }
+            else{
+                job1?.await()
+                firstRun = true
+                Log.d("데이터로드", "onMapReady job1?.await")
+
+            }
+            Log.d("데이터로드", "await 끝나고 나서의 CoroutineScope(Dispatchers.Default).launch ${Thread.currentThread().name}")
 
             withContext(Dispatchers.Main) {
                 for ((key, value) in marker_hashMap) {
@@ -551,12 +565,12 @@ class MapFragment(var city:String="") :
     suspend fun displayCityOutput(){
         if (city != "") {
 
-            Log.d("데이터로드", "displayCityOutput " + city)
+            Log.d("데이터로드", "displayCityOutput 진입 " + city)
 
             withContext(Dispatchers.IO){
                 Log.d(
                     "데이터로드",
-                    "withContext(Dispatchers.IO).launch ${Thread.currentThread().name}"
+                    "displayCityOutput() withContext(Dispatchers.IO).launch ${Thread.currentThread().name}"
                 )
 
                 tryGetMapFootStepCity(city)
@@ -670,7 +684,7 @@ class MapFragment(var city:String="") :
                 )
             }
             withContext(Dispatchers.Main) {
-                Log.d("데이터로드", "withContext(Dispatchers.Main) 진입2 ${Thread.currentThread().name}")
+                Log.d("데이터로드", "onGetMapFootStepCitySuccess withContext(Dispatchers.Main) 진입2 ${Thread.currentThread().name}")
 
                 for ((key, value) in marker_hashMap) {
                     if (marker_mapChk[key] == false) {
