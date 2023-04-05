@@ -42,6 +42,7 @@ class MapGalleryActivity : BaseActivity<ActivityMapgalleryBinding>(ActivityMapga
          */
         binding.mapgalleryBtnPost.setOnClickListener {
             val intent = Intent(this, PostActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         }
 

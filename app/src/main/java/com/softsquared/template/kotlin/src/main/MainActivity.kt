@@ -33,6 +33,7 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
 
         binding.mainBtmFab.setOnClickListener {
             val intent = Intent(this@MainActivity, PostActivity::class.java)
+            //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         }
 

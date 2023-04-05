@@ -411,6 +411,8 @@ class MapFragment(var city:String="") :
                         true
                     }
                 }
+                binding.placeInfo.visibility = View.GONE
+
             }
         }
 
@@ -496,9 +498,9 @@ class MapFragment(var city:String="") :
         naverMap.locationSource = locationSource
         naverMap.locationTrackingMode = LocationTrackingMode.Follow
 
-        naverMap.setOnMapClickListener { _, coord ->
-            binding.placeInfo.visibility = View.GONE
-        }
+        //naverMap.setOnMapClickListener { _, coord ->
+        //    binding.placeInfo.visibility = View.GONE
+        //}
     }
 
     fun displayCityOutput(){
@@ -581,11 +583,19 @@ class MapFragment(var city:String="") :
                     putExtra("placeId", placeId)
                 }
                 startActivity(intent)
+
+                binding.placeInfo.visibility = View.GONE
+                marker.tag = false
             }
         }
 
         else{
             binding.placeInfo.visibility=View.GONE
+            marker.tag = false
+        }
+
+        naverMap.setOnMapClickListener { _, coord ->
+            binding.placeInfo.visibility = View.GONE
             marker.tag = false
         }
     }

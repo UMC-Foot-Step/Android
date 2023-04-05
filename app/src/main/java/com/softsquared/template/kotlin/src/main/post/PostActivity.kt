@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -20,7 +21,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
 import com.softsquared.template.kotlin.databinding.ActivityMainPostBinding
+import com.softsquared.template.kotlin.src.main.MainActivity
 import com.softsquared.template.kotlin.src.main.post.models.PostResponse
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -155,8 +161,9 @@ class PostActivity
             // content, title, address, latitude, longitude, name만 확인 필요
             // 모든 값이 존재한다면 setData
             if(content != null && title != null && address != null && latitude != 0.0 && longitude != 0.0 && name != null){
+                showCustomToast("시간이 조금 소요됩니다")
                 setData(content!!, title!!, address!!, latitude!!, longitude!!, name!!, tvYear, tvMonth, tvDay, swChecked)
-                finish()
+                //finish()
             }
 
             else{
@@ -244,10 +251,18 @@ class PostActivity
         postHashmap["createPlaceDto.longitude"] = longitudeRequestBody
         postHashmap["createPlaceDto.name"] = nameRequestBody
 
-        PostService(this).postInfo(token, filePath, postHashmap)
+        CoroutineScope(Dispatchers.IO).launch {
+            postInfo()
+        }
     }
 
-    // uri -> file 형식의 데이터
+    private suspend fun postInfo(){
+        PostService(this).postInfo(token, filePath, postHashmap)
+
+    }
+
+
+        // uri -> file 형식의 데이터
     private fun getRealPathFromURI(uri: Uri): String{
         val buildName = Build.MANUFACTURER
         if(buildName.equals("Xiaomi")){
@@ -279,19 +294,31 @@ class PostActivity
         return "$year-$month-$day"
     }
 
-    override fun onPostPostInfoSuccess(response: PostResponse) {
+    override suspend fun onPostPostInfoSuccess(response: PostResponse) {
         Log.d("Success", "$response")
         Log.d("post date", "$tvYear-$tvMonth-$tvDay")
         if (response.code == 200) {
-            Log.d("데이터로드", "PostActivity 작성하기 완료")
+            CoroutineScope(Dispatchers.Main).launch {
 
-            showCustomToast("작성하기 완료")
+                Log.d("데이터로드", "PostActivity 작성하기 완료")
+
+                showCustomToast("작성 완료")
+            }
+        }
+        withContext(Dispatchers.Default) {
+            finish()
+            /*val intent=Intent(this@PostActivity,MainActivity::class.java)
+            intent.addFlags(FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+             */
         }
     }
 
-    override fun onPostPostInfoFailure(message: String) {
-        showCustomToast("API 요청 실패, LogCat 확인")
-        Log.d("Why fail?", message)
+    override suspend fun onPostPostInfoFailure(message: String) {
+        withContext(Dispatchers.Main) {
+            showCustomToast("API 요청 실패, LogCat 확인")
+        }
+        Log.d("Whyfail", message)
     }
 
     // 작성하기 계속 or 취소 dialog 작성
