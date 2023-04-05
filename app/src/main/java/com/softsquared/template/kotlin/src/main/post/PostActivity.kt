@@ -151,12 +151,25 @@ class PostActivity
             content = binding.postEtContent.text.toString()
             title = binding.postEtTitle.text.toString()
 
+            Log.d("post image", filePath.toString())
+            Log.d("post content", content.toString())
+            Log.d("post title", title.toString())
+            Log.d("post address", address.toString())
+            Log.d("post latitude", latitude.toString())
+            Log.d("post longitude", longitude.toString())
+            Log.d("post name", name.toString())
+            Log.d("post tvYear", tvYear.toString())
+            Log.d("post tvMonth", tvMonth.toString())
+            Log.d("post tvDay", tvDay.toString())
+            Log.d("post swChecked", swChecked.toString())
+
+
             // 모든 값이 존재하는지 확인
-            // content, title, address, latitude, longitude, name만 확인 필요
+            // filePath, content, title, address, latitude, longitude, name만 확인 필요
             // 모든 값이 존재한다면 setData
-            if(content != null && title != null && address != null && latitude != 0.0 && longitude != 0.0 && name != null){
+            // 나머지는 서버 success return code 에 따라 구분하기
+            if(filePath != null){
                 setData(content!!, title!!, address!!, latitude!!, longitude!!, name!!, tvYear, tvMonth, tvDay, swChecked)
-                finish()
             }
 
             else{
@@ -280,13 +293,24 @@ class PostActivity
     }
 
     override fun onPostPostInfoSuccess(response: PostResponse) {
-        Log.d("Success", "$response")
+        Log.d("Post Success", "$response")
         Log.d("post date", "$tvYear-$tvMonth-$tvDay")
-        if (response.code == 200) {
-            Log.d("데이터로드", "PostActivity 작성하기 완료")
 
-            showCustomToast("작성하기 완료")
+        when(response.code){
+            // 성공
+            200 -> {
+                Log.d("데이터로드", "PostActivity 작성하기 완료")
+                showCustomToast("작성하기 완료")
+                // 완료한 경우 fragment 종료
+                finish()}
+
+            // 제목, 내용, 장소
+            2030, 2031, 2040 -> {
+                // alertDialog 출력
+                btnPostDialog()
+            }
         }
+
     }
 
     override fun onPostPostInfoFailure(message: String) {
