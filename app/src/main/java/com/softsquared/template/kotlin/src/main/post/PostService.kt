@@ -1,8 +1,11 @@
 package com.softsquared.template.kotlin.src.main.post
 
 import android.util.Log
+import com.naver.maps.map.overlay.Marker
 import com.softsquared.template.kotlin.config.ApplicationClass
 import com.softsquared.template.kotlin.config.UserCode
+import com.softsquared.template.kotlin.src.main.map.MapRetrofitInterface
+import com.softsquared.template.kotlin.src.main.map.model.AllResponse
 import com.softsquared.template.kotlin.src.main.post.models.PostResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -22,6 +25,7 @@ import retrofit2.Response
 class PostService(val postActivityInterface: PostActivityInterface) {
     private val api = ApplicationClass.sRetrofit.create(PostRetrofitInterface::class.java)
     // API text post
+    /*
     fun postInfo(token: String, image: MultipartBody.Part?, textHashMap: HashMap<String, RequestBody>){
         api.postInfoList(image, textHashMap).enqueue(object:
         Callback<PostResponse> {
@@ -34,6 +38,22 @@ class PostService(val postActivityInterface: PostActivityInterface) {
             }
         }
         )
+    }
+     */
+    suspend fun postInfo(token: String, image: MultipartBody.Part?, textHashMap: HashMap<String, RequestBody>){
+        try{
+            val response=api.postInfoList(image, textHashMap)
+            Log.d("데이터 로드", "postInfo 되긴하니?")
+            if(response!=null)
+                postActivityInterface.onPostPostInfoSuccess(response)
+            else
+                Log.d("데이터 로드", "postInfo에서의 결과 : ${response.toString()}")
+        }
+        catch (e:Exception){
+            Log.d("데이터 로드", "postInfotFailure "+e.message.toString())
+            postActivityInterface.onPostPostInfoFailure(e.message ?: "통신 오류")
+
+        }
     }
 
 }

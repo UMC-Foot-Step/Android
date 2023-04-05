@@ -30,7 +30,7 @@ class MapService(val mapFragmentInterface: MapFragment) {
                 Log.d("FootStepList", "맵 서비스 List에서의 결과 : ${response.toString()}")
         }
         catch (e: Exception) {
-            Log.d("FootStepList", "onGetMapFootStepListFailure"+e.message.toString())
+            Log.d("FootStepList", "onGetMapFootStepListFailure "+e.message.toString())
 
             mapFragmentInterface.onGetMapFootStepListFailure(e.message ?: "통신 오류")
         }
