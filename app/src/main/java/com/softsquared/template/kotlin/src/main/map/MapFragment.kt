@@ -702,7 +702,7 @@ class MapFragment(var city:String="") :
         }
     }
 
-    override fun onGetMapFootStepCityFailure(message: String) {
+    override suspend fun onGetMapFootStepCityFailure(message: String) {
 //
     }
 
@@ -729,7 +729,7 @@ class MapFragment(var city:String="") :
         }
     }
 
-    override fun onGetMapFootStepListFailure(message: String) {
+    override suspend fun onGetMapFootStepListFailure(message: String) {
         //showCustomToast("onGetMapFootStepListSuccess 오류 : $message")
     }
 
@@ -756,7 +756,7 @@ class MapFragment(var city:String="") :
 
     }
 
-    override fun onGetMapFootStepPopupFailure(message: String) {
+    override suspend fun onGetMapFootStepPopupFailure(message: String) {
         //showCustomToast("오류 : $message")
     }
 
@@ -834,7 +834,7 @@ class MapFragment(var city:String="") :
         Log.d("데이터로드", "onGetMapFootStepSpecificSuccess 나감")
     }
 
-    override fun onGetMapFootStepSpecificFailure(message: String) {
+    override suspend fun onGetMapFootStepSpecificFailure(message: String) {
         //
     }
 
