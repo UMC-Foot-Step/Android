@@ -5,9 +5,11 @@ import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
@@ -17,6 +19,9 @@ import android.widget.ImageButton
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseActivity
@@ -31,8 +36,11 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileOutputStream
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEditBinding::inflate), PostUpdateActivityInterface {
@@ -165,12 +173,25 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
             content = binding.editEtContent.text.toString()
             title = binding.editEtTitle.text.toString()
 
+            Log.d("post image", filePath.toString())
+            Log.d("post content", content.toString())
+            Log.d("post title", title.toString())
+            Log.d("post address", address.toString())
+            Log.d("post latitude", latitude.toString())
+            Log.d("post longitude", longitude.toString())
+            Log.d("post name", name.toString())
+            Log.d("post tvYear", tvYear.toString())
+            Log.d("post tvMonth", tvMonth.toString())
+            Log.d("post tvDay", tvDay.toString())
+            Log.d("post swChecked", swChecked.toString())
+
             // 모든 값이 존재하는지 확인
             // content, title, address, latitude, longitude, name만 확인 필요
             // 모든 값이 존재한다면 setData
-            if(content != null && title != null && address != null && latitude != 0.0 && longitude != 0.0 && name != null){
+            // 이미지 경로만 지금 확인
+            // 나머지는 서버 success return code 에 따라 구분하기
+            if(filePath!=null){
                 setData(content!!, title!!, address!!, latitude!!, longitude!!, name!!, tvYear, tvMonth, tvDay, swChecked)
-                finish()
             }
 
             else{
@@ -361,7 +382,22 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
     // api post 성공
     override fun onPostPostUpdateInfoSuccess(response: PostEditResponse) {
         Log.d("Success post", "$response")
-        if(response.code==200) showCustomToast("발자취 수정하기 완료")
+
+        when(response.code){
+            // 성공
+            200 -> {
+                Log.d("데이터로드", "PostActivity 수정하기 완료")
+                showCustomToast("발자취 수정하기 완료")
+                // 완료한 경우 fragment 종료
+                finish()
+            }
+
+            // 제목, 내용, 장소
+            2030, 2031, 2040 -> {
+                // alertDialog 출력
+                btnPostDialog()
+            }
+        }
     }
     // api post 실패
     override fun onPostPostUpdateInfoFailure(message: String) {
@@ -369,19 +405,53 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
         Log.d("Why fail?", message)
     }
 
-    // 이미지 보여주기 (비트맵으로 다운로드)
-    private fun showServerImg(serverUrl: String){
+    // 이미지 보여주기
+    private fun showServerImg(serverUrl: String) {
         Glide.with(this)
             .load(serverUrl)
             .into(binding.editIbGallery)
 
-        //Glide.with(this).asBitmap().load(serverUrl)
-        //    .into(binding.editIbGallery)
-
         binding.editIbPhotoCancel.visibility = View.VISIBLE
     }
 
+    private fun imageUrlToCacheFileAsync(context: Context, url: String) {
+        // 이미지 다운받기
+        Glide.with(context)
+            .asBitmap()
+            .load(url)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    val newFile = File(
+                        context.cacheDir.path,
+                        Random(SystemClock.currentThreadTimeMillis()).nextLong().toString()
+                    ).apply {
+                        createNewFile()
+                    }
+                    FileOutputStream(newFile).use{
+                        resource.compress(Bitmap.CompressFormat.JPEG, 100, it)
+                    }
+                    filePath = loadFilechangeMultipart(newFile)
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+
+                    Log.d("imageLoad", "clear")
+                }
+            })
+
+
+    }
+
+    private fun loadFilechangeMultipart(file: File): MultipartBody.Part{
+        // file -> MultipartBody.Part
+        val requestFile = file?.asRequestBody("image/*".toMediaTypeOrNull())
+        return MultipartBody.Part.createFormData("image", file?.name, requestFile)
+    }
+
+
     // uri
+    /*
     fun getImageUri(inContext: Context, inImage: Bitmap): Uri{
         val bytes = ByteArrayOutputStream()
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
@@ -393,6 +463,9 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
         )
         return Uri.parse(path)
     }
+    */
+
+
 
     // 캘린더 날짜 보여주기
     private fun showCalendar(serverDate: String){

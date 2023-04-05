@@ -53,6 +53,9 @@ class MapFragment(var city:String="") :
     BaseFragment<FragmentMapBinding>(FragmentMapBinding::bind, R.layout.fragment_map),
     OnMapReadyCallback,MapFragmentInterface {
 
+    private var job1: Deferred<Unit>? = null
+    private var job2: Deferred<Unit>? = null
+
     // datepicker
     private val today = LocalDate.now()
     private var tvYear = today.year
@@ -89,7 +92,9 @@ class MapFragment(var city:String="") :
     private lateinit var cal_date1:TextView
     private lateinit var cal_date2:TextView
 
-    var setCalBtnClickEventCnk=false
+    var setCalBtnClickEventCnkOne=false
+    var setCalBtnClickEventCnkTwo=false
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -117,12 +122,12 @@ class MapFragment(var city:String="") :
 
 
     override fun onAttach(context: Context) {
-        runBlocking {
+        //runBlocking {
             super.onAttach(context)
 
             mContext = context
             Log.d("데이터로드", "맵 프래그먼트의 onAttach city +"+city)
-        }
+        //}
     }
 
     private fun initButtonView() {
@@ -168,11 +173,13 @@ class MapFragment(var city:String="") :
             bottomSheetDialog.setContentView(bottomSheet)
             bottomSheetDialog.show()
 
-            lateinit var data1:String
+            // lateinit var data1:String
+            var data1=today.toString()
             var data2=today.toString()
 
             btnClose.setOnClickListener {
-                setCalBtnClickEventCnk=false
+                setCalBtnClickEventCnkOne=false
+                setCalBtnClickEventCnkTwo=false
 
                 btnR.isChecked=false
                 btnR2.isChecked=false
@@ -180,8 +187,9 @@ class MapFragment(var city:String="") :
                 btnR4.isChecked=false
                 btnR5.isChecked=false
                 directSelectLayout.visibility=View.GONE
-                cal_date1.text=today.toString()
-                cal_date2.text=today.toString()
+
+                //cal_date1.text=today.toString()
+                //cal_date2.text=today.toString()
 
                 bottomSheetDialog.dismiss()
             }
@@ -218,10 +226,10 @@ class MapFragment(var city:String="") :
 
             btnCal1.setOnClickListener{
                 setCalBtnClickEvent(1)
-
                 Log.d("FootStepList","btnCal1 들어감")
+                //setCalBtnClickEventCnk=true
 
-                data2 = cal_date2.text.toString()
+                //data2 = cal_date2.text.toString()
 
                 Log.d("Calender","cal 1 $tvYear-$tvMonth-$tvDay")
             }
@@ -229,62 +237,81 @@ class MapFragment(var city:String="") :
             btnCal2.setOnClickListener{
                 setCalBtnClickEvent(2)
                 Log.d("FootStepList","btnCal2 들어감")
+                //setCalBtnClickEventCnk=true
 
                 Log.d("Calender","cal2 ${date2IntArr.year}-${date2IntArr.month}-${date2IntArr.day}")
             }
 
             btnChk.setOnClickListener {
-                runBlocking {
-
-                    if (setCalBtnClickEventCnk) {
+                CoroutineScope(Dispatchers.Default).launch {
+                    Log.d("데이터로드", "CoroutineScope(Dispatchers.Default).launch ${Thread.currentThread().name}")
+/*
+                    if (setCalBtnClickEventCnkOne||setCalBtnClickEventCnkTwo) {
                         data1 = cal_date1.text.toString()
                         data2 = cal_date2.text.toString()
 
-                        setCalBtnClickEventCnk = false
+                        setCalBtnClickEventCnkOne = false
+                        setCalBtnClickEventCnkTwo = false
                     }
+ */
+                    if(setCalBtnClickEventCnkOne){
+                        data1 = cal_date1.text.toString()
+
+                        setCalBtnClickEventCnkOne = false
+                    }
+
+                    if(setCalBtnClickEventCnkTwo){
+                        data2 = cal_date2.text.toString()
+
+                        setCalBtnClickEventCnkTwo = false
+                    }
+
                     Log.d("데이터로드", "btnChk-Calender 뭐지 ${data1} ${data2}")
 
-                    val job = launch {
-                        // CoroutineScope(Dispatchers.IO).launch {
-                        withContext(Dispatchers.IO) {
-                            tryGetMapFootStepSpecific(data1, data2)
-                            Log.d("데이터로드", "btnChk 코루틴마지막")
-                        }
+                    //val job = launch {
+                    // CoroutineScope(Dispatchers.IO).launch {
+                    withContext(Dispatchers.IO) {
+                        Log.d("데이터로드", "withContext(Dispatchers.IO).launch ${Thread.currentThread().name}")
+
+                        tryGetMapFootStepSpecific(data1, data2)
+                        Log.d("데이터로드", "withContext(Dispatchers.IO) 코루틴마지막")
                     }
+                    // }
                     //job.join()
-                    Log.d("데이터로드", "btnChk 런블락킹 마지막")
 
-                }
-                CoroutineScope(Dispatchers.Main).launch {
+                    withContext(Dispatchers.Main) {
+                        Log.d(
+                            "데이터로드",
+                            "btnChk의 withContext(Dispatchers.Main).launch ${Thread.currentThread().name}"
+                        )
 
-                    for ((key, value) in marker_hashMap) {
-                        if (marker_mapChk[key] == false) {
-                            value.map = null
+                        for ((key, value) in marker_hashMap) {
+                            if (marker_mapChk[key] == false) {
+                                value.map = null
 
-                            Log.d("데이터로드", "두번째 포문 안보이는 마커 ${key}")
-                        } else {
-                            marker_mapChk[key] = false
-                            value.map = naverMap
+                                Log.d("데이터로드", "두번째 포문 안보이는 마커 ${key}")
+                            } else {
+                                marker_mapChk[key] = false
+                                value.map = naverMap
 
-                            Log.d("데이터로드", "두번째 포문 보이는 마커 ${key}")
+                                Log.d("데이터로드", "두번째 포문 보이는 마커 ${key}")
+                            }
                         }
+
+                        btnR.isChecked = false
+                        btnR2.isChecked = false
+                        btnR3.isChecked = false
+                        btnR4.isChecked = false
+                        btnR5.isChecked = false
+                        directSelectLayout.visibility = View.GONE
+                        cal_date1.text = today.toString()
+                        cal_date2.text = today.toString()
+
+                        bottomSheetDialog.dismiss()
+                        Log.d("데이터로드", "btnChk-withContext(Dispatchers.Main) 끝남")
                     }
+                    Log.d("데이터로드", "btnChk CoroutineScope(Dispatchers.Default).launch 끝")
                 }
-
-                    btnR.isChecked = false
-                    btnR2.isChecked = false
-                    btnR3.isChecked = false
-                    btnR4.isChecked = false
-                    btnR5.isChecked = false
-                    directSelectLayout.visibility = View.GONE
-                    cal_date1.text = today.toString()
-                    cal_date2.text = today.toString()
-
-                    bottomSheetDialog.dismiss()
-
-                    Log.d("데이터로드", "btnChk 끝남")
-
-
             }
         }
 
@@ -324,7 +351,6 @@ class MapFragment(var city:String="") :
 
     private fun setCalBtnClickEvent(btn_type:Int) {
         Log.d("Calender","setCalBtnClickEvent + $btn_type 들어감")
-        setCalBtnClickEventCnk=true
 
         val bottomSheetDialog = BottomSheetDialog(mContext)
 
@@ -355,11 +381,15 @@ class MapFragment(var city:String="") :
 
         btnDateCheck.setOnClickListener{
             if(btn_type==1){
+                setCalBtnClickEventCnkOne=true
+
                 cal_date1.text="$tvYear-$tvMonth-$tvDay"
 
                 Log.d("Calender","setCalBtnClickEvent + btnDateCheck + $btn_type 들어감 $tvYear-$tvMonth-$tvDay")
             }
             else{
+                setCalBtnClickEventCnkTwo=true
+
                 cal_date2.text="$tvYear-$tvMonth-$tvDay"
 
                 Log.d("Calender","setCalBtnClickEvent + btnDateCheck + $btn_type 들어감 $tvYear-$tvMonth-$tvDay")
@@ -369,23 +399,40 @@ class MapFragment(var city:String="") :
     }
 
 
-    override fun onStart() = runBlocking<Unit>{
+    override fun onStart(){// = CoroutineScope(Dispatchers.Default).async{
         super.onStart()
         Log.d("데이터로드","맵 프래그먼트의 onStart()")
+        job1=CoroutineScope(Dispatchers.Default).async{
 
-        val startJob = launch {
+        //val startJob = launch {
             withContext(Dispatchers.IO) {
                 tryGetMapFootStepList()
 
                 Log.d("데이터로드", "onStart()-tryGetMapFootStepList 지나감")
             }
+/*
+            withContext(Dispatchers.Main){
+                for ((key, value) in marker_hashMap) {
+                    Log.d("데이터로드", "onStart 해시마커 포문 되니+ $key")
+                    value.map = naverMap
+                    marker_mapChk[key] = false
+                    value.setOnClickListener {
+                        setMarkerClickEvent(key, value, value.tag as Boolean)
+                        true
+                    }
+                }
+            }
         }
-        startJob.join()
-        Log.d("데이터로드", "onStart startJob.join()지나감 startJob.isActive : ${startJob.isActive}")
+
+ */
+        }
+        //startJob.join()
+        //Log.d("데이터로드", "onStart startJob.join()지나감 startJob.isActive : ${startJob.isActive}")
 
         binding.mapView.onStart()
-        Log.d("데이터로드", "onStart 런블락킹")
+        Log.d("데이터로드", "onStart 끝남")
     }
+
     private suspend fun tryGetMapFootStepList(){
         MapService(this).tryGetMapFootStepList()
     }
@@ -397,10 +444,11 @@ class MapFragment(var city:String="") :
     override fun onResume() {
         super.onResume()
         Log.d("데이터로드","맵 프래그먼트의 onResume()")
-
         if(firstRun){
             //Log.d("생명주기","맵 프래그먼트의 onResume()")
-            CoroutineScope(Dispatchers.Main).launch {
+            job2=CoroutineScope(Dispatchers.Main).async {
+                job1?.await()
+
                 //subRoutine4()
                 for ((key, value) in marker_hashMap) {
                     Log.d("데이터로드", "onResume() 해시마커 포문 되니+ $key")
@@ -416,8 +464,10 @@ class MapFragment(var city:String="") :
             }
         }
 
+
+
         binding.mapView.onResume()
-        Log.d("데이터로드", "onResume() 런블락킹 마지막")
+        Log.d("데이터로드", "onResume() 마지막")
     }
 
 
@@ -447,52 +497,63 @@ class MapFragment(var city:String="") :
         Log.d("데이터로드", "onMapReady")
         //Log.d("생명주기", "onMapReady")
 
-        if (!firstRun) {
-            firstRun = true
-        }
+       // if (!firstRun) {
+       //     firstRun = true
+       // }
 
         this.naverMap = naverMap
 
-       // val mapScope= CoroutineScope()
+        // val mapScope= CoroutineScope()
 
 //onStart에 있음
-        CoroutineScope(Dispatchers.Main).launch{
-            Log.d("데이터로드", "CoroutineScope(Dispatchers.Main).launch ${Thread.currentThread().name}")
+        CoroutineScope(Dispatchers.Default).launch{
+            if(firstRun){
+                job2?.await()
+                Log.d("데이터로드", "onMapReady job2?.await")
 
+            }
+            else{
+                job1?.await()
+                firstRun = true
+                Log.d("데이터로드", "onMapReady job1?.await")
+
+            }
+            Log.d("데이터로드", "await 끝나고 나서의 CoroutineScope(Dispatchers.Default).launch ${Thread.currentThread().name}")
+
+            withContext(Dispatchers.Main) {
+                for ((key, value) in marker_hashMap) {
+                    Log.d("데이터로드", "onMapReady 해시마커 포문 되니+ $key")
+                    value.map = naverMap
+                    marker_mapChk[key] = false
+                    value.setOnClickListener {
+                        setMarkerClickEvent(key, value, value.tag as Boolean)
+                        true
+                    }
+                }
+            }
+
+
+            displayCityOutput()
+        }
+        // }
+        // }
+        /*
+        CoroutineScope(Dispatchers.Main).launch {
             for ((key, value) in marker_hashMap) {
-                Log.d("데이터로드", "onMapReady 해시마커 포문 되니+ $key")
-                value.map = naverMap
-                marker_mapChk[key] = false
-                value.setOnClickListener {
-                    setMarkerClickEvent(key, value, value.tag as Boolean)
-                    true
+                if (marker_mapChk[key] == false) {
+                    value.map = null
+
+                    Log.d("데이터로드", "onMapReady 두번째 포문 안보이는 마커 ${key}")
+                } else {
+                    marker_mapChk[key] = false
+
+                    Log.d("데이터로드", "onMapReady 두번째 포문 보이는 마커 ${key}")
                 }
             }
         }
+         */
 
-
-                // }
-                // }
-                /*
-                CoroutineScope(Dispatchers.Main).launch {
-                    for ((key, value) in marker_hashMap) {
-                        if (marker_mapChk[key] == false) {
-                            value.map = null
-
-                            Log.d("데이터로드", "onMapReady 두번째 포문 안보이는 마커 ${key}")
-                        } else {
-                            marker_mapChk[key] = false
-
-                            Log.d("데이터로드", "onMapReady 두번째 포문 보이는 마커 ${key}")
-                        }
-                    }
-                }
-
-                 */
-
-
-
-        displayCityOutput()
+        //displayCityOutput()
         Log.d("데이터로드", "onMapReady if (city !=  { 끝남")
 
         naverMap.locationSource = locationSource
@@ -503,17 +564,15 @@ class MapFragment(var city:String="") :
         //}
     }
 
-    fun displayCityOutput(){
+    suspend fun displayCityOutput(){
         if (city != "") {
-            // runBlocking {
-            //    launch {
-            //        withContext(Dispatchers.IO) {
-            Log.d("데이터로드", "displayCityOutput " + city)
 
-            CoroutineScope(Dispatchers.IO).launch {
+            Log.d("데이터로드", "displayCityOutput 진입 " + city)
+
+            withContext(Dispatchers.IO){
                 Log.d(
                     "데이터로드",
-                    "CoroutineScope(Dispatchers.IO).launch ${Thread.currentThread().name}"
+                    "displayCityOutput() withContext(Dispatchers.IO).launch ${Thread.currentThread().name}"
                 )
 
                 tryGetMapFootStepCity(city)
@@ -605,34 +664,39 @@ class MapFragment(var city:String="") :
 
         if (response.result == null) {
             Log.d("데이터로드", "5번째 api null")
+            //showCustomToast("조회 결과가 없습니다")
 
-            val handler = Handler(Looper.getMainLooper())
-            handler.postDelayed(Runnable { Toast.makeText(mContext, "조회 결과가 없습니다", Toast.LENGTH_SHORT).show() }, 0)
+            //val handler = Handler(Looper.getMainLooper())
+            //handler.postDelayed(Runnable { Toast.makeText(mContext, "조회 결과가 없습니다", Toast.LENGTH_SHORT).show() }, 0)
             //Toast.makeText(mContext, "조회 결과가 없습니다", Toast.LENGTH_SHORT).show()
-        }
-
-        else{
+        } else {
             Log.d("데이터로드", "5번째 api ${response.toString()}")
 
-            if(response.result.size==0){
+            if (response.result.size == 0) {
+                withContext(Dispatchers.Main) {
+                    Log.d("데이터로드", "onGetMapFootStepCitySuccess withContext(Dispatchers.Main) 진입1 ${Thread.currentThread().name}")
+                    showCustomToast("조회 결과가 없습니다")
+                }
                 //Toast.makeText(mContext, "조회 결과가 없습니다", Toast.LENGTH_SHORT).show()
-                val handler = Handler(Looper.getMainLooper())
-                handler.postDelayed(Runnable { Toast.makeText(mContext, "조회 결과가 없습니다", Toast.LENGTH_SHORT).show() }, 0)
-                return
+                //val handler = Handler(Looper.getMainLooper())
+                //handler.postDelayed(Runnable { Toast.makeText(mContext, "조회 결과가 없습니다", Toast.LENGTH_SHORT).show() }, 0)
+                //return
             }
 
-            CoroutineScope(Dispatchers.Main).launch {
-                Log.d("데이터로드", "CoroutineScope(Dispatchers.Main).launch 진입..???")
+            //CoroutineScope(Dispatchers.Main).launch {
 
-                for (result_arr in response.result) {
+            for (result_arr in response.result) {
+                marker_mapChk[result_arr.placeId] = true
 
-                    marker_mapChk[result_arr.placeId] = true
+                Log.d(
+                    "데이터로드",
+                    "onGetMapFootStepCitySuccess 첫번째 포문 보이는 마커 ${result_arr.placeId}"
+                )
+            }
+            withContext(Dispatchers.Main) {
+                Log.d("데이터로드", "onGetMapFootStepCitySuccess withContext(Dispatchers.Main) 진입2 ${Thread.currentThread().name}")
 
-                    Log.d("데이터로드", "onGetMapFootStepCitySuccess 첫번째 포문 보이는 마커 ${result_arr.placeId}")
-
-                }
-
-                 for ((key, value) in marker_hashMap) {
+                for ((key, value) in marker_hashMap) {
                     if (marker_mapChk[key] == false) {
                         value.map = null
 
@@ -645,18 +709,15 @@ class MapFragment(var city:String="") :
                     }
                 }
             }
-
-
-           // }
         }
     }
 
-    override fun onGetMapFootStepCityFailure(message: String) {
+    override suspend fun onGetMapFootStepCityFailure(message: String) {
 //
     }
 
     //onStart에 있음
-    override fun onGetMapFootStepListSuccess(response: AllResponse)=runBlocking<Unit> {
+    override suspend fun onGetMapFootStepListSuccess(response: AllResponse){//=runBlocking<Unit> {
         Log.d("데이터로드", "onGetMapFootStepListSuccess 되긴하니??")
 
         for (result_arr in response.result) {
@@ -666,27 +727,27 @@ class MapFragment(var city:String="") :
                 icon = OverlayImage.fromResource(R.drawable.footstep_orange3)
                 tag = false
 
-                val job = launch {
-                    withContext(Dispatchers.IO) {
-                        tryGetMapFootStepPopup(result_arr.placeId)
-                    }
-                }
-                job.join()
+               // val job = launch {
+                 //   withContext(Dispatchers.IO) {
+                tryGetMapFootStepPopup(result_arr.placeId)
+                   // }
+                //}
+                //job.join()
 
                 Log.d("데이터로드", "onGetMapFootStepListSuccess 마지막 placeId: ${result_arr.placeId}")
             }
         }
     }
 
-    override fun onGetMapFootStepListFailure(message: String) {
+    override suspend fun onGetMapFootStepListFailure(message: String) {
         //showCustomToast("onGetMapFootStepListSuccess 오류 : $message")
     }
 
-    override fun onGetMapFootStepPopupSuccess(response: PopupResponse,placeId:Int) =runBlocking<Unit>{
-        val job = launch {
-            Log.d("데이터로드", "onGetMapFootStepPopupSuccess + ${response.result}")
-        }
-        job.join()
+    override suspend fun onGetMapFootStepPopupSuccess(response: PopupResponse,placeId:Int){//} =runBlocking<Unit>{
+     //   val job = launch {
+            Log.d("데이터로드", "onGetMapFootStepPopupSuccess")
+       // }
+        //job.join()
 
         //Log.d("데이터로드", "서브루틴 2 마커로..")
 
@@ -701,60 +762,68 @@ class MapFragment(var city:String="") :
         Log.d(
             "데이터로드",
             "onGetMapFootStepPopupSuccess 마지막 + ${marker_info_hashMap[placeId]!!.loacationName} " +
-                        "${marker_info_hashMap[placeId]!!.postingCount} ${marker_info_hashMap[placeId]!!.imageUrl}")
+                    "${marker_info_hashMap[placeId]!!.postingCount}")// ${marker_info_hashMap[placeId]!!.imageUrl}")
 
     }
 
-    override fun onGetMapFootStepPopupFailure(message: String) {
+    override suspend fun onGetMapFootStepPopupFailure(message: String) {
         //showCustomToast("오류 : $message")
     }
 
     override suspend fun onGetMapFootStepSpecificSuccess(response: SpecificFstResponse) {//=runBlocking<Unit>{
         Log.d("데이터로드", "onGetMapFootStepSpecificSuccess 되긴하니?")
 
-            if (response.result == null) {
-                Log.d("데이터로드", "4번째 api null")
-                val handler = Handler(
-                    Looper.getMainLooper()
-                )
-                handler.postDelayed(Runnable {
-                    Toast.makeText(
-                        mContext,
-                        "조회 결과가 없습니다",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }, 0)
-                Log.d("데이터로드", "조회 결과가 없습니다")
+        if (response.result == null) {
+            Log.d("데이터로드", "4번째 api null")
+            /*
+            val handler = Handler(
+                Looper.getMainLooper()
+            )
+            handler.postDelayed(Runnable {
+                Toast.makeText(
+                    mContext,
+                    "조회 결과가 없습니다",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }, 0)
+             */
+            withContext(Dispatchers.Main){
+                //Toast.makeText(mContext, "조회 결과가 없습니다", Toast.LENGTH_SHORT).show()
+                Log.d("데이터로드", "onGetMapFootStepSpecificSuccess withContext(Dispatchers.Main) ${Thread.currentThread().name}")
 
+                showCustomToast("조회 결과가 없습니다")
             }
+            Log.d("데이터로드", "조회 결과가 없습니다")
+
+        }
 
 
         else {
             Log.d("데이터로드", "4번째 api ${response.toString()}")
 
 
-              //  CoroutineScope(Dispatchers.Main).launch {
-                    //Log.d("데이터로드", "onGetMapFootStepSpecificSuccess의 CoroutineScope 진입..???")
+            //  CoroutineScope(Dispatchers.Main).launch {
+            //Log.d("데이터로드", "onGetMapFootStepSpecificSuccess의 CoroutineScope 진입..???")
 
-                    for (result_arr in response.result.allPlaceDto) {
+            for (result_arr in response.result.allPlaceDto) {
 
-                        marker_mapChk[result_arr.placeId] = true
-                        Log.d("데이터로드", "첫번째 포문 보이는 마커 ${result_arr.placeId}")
-                    }
+                marker_mapChk[result_arr.placeId] = true
+                Log.d("데이터로드", "첫번째 포문 보이는 마커 ${result_arr.placeId}")
+            }
 
-                    /*for ((key, value) in marker_hashMap) {
-                        if (marker_mapChk[key] == false) {
-                            value.map = null
+            /*for ((key, value) in marker_hashMap) {
+                if (marker_mapChk[key] == false) {
+                    value.map = null
 
-                            Log.d("데이터로드", "두번째 포문 안보이는 마커 ${key}")
-                        } else {
-                            marker_mapChk[key] = false
-                            Log.d("데이터로드", "두번째 포문 보이는 마커 ${key}")
-                        }
-                    }
+                    Log.d("데이터로드", "두번째 포문 안보이는 마커 ${key}")
+                } else {
+                    marker_mapChk[key] = false
+                    Log.d("데이터로드", "두번째 포문 보이는 마커 ${key}")
+                }
+            }
 
-                     */
-             //   }
+             */
+            //   }
 
         }
 
@@ -772,10 +841,10 @@ class MapFragment(var city:String="") :
             }
             */
 
-        Log.d("데이터로드", "onGetMapFootStepSpecificSuccess 런블락킹 나감")
+        Log.d("데이터로드", "onGetMapFootStepSpecificSuccess 나감")
     }
 
-    override fun onGetMapFootStepSpecificFailure(message: String) {
+    override suspend fun onGetMapFootStepSpecificFailure(message: String) {
         //
     }
 

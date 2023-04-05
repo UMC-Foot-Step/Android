@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import com.softsquared.template.kotlin.R
@@ -36,6 +37,7 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -50,6 +52,7 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
             }
         })
 
+        //onfocusChangeListener에 대한 문제로 파악중...
         binding.etId.addTextChangedListener(object :TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
@@ -71,6 +74,11 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
             }
 
         })
+
+
+
+
+
 
         // 로그인 버튼 입력 -> 성공한 여부는 나중에 추가할 예정
         binding.loginBtn.setOnClickListener{
@@ -122,10 +130,8 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
                 }
             }
 
-            override fun onLoginFailure(message: String?) {
-                Toast.makeText(this@LoginProcessActivity,message.toString(),Toast.LENGTH_SHORT)
-                    .show()
-
+            override fun onLoginFailure(message: String) {
+                showCustomToast(message)
             }
         })
     }
@@ -147,13 +153,12 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
     }
     private fun startregisterActivity(){
         val intent = Intent(this,SignupActivity::class.java)
-        startActivity(intent)
 
+        startActivity(intent)
         finish()
     }
 
     private fun beforeStartActivity(){
-
         removeJwt()
         removeRefresh()
         removeCheck2()

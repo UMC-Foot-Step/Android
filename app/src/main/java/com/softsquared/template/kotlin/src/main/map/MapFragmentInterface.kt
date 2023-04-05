@@ -8,23 +8,23 @@ import com.softsquared.template.kotlin.src.main.map.model.SpecificFstResponse
 
 interface MapFragmentInterface {
 
-    fun onGetMapFootStepListSuccess(response:AllResponse)
+    suspend fun onGetMapFootStepListSuccess(response:AllResponse)
 
-    fun onGetMapFootStepListFailure(message:String)
+    suspend fun onGetMapFootStepListFailure(message:String)
 
 
-    fun onGetMapFootStepPopupSuccess(response: PopupResponse,placeId:Int)
+    suspend fun onGetMapFootStepPopupSuccess(response: PopupResponse,placeId:Int)
 
-    fun onGetMapFootStepPopupFailure(message:String)
+    suspend fun onGetMapFootStepPopupFailure(message:String)
 
 
     suspend fun onGetMapFootStepSpecificSuccess(response:SpecificFstResponse)
 
-    fun onGetMapFootStepSpecificFailure(message:String)
+    suspend fun onGetMapFootStepSpecificFailure(message:String)
 
 
     suspend fun onGetMapFootStepCitySuccess(response: CityResponse)
 
-    fun onGetMapFootStepCityFailure(message:String)
+    suspend fun onGetMapFootStepCityFailure(message:String)
 
 }

@@ -35,7 +35,7 @@ class SignupSuccessActivity : BaseActivity<ActivitySignupSuccessBinding>(Activit
                 startMainActivity()
             }
 
-            override fun onLoginFailure(message: String?) {
+            override fun onLoginFailure(message: String) {
                 Toast.makeText(this@SignupSuccessActivity,message.toString(), Toast.LENGTH_SHORT)
                     .show()
             }
@@ -52,8 +52,9 @@ class SignupSuccessActivity : BaseActivity<ActivitySignupSuccessBinding>(Activit
 
     private fun startMainActivity(){
         val intent = Intent(this,MainActivity::class.java)
+        finishAffinity()
         startActivity(intent)
-        finish()
+
     }
 
 
