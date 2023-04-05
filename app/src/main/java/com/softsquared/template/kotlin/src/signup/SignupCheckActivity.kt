@@ -1,6 +1,7 @@
 package com.softsquared.template.kotlin.src.signup
 
 import android.content.Intent
+import android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
@@ -34,6 +35,7 @@ class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySig
             val intent = Intent(this@SignupCheckActivity,SignupInfoActivity::class.java)
             saveCheck1(true)
             checknext()
+            showCustomToast("약관을 전부 읽어야 버튼이 활성화 됩니다.")
             startActivity(intent)
         }
 
@@ -64,14 +66,8 @@ class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySig
                         SaveSignInNickname(etNickname.text.toString(),nicknamecheck)
                         checknext()
                     }
-
                 }
-
-
             })
-
-
-
         }
 
     }//onCreate
@@ -97,9 +93,6 @@ class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySig
     private fun checkboxstatus(){
         binding.agreeCheck.isChecked = getCheck1()
         binding.etNickname.setText(getSignInNickname())
-
-
-
     }
 
 
@@ -146,14 +139,13 @@ class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySig
 
     private fun startActivityLogin(){
         val mintent = Intent(this,SignupSuccessActivity::class.java)
+        finishAffinity()
         startActivity(mintent)
-        finish()
     }
 
     private fun backtoemail(){
         val intent = Intent(this,SignupActivity::class.java)
         startActivity(intent)
-        finish()
     }
 
 

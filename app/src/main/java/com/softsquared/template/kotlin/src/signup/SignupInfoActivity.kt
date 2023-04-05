@@ -45,8 +45,9 @@ class SignupInfoActivity : BaseActivity<ActivitySignupInfoBinding>(ActivitySignu
 
     private fun returncheckActivity(){
         var intent = Intent(this,SignupCheckActivity::class.java)
-
+        finishAffinity()
         startActivity(intent)
+
     }
 
     private fun checkscroll(){

@@ -30,13 +30,13 @@ class NetworkDataSource {
                     when (val code = loginResponse.code){
 
                         200 -> loginView.onLoginSuccess(code,loginResponse.result!!)
-                        else -> loginView.onLoginFailure(response.message())
+                        else -> loginView.onLoginFailure(loginResponse.message)
                     }
                 }
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable)
-                = loginView.onLoginFailure(t.message)
+                = loginView.onLoginFailure(t.message?: "통신오류")
 
         })
     }
@@ -47,7 +47,6 @@ class NetworkDataSource {
                 Log.d("Tester", "onResponse: dddd${response}")
                 if(response.isSuccessful && response.code() == 200){
                     val loginResponse: LoginResponse = response.body()!!
-                    Log.d("Tester", "onResponse: $loginResponse")
                     when(val code = loginResponse.code){
                         200->loginView.onLoginSuccess(code,loginResponse.result)
                         else -> loginView.onLoginFailure(response.message())
@@ -56,8 +55,8 @@ class NetworkDataSource {
             }
 
             override fun onFailure(call: Call<LoginResponse>, t: Throwable){
-                loginView.onLoginFailure(t.message)
-                Log.d("Tester", "onFailure: ${t}")
+                loginView.onLoginFailure(t.message?: "통신오류")
+
             }
 
 

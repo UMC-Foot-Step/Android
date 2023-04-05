@@ -26,7 +26,7 @@ class SecessionService {
                     Log.d("Tester", "onResponse: 실행됨${secessionResponse}")
                     when (val code = secessionResponse.code){
                         200 ->  secessionView.onSecessionSuccess(code,secessionResponse.result!!)
-                        else -> secessionView.onSecessionFailure(response.message())
+                        else -> secessionView.onSecessionFailure(secessionResponse.message)
                     }
                 }
 
