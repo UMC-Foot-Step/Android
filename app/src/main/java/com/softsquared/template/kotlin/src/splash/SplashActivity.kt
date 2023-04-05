@@ -53,7 +53,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
             startActivity(OnboardingActivity::class.java)
         }
         else
-            NetworkDataSource().autoLogin(refresh,object : LoginView {
+            NetworkDataSource().autoLogin(refresh, object : LoginView {
                 override fun onLoginSuccess(code: Int, result: Result?) {
                     Log.d("Tester", "onLoginSuccess: $result")
                     startActivity(MainActivity::class.java)
@@ -61,7 +61,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
                     //let,apply,run : !!=위험, 코틀린에 맞는 문법을 사용해 위험요소 제거
                 }
 
-                override fun onLoginFailure(message: String?) {
+                override fun onLoginFailure(message: String) {
                     Log.d("Tester", "onLoginFailure: $message")
                     showCustomToast(message!!)
                     startActivity(LoginProcessActivity::class.java)

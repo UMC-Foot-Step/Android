@@ -26,7 +26,7 @@ class NicknameService {
                Log.d("Tester", "onResponse: 실행됨${nicknameResponse}")
                when (val code = nicknameResponse.code){
                   200 ->  nicknameView.onNicknameSuccess(code,nicknameResponse.result!!)
-                  else -> nicknameView.onNicknameFailure(response.message())
+                  else -> nicknameView.onNicknameFailure(nicknameResponse.message)
                }
             }
          }
