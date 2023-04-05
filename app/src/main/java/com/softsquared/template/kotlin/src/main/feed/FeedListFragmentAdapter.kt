@@ -48,7 +48,8 @@ class FeedListFragmentAdapter(
              */
             binding.root.setOnClickListener {
                 val post_idx: Int = feedList.postingId
-                feedListFragmentInterface.changeFeedInfoActivity(post_idx)
+                val user_Id:Int=feedList.userId
+                feedListFragmentInterface.changeFeedInfoActivity(post_idx,user_Id)
             }
 
 

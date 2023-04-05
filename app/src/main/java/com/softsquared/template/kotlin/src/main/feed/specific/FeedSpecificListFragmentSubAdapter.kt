@@ -12,11 +12,13 @@ import com.softsquared.template.kotlin.src.main.gallery.models.PostList
 
 class FeedSpecificListFragmentSubAdapter(
     private val resultFeetStepList: ArrayList<PostList>,
-    val feedSpecificListFragmentInterface: FeedSpecificListFragmentInterface
+    val feedSpecificListFragmentInterface: FeedSpecificListFragmentInterface,
+    private val userId:Int
 ) : RecyclerView.Adapter<FeedSpecificListFragmentSubAdapter.MyViewHolder>() {
     class MyViewHolder(
         private val binding: ItemGallerySubSectionBinding,
-        private val feedSpecificListFragmentInterface: FeedSpecificListFragmentInterface
+        private val feedSpecificListFragmentInterface: FeedSpecificListFragmentInterface,
+        private val userId:Int
     ) : RecyclerView.ViewHolder(binding.root) {
 
 
@@ -35,8 +37,8 @@ class FeedSpecificListFragmentSubAdapter(
 
                 // 게시글 인덱스
                 val post_idx: Int = resultFeetStep.postingId
-                feedSpecificListFragmentInterface.changeFeedInfoActivity(post_idx)
-
+                val userId:Int=userId
+                feedSpecificListFragmentInterface.changeFeedInfoActivity(post_idx,userId)
             }
         }
 
@@ -46,7 +48,7 @@ class FeedSpecificListFragmentSubAdapter(
         return MyViewHolder(
             ItemGallerySubSectionBinding.inflate(
                 LayoutInflater.from(parent.context),
-            parent, false), feedSpecificListFragmentInterface)
+            parent, false), feedSpecificListFragmentInterface,userId)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {

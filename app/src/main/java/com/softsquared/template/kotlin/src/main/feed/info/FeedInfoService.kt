@@ -122,6 +122,33 @@ class FeedInfoService(val feedInfoActivityInterface: FeedInfoActivityInterface) 
     
     
     // To Do 5.2 댓글 - 유저 신고하기
+    //유저 신고 API
+    fun ReportUser(user_id:Int,createReportDto:createReportDto){
+        val GalleryRetrofitInterface =
+            ApplicationClass.sRetrofit.create(GalleryRetrofitInterface::class.java)
+        Log.d("reportProcess", "ReportComment 안쪽직전진입")
+
+        GalleryRetrofitInterface.reportUser(user_id,createReportDto).enqueue(object :
+            Callback<ReportResponse> {
+
+            override fun onResponse(
+                call: Call<ReportResponse>,
+                response: Response<ReportResponse>
+            ) {
+                feedInfoActivityInterface.onReportUserSuccess(response.body() as ReportResponse)
+                Log.d("reportProcess", "ReportComment onResponse")
+
+            }
+
+            override fun onFailure(call: Call<ReportResponse>, t: Throwable) {
+                feedInfoActivityInterface.onReportUserFailure(t.message ?: "통신 오류")
+                Log.d("reportProcess", "ReportComment onFailure")
+
+            }
+
+        })
+    }
+
     // To Do 6. 게시글 신고하기
 
     fun ReportPost(createReportDto: createReportDto,posting_id: Int){
