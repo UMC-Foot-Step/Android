@@ -2,11 +2,13 @@ package com.softsquared.template.kotlin.config
 
 import android.app.Application
 import android.content.SharedPreferences
-import android.util.Log
+import com.softsquared.template.kotlin.BuildConfig
+import com.softsquared.template.kotlin.BuildConfig.KAKAO_API_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.URI
 import java.util.concurrent.TimeUnit
 
 // 앱이 실행될때 1번만 실행이 됩니다.
@@ -16,9 +18,10 @@ class ApplicationClass : Application() {
     // val API_URL = "https://edu-api-test.softsquared.com/"
 
     // 당신의 발자취 서버 URL 주소
-    val API_URL = "http://52.78.49.35:8080"
+    private var API_URL = BuildConfig.API_URL
     //카카오 서버주소
-    val KAKAO_API_URL = "https://dapi.kakao.com/"
+    private var KAKAO_API_URL = BuildConfig.KAKAO_API_URL
+
 
     // 코틀린의 전역변수 문법
     companion object {
