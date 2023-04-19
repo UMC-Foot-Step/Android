@@ -30,7 +30,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
                 }
 
                 override fun afterTextChanged(p0: Editable?) {
-                    if(etSignUpId.length()>5){
+                    if(etSignUpId.length()>8){
                         id_check = true
                         checknext()
                     }
@@ -51,7 +51,7 @@ class SignupActivity : BaseActivity<ActivitySignupBinding>(ActivitySignupBinding
                 }
 
                 override fun afterTextChanged(p0: Editable?) {
-                   if(etSignUpPw.length()>4){
+                   if(etSignUpPw.length() in 8..12){
                        pw_check = true
                        checknext()
                    }

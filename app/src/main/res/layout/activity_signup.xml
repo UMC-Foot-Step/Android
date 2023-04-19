@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/login_line"
             android:fontFamily="@font/noto_sans_extrabold"
-            android:hint="비밀번호"
+            android:hint="비밀번호 8~12자리"
             android:inputType="textPassword"
             android:textColorHighlight="@color/orange"
             android:textCursorDrawable="@color/orange"
