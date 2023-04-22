@@ -72,25 +72,26 @@
              android:checked="true"
             -->
 
-        <LinearLayout
+        <RadioGroup
             android:id="@+id/si_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
+            <RadioButton
                 android:id="@+id/seoul"
                 android:layout_width="81dp"
                 android:layout_height="31dp"
                 android:background="@drawable/city_selector"
                 android:fontFamily="@font/inter"
                 android:gravity="center"
+                android:button="@null"
                 android:text="서울특별시"
                 android:textColor="@drawable/city_text"
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
-            <Button
+            <RadioButton
                 android:id="@+id/incheon"
                 android:layout_width="81dp"
                 android:layout_height="31dp"
@@ -105,7 +106,7 @@
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
-            <Button
+            <RadioButton
                 android:id="@+id/busan"
                 android:layout_width="81dp"
                 android:layout_height="31dp"
@@ -120,16 +121,15 @@
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
-        </LinearLayout>
 
-        <LinearLayout
+<!--        <LinearLayout
             android:id="@+id/si_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal">
-
-            <Button
+-->
+            <RadioButton
                 android:id="@+id/daegu"
                 android:layout_width="81dp"
                 android:layout_height="31dp"
@@ -140,13 +140,16 @@
                 android:gravity="center"
                 android:text="대구광역시"
                 android:textColor="@drawable/city_text"
+                android:layout_marginTop="43dp"
+                android:layout_marginStart="-273dp"
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
-            <Button
+            <RadioButton
                 android:id="@+id/daejeon"
                 android:layout_width="81dp"
                 android:layout_height="31dp"
+                android:layout_marginTop="43dp"
                 android:layout_marginLeft="15dp"
                 android:background="@drawable/city_selector"
                 android:button="@null"
@@ -158,11 +161,12 @@
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
-            <Button
+            <RadioButton
                 android:id="@+id/gwangju"
                 android:layout_width="81dp"
                 android:layout_height="31dp"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="43dp"
                 android:background="@drawable/city_selector"
                 android:button="@null"
                 android:checked="false"
@@ -173,19 +177,20 @@
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
-        </LinearLayout>
-
+<!--
         <LinearLayout
             android:id="@+id/si_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal">
-
-            <Button
+-->
+            <RadioButton
                 android:id="@+id/ulsan"
                 android:layout_width="81dp"
                 android:layout_height="31dp"
+                android:layout_marginTop="86dp"
+                android:layout_marginStart="-273dp"
                 android:background="@drawable/city_selector"
                 android:button="@null"
                 android:checked="false"
@@ -196,11 +201,12 @@
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
-            <Button
+            <RadioButton
                 android:id="@+id/sejong"
                 android:layout_width="107dp"
                 android:layout_height="31dp"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="86dp"
                 android:background="@drawable/city_selector"
                 android:button="@null"
                 android:checked="false"
@@ -211,7 +217,7 @@
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
-        </LinearLayout>
+        </RadioGroup>
         <!--</RadioGroup>-->
     </LinearLayout>
 
@@ -257,13 +263,13 @@
         app:layout_constraintTop_toBottomOf="@+id/city_do"
         app:layout_constraintVertical_bias="0.0">
 
-        <LinearLayout
+        <RadioGroup
             android:id="@+id/do_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
+            <RadioButton
                 android:id="@+id/gyeonggi"
                 android:layout_width="55dp"
                 android:layout_height="31dp"
@@ -277,7 +283,7 @@
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
-            <Button
+            <RadioButton
                 android:id="@+id/gangwon"
                 android:layout_width="55dp"
                 android:layout_height="31dp"
@@ -292,7 +298,7 @@
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
-            <Button
+            <RadioButton
                 android:id="@+id/chungcheongbuk"
                 android:layout_width="68dp"
                 android:layout_height="31dp"
@@ -307,7 +313,7 @@
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
-            <Button
+            <RadioButton
                 android:id="@+id/chungcheongnam"
                 android:layout_width="68dp"
                 android:layout_height="31dp"
@@ -321,7 +327,7 @@
                 android:textColor="@drawable/city_text"
                 android:textSize="14sp"
                 android:textStyle="normal" />
-        </LinearLayout>
+ <!--       </RadioGroup>
 
         <LinearLayout
             android:id="@+id/do_2"
@@ -329,11 +335,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal">
-
-            <Button
+-->
+            <RadioButton
                 android:id="@+id/gyeongsangbuk"
                 android:layout_width="68dp"
                 android:layout_height="31dp"
+                android:layout_marginTop="43dp"
+                android:layout_marginStart="-291dp"
                 android:background="@drawable/city_selector"
                 android:button="@null"
                 android:checked="false"
@@ -344,11 +352,12 @@
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
-            <Button
+            <RadioButton
                 android:id="@+id/gyeongsangnam"
                 android:layout_width="68dp"
                 android:layout_height="31dp"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="43dp"
                 android:background="@drawable/city_selector"
                 android:button="@null"
                 android:checked="false"
@@ -359,11 +368,12 @@
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
-            <Button
+            <RadioButton
                 android:id="@+id/jeollabuk"
                 android:layout_width="68dp"
                 android:layout_height="31dp"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="43dp"
                 android:background="@drawable/city_selector"
                 android:button="@null"
                 android:checked="false"
@@ -374,11 +384,12 @@
                 android:textSize="14sp"
                 android:textStyle="normal" />
 
-            <Button
+            <RadioButton
                 android:id="@+id/jeollanam"
                 android:layout_width="68dp"
                 android:layout_height="31dp"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="43dp"
                 android:background="@drawable/city_selector"
                 android:button="@null"
                 android:checked="false"
@@ -388,19 +399,20 @@
                 android:textColor="@drawable/city_text"
                 android:textSize="14sp"
                 android:textStyle="normal" />
-        </LinearLayout>
-
+<!--
         <LinearLayout
             android:id="@+id/do_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal">
-
-            <Button
+-->
+            <RadioButton
                 android:id="@+id/jeju"
                 android:layout_width="107dp"
                 android:layout_height="31dp"
+                android:layout_marginTop="86dp"
+                android:layout_marginStart="-317dp"
                 android:background="@drawable/city_selector"
                 android:button="@null"
                 android:checked="false"
@@ -410,10 +422,11 @@
                 android:textColor="@drawable/city_text"
                 android:textSize="14sp"
                 android:textStyle="normal" />
-        </LinearLayout>
-
+        </RadioGroup>
 
     </LinearLayout>
+
+
 
     <Button
         android:id="@+id/city_btn"
@@ -431,6 +444,15 @@
         android:textColor="#ffffff"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="제일 마지막에 누른 버튼 기준으로 조회됩니다"
+        app:layout_constraintBottom_toTopOf="@+id/city_btn"
+        app:layout_constraintEnd_toEndOf="@+id/city_do"
+        app:layout_constraintTop_toBottomOf="@+id/do_box"
+        app:layout_constraintVertical_bias="0.07"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
