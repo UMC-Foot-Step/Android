@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.softsquared.template.kotlin.R
 import com.softsquared.template.kotlin.config.BaseFragment
@@ -23,6 +24,8 @@ class FeedSpecificListFragment :
 
 
     private lateinit var feedSpecificListFragment: FeedSpecificListFragment
+    private var userId:Int? = null
+    private var userName:String?=""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,17 +38,14 @@ class FeedSpecificListFragment :
 
         // 프래그먼트에서 넘겨오는 유저 인덱스 받기
         // 프래그먼트에서 넘겨오는 유저 닉네임 받기
-        val userId = arguments?.getInt("userId")
-        val userName = arguments?.getString("userName")
-
+        userId = arguments?.getInt("userId")
+        userName = arguments?.getString("userName")
         // 프래그먼트 뷰 뿌리기
         binding.feedSpecificlistTitleTxt.text = userName
 
 
         // 유저 인덱스로, 특정 유저 피드 리스트 조회 API 호출
-        if (userId != null) {
-            FeedSpecificListService(this).getSpecificFeedList(userId)
-        }
+        //onStart로 옮김
 
 
         /*
@@ -66,6 +66,13 @@ class FeedSpecificListFragment :
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        // 유저 인덱스로, 특정 유저 피드 리스트 조회 API 호출
+        if (userId != null) {
+            FeedSpecificListService(this).getSpecificFeedList(userId!!)
+        }
+    }
 
     /*
         To Do 1. 특정 유저 피드 리스트 조회 API 응답 메소드

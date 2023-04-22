@@ -28,13 +28,16 @@ class FeedListFragment :
 
         feedListFragment = this
 
+
+    }
+
+    override fun onStart() {
+        super.onStart()
         /*
-            To Do 1. 타 유저 피드 리스트 조회 API 호출
-         */
+           To Do 1. 타 유저 피드 리스트 조회 API 호출
+
+        */
         FeedListService(this).getFeedList()
-
-
-
 
     }
 
