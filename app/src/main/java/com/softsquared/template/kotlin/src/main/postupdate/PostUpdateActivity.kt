@@ -190,7 +190,8 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
             // 모든 값이 존재한다면 setData
             // 이미지 경로만 지금 확인
             // 나머지는 서버 success return code 에 따라 구분하기
-            if(filePath!=null){
+            //if(filePath!=null){
+            if(content!=null&&title!=null&&address!=null&&latitude!=null&&longitude!=null&&name!=null){
                 setData(content!!, title!!, address!!, latitude!!, longitude!!, name!!, tvYear, tvMonth, tvDay, swChecked)
             }
 
