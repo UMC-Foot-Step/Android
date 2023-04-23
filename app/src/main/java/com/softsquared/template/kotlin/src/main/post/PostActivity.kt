@@ -55,7 +55,7 @@ class PostActivity
     var postHashmap = HashMap<String, RequestBody>()
 
     // switch checked
-    private var swChecked = 0
+    private var swChecked = 1
 
     // accessToken
     private val token: String = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImZvb3RzdGVwQG5hdmVyLmNvbSIsImlhdCI6MTY3NTk2MTcyMywiZXhwIjoxNjc2MjY0MTIzfQ.9sDbAWp3N01eXTqPflKlbLF3p7YN95naQ9uhQpD70Gs"
@@ -145,10 +145,10 @@ class PostActivity
         // switch
         binding.postSwOpen.setOnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked){
-                swChecked = 1
+                swChecked = 0
             }
             else {
-                swChecked = 0
+                swChecked = 1
             }
         }
         
@@ -176,7 +176,7 @@ class PostActivity
 
             // 나머지는 서버 success return code 에 따라 구분하기
             if(filePath != null){
-                showCustomToast("시간이 조금 소요됩니다")
+                showCustomToast("업로드 중 입니다")
                 setData(content!!, title!!, address!!, latitude!!, longitude!!, name!!, tvYear, tvMonth, tvDay, swChecked)
             }
 
