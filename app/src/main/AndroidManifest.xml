@@ -169,18 +169,20 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
-
-
-
-        <meta-data
-            android:name="com.naver.maps.map.CLIENT_ID"
-            android:value="phlxzodw8d" />
-
-
-        <!--kakaoMap api-->
+        <!-- Kakao api 추가-->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="	c794bd7db8862f135dd6387c9606bee0" />
+            android:value="${API_KEY}" />
+
+        <!-- Naver map 추가-->
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="${map_CLIENT_ID}" />
+
+
+
+
+
     </application>
 
 </manifest>
