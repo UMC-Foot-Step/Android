@@ -29,7 +29,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1"/>
-
+<!--
         <ImageView
             android:id="@+id/img_bell"
             android:layout_width="16dp"
@@ -38,7 +38,7 @@
             android:layout_gravity="center|right"
             android:scaleType="centerCrop"
             android:src="@drawable/bell" />
-
+-->
     </LinearLayout>
 
     <LinearLayout
@@ -213,6 +213,19 @@
                 android:textStyle="normal" />
 
         </FrameLayout>
+
+        <Button
+            android:id="@+id/btn_community_rule"
+            android:layout_width="match_parent"
+            android:layout_height="39dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/top_stroke"
+            android:gravity="center|left"
+            android:paddingLeft="8dp"
+            android:text="커뮤니티 이용규칙"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="normal" />
 
         <Button
             android:id="@+id/btn_logout"
