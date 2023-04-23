@@ -116,13 +116,13 @@ class FeedInfoActivity()
                             }
                             .setPositiveButton("확인") { dialog, which ->
                                 if(selectedNum==0){
-                                    showCustomToast("게시글 신고하기")
+                                    //showCustomToast("게시글 신고하기")
                                     // bottomSheetDialog - 신고사유
                                     reportDialogPosting(posting_id)
                                     // api 연결 성공
                                 }
                                 else{
-                                    showCustomToast("유저 신고하기")
+                                    //showCustomToast("유저 신고하기")
                                     // bottomSheetDialog - 신고사유
                                     reportDialogUser()
                                 }
@@ -305,35 +305,29 @@ class FeedInfoActivity()
             var reasonNum=0
             when(reportGroup.checkedRadioButtonId){
                 R.id.btn_report_0 -> {
-                    showCustomToast("0번 신고사유")
                     reasonNum=0
                 }
                 R.id.btn_report_1 -> {
-                    showCustomToast("1번 신고사유")
                     reasonNum=1
                 }
                 R.id.btn_report_2 -> {
-                    showCustomToast("2번 신고사유")
                     reasonNum=2
                 }
                 R.id.btn_report_3 -> {
-                    showCustomToast("3번 신고사유")
                     reasonNum=3
                 }
                 R.id.btn_report_4 -> {
-                    showCustomToast("4번 신고사유")
                     reasonNum=4
                 }
                 R.id.btn_report_5 -> {
-                    showCustomToast("5번 신고사유")
                     reasonNum=5
                 }
                 R.id.btn_report_6 -> {
-                    showCustomToast("6번 신고사유")
                     reasonNum=6
                 }
 
             }
+            showCustomToast("신고하기 처리중입니다")
             FeedInfoService(feedInfoActivity).ReportPost(
                 createReportDto(reasonNumber = reasonNum, targetNumber = 1),posting_id,
             )
@@ -372,35 +366,29 @@ class FeedInfoActivity()
             var reasonNum=0
             when(reportGroup.checkedRadioButtonId){
                 R.id.btn_report_0 -> {
-                    showCustomToast("0번 신고사유")
                     reasonNum=0
                 }
                 R.id.btn_report_1 -> {
-                    showCustomToast("1번 신고사유")
                     reasonNum=1
                 }
                 R.id.btn_report_2 -> {
-                    showCustomToast("2번 신고사유")
                     reasonNum=2
                 }
                 R.id.btn_report_3 -> {
-                    showCustomToast("3번 신고사유")
                     reasonNum=3
                 }
                 R.id.btn_report_4 -> {
-                    showCustomToast("4번 신고사유")
                     reasonNum=4
                 }
                 R.id.btn_report_5 -> {
-                    showCustomToast("5번 신고사유")
                     reasonNum=5
                 }
                 R.id.btn_report_6 -> {
-                    showCustomToast("6번 신고사유")
                     reasonNum=6
                 }
 
             }
+            showCustomToast("신고하기 처리중입니다")
             FeedInfoService(feedInfoActivity).ReportUser(
                 userId,createReportDto(reasonNumber = reasonNum, targetNumber = 0)
             )
@@ -418,7 +406,7 @@ class FeedInfoActivity()
             .setMessage("게시글 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
             .setPositiveButton("확인", 
                 DialogInterface.OnClickListener { dialog, id -> 
-                    showCustomToast("신고 접수완료")
+                    //showCustomToast("신고 접수완료")
                 }
             )
         
@@ -432,7 +420,7 @@ class FeedInfoActivity()
             .setMessage("유저 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
             .setPositiveButton("확인",
                 DialogInterface.OnClickListener { dialog, id ->
-                    showCustomToast("신고 접수완료")
+                    //showCustomToast("신고 접수완료")
                 }
             )
 
@@ -446,7 +434,7 @@ class FeedInfoActivity()
             .setMessage("댓글 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
             .setPositiveButton("확인",
                 DialogInterface.OnClickListener { dialog, id ->
-                    feedInfoActivity.showCustomToast("신고 접수완료")
+                    //feedInfoActivity.showCustomToast("신고 접수완료")
                 }
             )
 

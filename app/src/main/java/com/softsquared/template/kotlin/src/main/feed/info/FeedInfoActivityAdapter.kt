@@ -123,14 +123,14 @@ class FeedInfoActivityAdapter(
                                 .setPositiveButton("확인") { dialog, which ->
                                     // 댓글을 누르고 확인 버튼
                                     if(selectedNum==0){
-                                        feedInfoActivity.showCustomToast("댓글 신고하기")
+                                        //feedInfoActivity.showCustomToast("댓글 신고하기")
                                         // bottomSheetDialog - 신고사유
                                         reportDialogComment(commentList.commentId)
 
                                     }
                                     // 유저를 누르고 확인 버튼
                                     else{
-                                        feedInfoActivity.showCustomToast("유저 신고하기")
+                                        //feedInfoActivity.showCustomToast("유저 신고하기")
                                         // bottomSheetDialog - 신고사유
                                         reportDialogUser(commentList.usersId)
                                     }
@@ -192,35 +192,29 @@ class FeedInfoActivityAdapter(
                 var reasonNum=0
                 when(reportGroup.checkedRadioButtonId){
                     R.id.btn_report_0 -> {
-                        feedInfoActivity.showCustomToast("0번 신고사유")
                         reasonNum=0
                     }
                     R.id.btn_report_1 -> {
-                        feedInfoActivity.showCustomToast("1번 신고사유")
                         reasonNum=1
                     }
                     R.id.btn_report_2 -> {
-                        feedInfoActivity.showCustomToast("2번 신고사유")
                         reasonNum=2
                     }
                     R.id.btn_report_3 -> {
-                        feedInfoActivity.showCustomToast("3번 신고사유")
                         reasonNum=3
                     }
                     R.id.btn_report_4 -> {
-                        feedInfoActivity.showCustomToast("4번 신고사유")
                         reasonNum=4
                     }
                     R.id.btn_report_5 -> {
-                        feedInfoActivity.showCustomToast("5번 신고사유")
                         reasonNum=5
                     }
                     R.id.btn_report_6 -> {
-                        feedInfoActivity.showCustomToast("6번 신고사유")
                         reasonNum=6
                     }
 
                 }
+                feedInfoActivity.showCustomToast("신고하기 처리중입니다")
                 FeedInfoService(feedInfoActivity).ReportComment(commentId,
                     createReportDto(reasonNumber = reasonNum, targetNumber = 2))
 
@@ -260,35 +254,29 @@ class FeedInfoActivityAdapter(
                 var reasonNum=0
                 when(reportGroup.checkedRadioButtonId){
                     R.id.btn_report_0 -> {
-                        feedInfoActivity.showCustomToast("0번 신고사유")
                         reasonNum=0
                     }
                     R.id.btn_report_1 -> {
-                        feedInfoActivity.showCustomToast("1번 신고사유")
                         reasonNum=1
                     }
                     R.id.btn_report_2 -> {
-                        feedInfoActivity.showCustomToast("2번 신고사유")
                         reasonNum=2
                     }
                     R.id.btn_report_3 -> {
-                        feedInfoActivity.showCustomToast("3번 신고사유")
                         reasonNum=3
                     }
                     R.id.btn_report_4 -> {
-                        feedInfoActivity.showCustomToast("4번 신고사유")
                         reasonNum=4
                     }
                     R.id.btn_report_5 -> {
-                        feedInfoActivity.showCustomToast("5번 신고사유")
                         reasonNum=5
                     }
                     R.id.btn_report_6 -> {
-                        feedInfoActivity.showCustomToast("6번 신고사유")
                         reasonNum=6
                     }
 
                 }
+                feedInfoActivity.showCustomToast("신고하기 처리중입니다")
                 FeedInfoService(feedInfoActivity).ReportUser(userId,
                     createReportDto(reasonNumber = reasonNum, targetNumber = 0))
 
