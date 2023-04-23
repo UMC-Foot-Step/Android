@@ -35,7 +35,7 @@ class MapGalleryActivity : BaseActivity<ActivityMapgalleryBinding>(ActivityMapga
 
         // 응답 데이터 구성
         // API 요청
-        MapGalleryService(this).onGetPostListByPosition(placeId)
+        //onStart로 옮김
 
         /*
             To Do 4. 발자취 기록하기 액티비티로 전환
@@ -48,6 +48,12 @@ class MapGalleryActivity : BaseActivity<ActivityMapgalleryBinding>(ActivityMapga
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        // 응답 데이터 구성
+        // API 요청
+        MapGalleryService(this).onGetPostListByPosition(placeId)
+    }
 
     /*
         To Do 2. 해당 장소에 대한 게시글 리스트 조회 API 호출
