@@ -64,7 +64,7 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
     private lateinit var getResultPosition: ActivityResultLauncher<Intent>
 
     // switch checked
-    private var swChecked = 0
+    private var swChecked = 1
 
     // filepath
     private var filePath: MultipartBody.Part? = null
@@ -94,16 +94,16 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
         }
 
         // 사진 삭제
-        if(uri==null){
-            binding.editIbPhotoCancel.visibility = View.INVISIBLE
-        }
+        //if(uri==null){
+        //    binding.editIbPhotoCancel.visibility = View.INVISIBLE
+       // }
 
         // 사진 삭제 imageButton 클릭시
-        binding.editIbPhotoCancel.setOnClickListener {
-            binding.editIbGallery.setImageResource(R.drawable.post_iv_unselected)
-            uri=null
-            binding.editIbPhotoCancel.visibility = View.INVISIBLE
-        }
+        //binding.editIbPhotoCancel.setOnClickListener {
+            //binding.editIbGallery.setImageResource(R.drawable.post_iv_unselected)
+            //uri=null
+            //inding.editIbPhotoCancel.visibility = View.INVISIBLE
+       // }
 
         binding.editIbCalendar.setOnClickListener {
             val bottomSheet = layoutInflater.inflate(R.layout.fragment_post_calendar, null)
@@ -154,17 +154,17 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
         }
 
         // 갤러리 열기
-        binding.editIbGallery.setOnClickListener {
-            openGallery()
-        }
+        //binding.editIbGallery.setOnClickListener {
+        //    openGallery()
+        //}
 
         // switch
         binding.editSwOpen.setOnCheckedChangeListener { buttonView, isChecked ->
             if(isChecked){
-                swChecked = 1
+                swChecked = 0
             }
             else {
-                swChecked = 0
+                swChecked = 1
             }
         }
 
@@ -278,7 +278,7 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
 
             filePath = changeMultipart(getRealPathFromURI(uri!!))
 
-            binding.editIbPhotoCancel.visibility = View.VISIBLE
+            //binding.editIbPhotoCancel.visibility = View.VISIBLE
         }
     }
 
@@ -411,7 +411,7 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
             .load(serverUrl)
             .into(binding.editIbGallery)
 
-        binding.editIbPhotoCancel.visibility = View.VISIBLE
+        //binding.editIbPhotoCancel.visibility = View.VISIBLE
     }
 
     private fun imageUrlToCacheFileAsync(context: Context, url: String) {

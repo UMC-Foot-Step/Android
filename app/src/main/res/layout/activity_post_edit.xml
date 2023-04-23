@@ -83,6 +83,7 @@
                 android:src="@drawable/post_iv_unselected" />
         </androidx.cardview.widget.CardView>
 
+        <!--
         <ImageButton
             android:id="@+id/editIbPhotoCancel"
             android:layout_width="20dp"
@@ -93,6 +94,7 @@
             android:scaleType="centerCrop"
             android:background="@android:color/transparent"
             android:src="@drawable/post_pic_close" />
+        -->
     </FrameLayout>
 
     <LinearLayout
