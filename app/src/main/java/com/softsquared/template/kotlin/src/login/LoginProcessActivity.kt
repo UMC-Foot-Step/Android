@@ -28,7 +28,7 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
         //로그인 전 제거하고 시작해야 하는 정보
         beforeStartActivity()
 
-        // 비밀번호 4자리 이상 입력하지 않았을 경우에는 버튼 활성화 안되고 4자리 이상 입력한 경우에는 버튼 할성화
+        // 비밀번호 8자리 이상 입력하지 않았을 경우에는 버튼 활성화 안되고 8자리 이상 입력한 경우에는 버튼 할성화
         binding.loginBtn.isClickable = false
         binding.loginBtn.isEnabled = false
 
@@ -41,7 +41,7 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (binding.etPw.length() > 4) {
+                if (binding.etPw.length() in 8..12) {
                     id_check = true
                     id_pw_Check()
                 }
@@ -63,7 +63,7 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                if(binding.etId.length()>4){
+                if(binding.etId.length()>8){
                     pw_check = true
                     id_pw_Check()
                 }
@@ -131,7 +131,8 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
             }
 
             override fun onLoginFailure(message: String) {
-                showCustomToast(message)
+               // showCustomToast(message)
+                showCustomToast("연결이 지연되고 있습니다")
             }
         })
     }
