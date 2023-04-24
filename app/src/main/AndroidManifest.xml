@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.softsquared.template.kotlin">
+    package="com.footstep.dangbal.kotlin">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".config.ApplicationClass"
+        android:name="com.footstep.dangbal.kotlin.config.ApplicationClass"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher_umc_foot_step"
         android:roundIcon="@mipmap/ic_launcher_umc_foot_step"
@@ -26,7 +26,7 @@
 <!--            android:name=".MainActivity"-->
 <!--            android:exported="false" />-->
         <activity
-            android:name=".src.splash.SplashActivity"
+            android:name="com.footstep.dangbal.kotlin.src.splash.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -40,14 +40,14 @@
 
 
         <activity
-            android:name=".src.main.MainActivity"
+            android:name="com.footstep.dangbal.kotlin.src.main.MainActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <!--OnBoarding Activity 추가-->
         <activity
-            android:name=".src.onboarding.OnboardingActivity"
+            android:name="com.footstep.dangbal.kotlin.src.onboarding.OnboardingActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
@@ -56,13 +56,13 @@
 
         <!--Login Activity 추가-->
         <activity
-            android:name=".src.login.LoginProcessActivity"
+            android:name="com.footstep.dangbal.kotlin.src.login.LoginProcessActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
-            android:name=".src.login.LoginSuccessActivity"
+            android:name="com.footstep.dangbal.kotlin.src.login.LoginSuccessActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
@@ -70,25 +70,25 @@
 
         <!--SignUp Activity 추가-->
         <activity
-            android:name=".src.signup.SignupActivity"
+            android:name="com.footstep.dangbal.kotlin.src.signup.SignupActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
-            android:name=".src.signup.SignupCheckActivity"
+            android:name="com.footstep.dangbal.kotlin.src.signup.SignupCheckActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
-            android:name=".src.signup.SignupInfoActivity"
+            android:name="com.footstep.dangbal.kotlin.src.signup.SignupInfoActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
-            android:name=".src.signup.SignupSuccessActivity"
+            android:name="com.footstep.dangbal.kotlin.src.signup.SignupSuccessActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"/>
@@ -97,30 +97,30 @@
 
         <!--Post Activity 추가-->
         <activity
-            android:name=".src.main.post.PostActivity"
+            android:name="com.footstep.dangbal.kotlin.src.main.post.PostActivity"
             android:exported="false"
-            android:parentActivityName=".src.main.MainActivity"
+            android:parentActivityName="com.footstep.dangbal.kotlin.src.main.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".src.main.post.PostSearchPositionActivity"
+            android:name="com.footstep.dangbal.kotlin.src.main.post.PostSearchPositionActivity"
             android:exported="false"
-            android:parentActivityName=".src.main.post.PostActivity"
+            android:parentActivityName="com.footstep.dangbal.kotlin.src.main.post.PostActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
 
         <!--Post Update Activity 추가-->
-        <activity android:name=".src.main.postupdate.PostUpdateActivity"
+        <activity android:name="com.footstep.dangbal.kotlin.src.main.postupdate.PostUpdateActivity"
             android:exported="false"
-            android:parentActivityName=".src.main.MainActivity"
+            android:parentActivityName="com.footstep.dangbal.kotlin.src.main.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
 
         <!--Gallery Activity 추가-->
         <activity
-            android:name=".src.main.gallery.info.GalleryInfoActivity"
+            android:name="com.footstep.dangbal.kotlin.src.main.gallery.info.GalleryInfoActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -129,17 +129,17 @@
 
         <!--Map Activity 추가-->
         <activity
-            android:name=".src.main.map.search.SearchActivity"
+            android:name="com.footstep.dangbal.kotlin.src.main.map.search.SearchActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".src.main.map.area.AreaActivity"
+            android:name="com.footstep.dangbal.kotlin.src.main.map.area.AreaActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".src.main.map.search.SearchResultActivity"
+            android:name="com.footstep.dangbal.kotlin.src.main.map.search.SearchResultActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -149,7 +149,7 @@
 
         <!--MapGallery Activity 추가-->
         <activity
-            android:name=".src.main.gallery.map.MapGalleryActivity"
+            android:name="com.footstep.dangbal.kotlin.src.main.gallery.map.MapGalleryActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -157,14 +157,14 @@
 
         <!-- FeedInfo Activity 추가-->
         <activity
-            android:name=".src.main.feed.info.FeedInfoActivity"
+            android:name="com.footstep.dangbal.kotlin.src.main.feed.info.FeedInfoActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <!-- MyPage Activity 추가-->
         <activity
-            android:name=".src.main.myPage.ChangePasswordActivity"
+            android:name="com.footstep.dangbal.kotlin.src.main.myPage.ChangePasswordActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
