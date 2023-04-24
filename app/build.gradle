@@ -16,7 +16,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.softsquared.template.kotlin"
+        applicationId "com.footstep.dangbal.kotlin"
         minSdkVersion 27
         targetSdkVersion 31
         versionCode 1
