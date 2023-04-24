@@ -131,8 +131,7 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
             }
 
             override fun onLoginFailure(message: String) {
-               // showCustomToast(message)
-                showCustomToast("연결이 지연되고 있습니다")
+                showCustomToast(message)
             }
         })
     }
