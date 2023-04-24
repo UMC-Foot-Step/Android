@@ -28,9 +28,9 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
-//import com.footstep.dangbal.kotlin.R
+import com.footstep.dangbal.kotlin.R
 import com.footstep.dangbal.kotlin.config.BaseFragment
-//import com.footstep.dangbal.kotlin.databinding.FragmentMapBinding
+import com.footstep.dangbal.kotlin.databinding.FragmentMapBinding
 import com.footstep.dangbal.kotlin.src.main.gallery.map.MapGalleryActivity
 import com.footstep.dangbal.kotlin.src.main.map.area.AreaActivity
 import com.footstep.dangbal.kotlin.src.main.map.model.AllResponse
@@ -38,8 +38,6 @@ import com.footstep.dangbal.kotlin.src.main.map.model.CityResponse
 import com.footstep.dangbal.kotlin.src.main.map.model.PopupResponse
 import com.footstep.dangbal.kotlin.src.main.map.model.SpecificFstResponse
 import com.footstep.dangbal.kotlin.src.main.map.search.SearchActivity
-import com.softsquared.template.kotlin.R
-import com.softsquared.template.kotlin.databinding.FragmentMapBinding
 import kotlinx.coroutines.*
 import java.time.LocalDate
 

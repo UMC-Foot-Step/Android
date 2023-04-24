@@ -15,6 +15,7 @@ import com.footstep.dangbal.kotlin.src.login.LoginDataSource.NetworkDataSource
 import com.footstep.dangbal.kotlin.src.signup.SignupActivity
 import com.footstep.dangbal.kotlin.util.*
 
+
 class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityLoginProcessBinding::inflate) {
 
     var id_check = false
