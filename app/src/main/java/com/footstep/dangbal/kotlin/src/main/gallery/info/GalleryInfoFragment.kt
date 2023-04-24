@@ -135,8 +135,7 @@ class GalleryInfoFragment (
             .setMessage("댓글 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
             .setPositiveButton("확인",
                 DialogInterface.OnClickListener { dialog, id ->
-                    //galleryInfoFragment.showCustomToast("신고 접수완료")
-                    showCustomToast("신고 접수완료")
+                    //showCustomToast("신고 접수완료")
                 }
             )
 
@@ -150,8 +149,7 @@ class GalleryInfoFragment (
             .setMessage("유저 신고가 완료되었습니다 \n(각기 다른 사용자에게 신고가 3번 누적될 경우 해당 계정은 한달간 정지됩니다.)")
             .setPositiveButton("확인",
                 DialogInterface.OnClickListener { dialog, id ->
-                    //galleryInfoFragment.showCustomToast("신고 접수완료")
-                    showCustomToast("신고 접수완료")
+                    //showCustomToast("신고 접수완료")
                 }
             )
 
