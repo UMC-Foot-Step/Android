@@ -36,7 +36,7 @@ class GalleryInfoFragmentService(val galleryInfoFragmentInterface: GalleryInfoFr
     fun ReportComment(comment_id:Int,createReportDto:createReportDto){
         val GalleryRetrofitInterface =
             ApplicationClass.sRetrofit.create(GalleryRetrofitInterface::class.java)
-        Log.d("reportProcess", "ReportComment 안쪽직전진입")
+        Log.d("reportProcess", "갤러리 댓글 ReportComment 안쪽직전진입")
 
         GalleryRetrofitInterface.reportComment(comment_id,createReportDto).enqueue(object :
             Callback<ReportResponse> {
@@ -46,13 +46,13 @@ class GalleryInfoFragmentService(val galleryInfoFragmentInterface: GalleryInfoFr
                 response: Response<ReportResponse>
             ) {
                 galleryInfoFragmentInterface.onReportCommentSuccess(response.body() as ReportResponse)
-                Log.d("reportProcess", "ReportComment onResponse")
+                Log.d("reportProcess", "갤러리 댓글 ReportComment onResponse")
 
             }
 
             override fun onFailure(call: Call<ReportResponse>, t: Throwable) {
                 galleryInfoFragmentInterface.onReportCommentFailure(t.message ?: "통신 오류")
-                Log.d("reportProcess", "ReportComment onFailure")
+                Log.d("reportProcess", "갤러리 댓글 ReportComment onFailure")
 
             }
 
@@ -63,7 +63,7 @@ class GalleryInfoFragmentService(val galleryInfoFragmentInterface: GalleryInfoFr
     fun ReportUser(user_id:Int,createReportDto:createReportDto){
         val GalleryRetrofitInterface =
             ApplicationClass.sRetrofit.create(GalleryRetrofitInterface::class.java)
-        Log.d("reportProcess", "ReportComment 안쪽직전진입")
+        Log.d("reportProcess", "갤러리 댓글유저 ReportUser 안쪽직전진입")
 
         GalleryRetrofitInterface.reportUser(user_id,createReportDto).enqueue(object :
             Callback<ReportResponse> {
@@ -73,13 +73,13 @@ class GalleryInfoFragmentService(val galleryInfoFragmentInterface: GalleryInfoFr
                 response: Response<ReportResponse>
             ) {
                 galleryInfoFragmentInterface.onReportUserSuccess(response.body() as ReportResponse)
-                Log.d("reportProcess", "ReportComment onResponse")
+                Log.d("reportProcess", "갤러리 댓글유저 ReportUser onResponse")
 
             }
 
             override fun onFailure(call: Call<ReportResponse>, t: Throwable) {
                 galleryInfoFragmentInterface.onReportUserFailure(t.message ?: "통신 오류")
-                Log.d("reportProcess", "ReportComment onFailure")
+                Log.d("reportProcess", "갤러리 댓글유저 ReportUser onFailure")
 
             }
 

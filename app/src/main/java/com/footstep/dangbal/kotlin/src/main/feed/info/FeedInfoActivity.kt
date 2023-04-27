@@ -339,6 +339,7 @@ class FeedInfoActivity()
     private fun reportDialogUser() {
         // val dialog = BottomSheetDialog(this)
         // dialog.setContentView(R.layout.dialog_report)
+        Log.d("신고하기","피드 게시글 유저 ${userId.toString()}")
 
         val bottomSheet = layoutInflater.inflate(R.layout.dialog_report, null)
         // 스타일 둥글게 적용
@@ -442,8 +443,9 @@ class FeedInfoActivity()
     //댓글신고 api
     override fun onReportCommentSuccess(response: ReportResponse) {
         Log.d("reportProcess", "onReportCommentSuccess ${response.toString()}")
-
-        reportSuccessComment()
+        CoroutineScope(Dispatchers.Main).launch {
+            reportSuccessComment()
+        }
     }
 
     override fun onReportCommentFailure(message: String) {

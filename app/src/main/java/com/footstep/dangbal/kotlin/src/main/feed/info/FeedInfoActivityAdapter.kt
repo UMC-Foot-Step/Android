@@ -226,6 +226,7 @@ class FeedInfoActivityAdapter(
         private fun reportDialogUser(userId:Int) {
             // val dialog = BottomSheetDialog(this)
             // dialog.setContentView(R.layout.dialog_report)
+            Log.d("신고하기","피드 댓글 유저 ${userId.toString()}")
 
             val bottomSheet = feedInfoActivity.layoutInflater.inflate(R.layout.dialog_report, null)
             // 스타일 둥글게 적용

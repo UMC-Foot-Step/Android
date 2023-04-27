@@ -171,6 +171,7 @@ class GalleryInfoFragment (
 
     override fun onReportUserSuccess(response: ReportResponse) {
         Log.d("reportProcess", "onReportUserSuccess ${response.toString()}")
+
         CoroutineScope(Dispatchers.Main).launch {
             reportSuccessUser()
         }

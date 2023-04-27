@@ -64,6 +64,9 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
 
     // switch checked
     private var swChecked = 1
+    //lateinit private var swChecked:Int
+
+
 
     // filepath
     private var filePath: MultipartBody.Part? = null
@@ -366,8 +369,8 @@ class PostUpdateActivity : BaseActivity<ActivityPostEditBinding>(ActivityPostEdi
         // swChecked
         swChecked = response.result.postingOpen
         when(swChecked){
-            0 -> binding.editSwOpen.isChecked = false
-            1 -> binding.editSwOpen.isChecked = true
+            1 -> binding.editSwOpen.isChecked = false
+            0 -> binding.editSwOpen.isChecked = true
         }
 
     }
