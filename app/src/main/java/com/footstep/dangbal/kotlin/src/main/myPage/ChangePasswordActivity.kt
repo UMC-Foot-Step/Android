@@ -35,6 +35,7 @@ class ChangePasswordActivity: BaseActivity<ActivityChangePasswordBinding>(Activi
 
 
         with(binding){
+            
             // 뒤로가기 버튼 누르기
             btnBack.setOnClickListener {
                 finish()
