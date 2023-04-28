@@ -1,14 +1,12 @@
 package com.footstep.dangbal.kotlin.src.main.feed
 
+import com.footstep.dangbal.kotlin.config.BaseResponse
 import com.footstep.dangbal.kotlin.src.main.feed.models.FeedListResponse
 import com.footstep.dangbal.kotlin.src.main.feed.models.ReportResponse
 import com.footstep.dangbal.kotlin.src.main.feed.models.createReportDto
 import com.footstep.dangbal.kotlin.src.main.gallery.models.PostListResponse
-import retrofit2.http.GET
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface FeedRetrofitInterface {
 
@@ -39,11 +37,22 @@ interface FeedRetrofitInterface {
                    @Path("posting-id") posting_id: Int) : Call<ReportResponse>
 
     /*
+    여기서 부터는 갤러리 기능이 안되서 중복해서 여기에도 만든 api
         To Do 5. 유저 신고
+
+
 
     @POST("{users-id}/users-report")
     fun reportUser(@Path("users-id") users_id: Int,
                    @Body createReportDto: createReportDto) : Call<ReportResponse>
 
+
+
+    /*
+        To Do 6. GalleryInfo - 게시글 댓글 삭제 API 호출
      */
+    @PATCH("footstep/{comment_id}")
+    fun deletePostComment(@Path("comment_id") comment_id: Int) : Call<BaseResponse>
+*/
+
 }

@@ -247,6 +247,8 @@ class FeedInfoActivity()
             To Do 1. 상세 조회 뷰 업데이트
          */
         if(response.isSuccess == false) {
+            Log.d("reportProcess", "피드 댓글 삭제 onDeletePostCommentSuccess false")
+
             val builder = AlertDialog.Builder(binding.root.context)
             builder.setTitle("댓글 삭제하기")
                 .setMessage("타 유저의 댓글을 삭제하실 수가 없습니다.")
@@ -257,6 +259,8 @@ class FeedInfoActivity()
             builder.show()
         }
         else {
+            Log.d("reportProcess", "피드 댓글 삭제 onDeletePostCommentSuccess true")
+
             FeedInfoService(this).getPostInfo(posting_id)
         }
 
@@ -456,7 +460,7 @@ class FeedInfoActivity()
 
     //유저신고 api
     override fun onReportUserSuccess(response: ReportResponse) {
-        Log.d("reportProcess", "onReportUserSuccess ${response.toString()}")
+        Log.d("reportProcess", "피드 유저신고 response.toString :  ${response.toString()}")
 
         CoroutineScope(Dispatchers.Main).launch {
             reportSuccessUser()

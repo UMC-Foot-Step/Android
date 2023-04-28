@@ -3,6 +3,7 @@ package com.footstep.dangbal.kotlin.src.main.gallery
 import com.footstep.dangbal.kotlin.config.BaseResponse
 import com.footstep.dangbal.kotlin.src.main.feed.models.ReportResponse
 import com.footstep.dangbal.kotlin.src.main.feed.models.createReportDto
+import com.footstep.dangbal.kotlin.src.main.gallery.info.models.CommentResponse
 import com.footstep.dangbal.kotlin.src.main.gallery.info.models.PostCommentRequest
 import com.footstep.dangbal.kotlin.src.main.gallery.info.models.PostInfoResponse
 import com.footstep.dangbal.kotlin.src.main.gallery.models.PostListByDateResponse
@@ -35,7 +36,7 @@ interface GalleryRetrofitInterface {
         To Do 4. GalleryInfo - 게시글 댓글 삭제 API 호출
      */
     @PATCH("footstep/{comment_id}")
-    fun deletePostComment(@Path("comment_id") comment_id: Int) : Call<BaseResponse>
+    fun deletePostComment(@Path("comment_id") comment_id: Int) : Call<CommentResponse>
 
     /*
         To Do 5. GalleryInfo - 게시글 좋아요 클릭 API 호출

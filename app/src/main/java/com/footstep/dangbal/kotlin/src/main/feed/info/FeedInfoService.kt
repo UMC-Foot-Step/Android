@@ -7,6 +7,7 @@ import com.footstep.dangbal.kotlin.src.main.feed.FeedRetrofitInterface
 import com.footstep.dangbal.kotlin.src.main.feed.models.ReportResponse
 import com.footstep.dangbal.kotlin.src.main.feed.models.createReportDto
 import com.footstep.dangbal.kotlin.src.main.gallery.GalleryRetrofitInterface
+import com.footstep.dangbal.kotlin.src.main.gallery.info.models.CommentResponse
 import com.footstep.dangbal.kotlin.src.main.gallery.info.models.PostCommentRequest
 import com.footstep.dangbal.kotlin.src.main.gallery.info.models.PostInfoResponse
 import retrofit2.Call
@@ -77,6 +78,7 @@ class FeedInfoService(val feedInfoActivityInterface: FeedInfoActivityInterface) 
         To Do 4. 게시글 댓글 삭제 API
         To Do 4.1 댓글 예외처리 (응답 데이터 토대로)
     */
+    /*
     fun deletePostComment(comment_id: Int) {
         val GalleryRetrofitInterface =
             ApplicationClass.sRetrofit.create(GalleryRetrofitInterface::class.java)
@@ -87,6 +89,24 @@ class FeedInfoService(val feedInfoActivityInterface: FeedInfoActivityInterface) 
             }
 
             override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                feedInfoActivityInterface.onDeletePostCommentFailure(t.message ?: "통신 오류")
+            }
+        })
+    }
+
+     */
+    fun deletePostComment(comment_id: Int) {
+        val GalleryRetrofitInterface =
+            ApplicationClass.sRetrofit.create(GalleryRetrofitInterface::class.java)
+        GalleryRetrofitInterface.deletePostComment(comment_id).enqueue(object :
+            Callback<CommentResponse> {
+            override fun onResponse(call: Call<CommentResponse>, response: Response<CommentResponse>) {
+                Log.d("reportProcess", "피드 댓글 삭제 서비스 성공")
+
+                feedInfoActivityInterface.onDeletePostCommentSuccess(response.body() as CommentResponse)
+            }
+
+            override fun onFailure(call: Call<CommentResponse>, t: Throwable) {
                 feedInfoActivityInterface.onDeletePostCommentFailure(t.message ?: "통신 오류")
             }
         })
@@ -123,6 +143,7 @@ class FeedInfoService(val feedInfoActivityInterface: FeedInfoActivityInterface) 
     
     // To Do 5.2 댓글 - 유저 신고하기
     //유저 신고 API
+    /*
     fun ReportUser(user_id:Int,createReportDto:createReportDto){
         val GalleryRetrofitInterface =
             ApplicationClass.sRetrofit.create(GalleryRetrofitInterface::class.java)
@@ -143,6 +164,33 @@ class FeedInfoService(val feedInfoActivityInterface: FeedInfoActivityInterface) 
             override fun onFailure(call: Call<ReportResponse>, t: Throwable) {
                 feedInfoActivityInterface.onReportUserFailure(t.message ?: "통신 오류")
                 Log.d("reportProcess", "ReportComment onFailure")
+
+            }
+
+        })
+    }
+
+     */
+    fun ReportUser(user_id:Int,createReportDto:createReportDto){
+        val GalleryRetrofitInterface =
+            ApplicationClass.sRetrofit.create(GalleryRetrofitInterface::class.java)
+        Log.d("reportProcess", "피드 유저신고 서비스 유저아이디 : $user_id crDto : $createReportDto")
+
+        GalleryRetrofitInterface.reportUser(user_id,createReportDto).enqueue(object :
+            Callback<ReportResponse> {
+
+            override fun onResponse(
+                call: Call<ReportResponse>,
+                response: Response<ReportResponse>
+            ) {
+                feedInfoActivityInterface.onReportUserSuccess(response.body() as ReportResponse)
+                Log.d("reportProcess", "피드 유저신고 서비스성공 response.body() : ${response.body()}")
+
+            }
+
+            override fun onFailure(call: Call<ReportResponse>, t: Throwable) {
+                feedInfoActivityInterface.onReportUserFailure(t.message ?: "통신 오류")
+                Log.d("reportProcess", "피드 유저신고 서비스 실패")
 
             }
 
