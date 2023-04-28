@@ -106,8 +106,11 @@ class GalleryInfoFragment (
         발자취 게시글 댓글 삭제 API 메소드
      */
     override fun onDeletePostCommentSuccess(response: BaseResponse) {
+        Log.d("reportProcess", "갤러리 댓글 삭제 성공 response.toString(): ${response.toString()}")
 
         if(response.isSuccess == false) {
+            Log.d("reportProcess", "갤러리 댓글 삭제 onDeletePostCommentSuccess false")
+
             val builder = AlertDialog.Builder(binding.root.context)
             builder.setTitle("댓글 삭제하기")
                 .setMessage("타 유저의 댓글을 삭제하실 수가 없습니다.")
@@ -121,6 +124,8 @@ class GalleryInfoFragment (
             /*
             To Do 1. 게시글 뷰 업데이트 - 정보 상세 조회 API 재호출
          */
+            Log.d("reportProcess", "갤러리 댓글 삭제 onDeletePostCommentSuccess true")
+
             GalleryInfoService(galleryInfoActivity).getPostInfo(posting_id)
         }
     }
@@ -170,7 +175,8 @@ class GalleryInfoFragment (
     }
 
     override fun onReportUserSuccess(response: ReportResponse) {
-        Log.d("reportProcess", "onReportUserSuccess ${response.toString()}")
+        Log.d("reportProcess", "갤러리 댓글 유저 신고 성공 response.toString(): ${response.toString()}")
+
         CoroutineScope(Dispatchers.Main).launch {
             reportSuccessUser()
         }

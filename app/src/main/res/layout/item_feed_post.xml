@@ -21,13 +21,13 @@
         android:id="@+id/feedlist_tv_user_nickname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginLeft="5dp"
 
 
-        android:layout_marginLeft="7dp"
+        android:layout_marginTop="2dp"
         android:text="@string/feed_tv_user_name"
         android:textColor="#000000"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imageView4"
         app:layout_constraintTop_toTopOf="parent" />

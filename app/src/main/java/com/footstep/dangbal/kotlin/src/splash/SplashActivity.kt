@@ -19,6 +19,7 @@ import com.footstep.dangbal.kotlin.src.login.LoginView
 import com.footstep.dangbal.kotlin.src.main.MainActivity
 import com.footstep.dangbal.kotlin.src.onboarding.OnboardingActivity
 import com.footstep.dangbal.kotlin.util.getRefresh
+import com.footstep.dangbal.kotlin.util.removeRefresh
 import com.footstep.dangbal.kotlin.util.saveRefresh
 
 class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding::inflate) {
@@ -46,7 +47,7 @@ class SplashActivity : BaseActivity<ActivitySplashBinding>(ActivitySplashBinding
         Log.d("Tester", "autoLogin: dd")
         val refresh = getRefresh()
         Log.d("Tester", "autoLogin: $refresh")
-
+        //removeRefresh()
         if(refresh == null) {
             Log.d("Tester", "autoLogin: ddd")
             startActivity(OnboardingActivity::class.java)

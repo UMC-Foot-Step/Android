@@ -179,7 +179,7 @@ class GalleryInfoFragmentAdapter(
 
             // 확인
             btnCheck.setOnClickListener {
-                Log.d("reportProcess", "다이어로그")
+                Log.d("reportProcess", "갤러리 댓글 다이어로그")
 
                 var reasonNum=0
 
@@ -220,6 +220,7 @@ class GalleryInfoFragmentAdapter(
         }
         // 유저
         private fun reportDialogUser(userId:Int) {
+            Log.d("신고하기","갤러리 댓글 유저 ${userId.toString()}")
             val bottomSheet = galleryInfoFragment.layoutInflater.inflate(R.layout.dialog_report, null)
             // 스타일 둥글게 적용
             val bottomSheetDialog = BottomSheetDialog(galleryInfoActivity, R.style.calTheme_Custom)
@@ -240,6 +241,8 @@ class GalleryInfoFragmentAdapter(
 
             // 확인
             btnCheck.setOnClickListener {
+                Log.d("reportProcess", "갤러리 댓글유저 다이어로그")
+
                 var reasonNum=0
                 when(reportGroup.checkedRadioButtonId){
                     R.id.btn_report_0 -> {

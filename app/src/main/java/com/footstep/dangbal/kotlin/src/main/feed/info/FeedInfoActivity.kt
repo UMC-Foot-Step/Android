@@ -247,6 +247,8 @@ class FeedInfoActivity()
             To Do 1. 상세 조회 뷰 업데이트
          */
         if(response.isSuccess == false) {
+            Log.d("reportProcess", "피드 댓글 삭제 onDeletePostCommentSuccess false")
+
             val builder = AlertDialog.Builder(binding.root.context)
             builder.setTitle("댓글 삭제하기")
                 .setMessage("타 유저의 댓글을 삭제하실 수가 없습니다.")
@@ -257,6 +259,8 @@ class FeedInfoActivity()
             builder.show()
         }
         else {
+            Log.d("reportProcess", "피드 댓글 삭제 onDeletePostCommentSuccess true")
+
             FeedInfoService(this).getPostInfo(posting_id)
         }
 
@@ -339,6 +343,7 @@ class FeedInfoActivity()
     private fun reportDialogUser() {
         // val dialog = BottomSheetDialog(this)
         // dialog.setContentView(R.layout.dialog_report)
+        Log.d("신고하기","피드 게시글 유저 ${userId.toString()}")
 
         val bottomSheet = layoutInflater.inflate(R.layout.dialog_report, null)
         // 스타일 둥글게 적용
@@ -442,8 +447,9 @@ class FeedInfoActivity()
     //댓글신고 api
     override fun onReportCommentSuccess(response: ReportResponse) {
         Log.d("reportProcess", "onReportCommentSuccess ${response.toString()}")
-
-        reportSuccessComment()
+        CoroutineScope(Dispatchers.Main).launch {
+            reportSuccessComment()
+        }
     }
 
     override fun onReportCommentFailure(message: String) {
@@ -454,7 +460,7 @@ class FeedInfoActivity()
 
     //유저신고 api
     override fun onReportUserSuccess(response: ReportResponse) {
-        Log.d("reportProcess", "onReportUserSuccess ${response.toString()}")
+        Log.d("reportProcess", "피드 유저신고 response.toString :  ${response.toString()}")
 
         CoroutineScope(Dispatchers.Main).launch {
             reportSuccessUser()
