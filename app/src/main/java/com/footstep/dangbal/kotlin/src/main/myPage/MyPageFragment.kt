@@ -40,7 +40,7 @@ class MyPageFragment :
     BaseFragment<FragmentMyPageBinding>(FragmentMyPageBinding::bind, R.layout.fragment_my_page){
 
 
-    private val communityRule = "https://www.notion.so/1842c6dfef324b73a0ce7364e3e85c6a"
+    private val communityRule = "https://mud-century-1f3.notion.site/29485b0e5055495db2041d8693128696"
 
 
     //호출 시점은 accessToken호출 때
