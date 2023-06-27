@@ -8,7 +8,10 @@ data class ResultPostInfo(
     @SerializedName("content") val content: String,
     @SerializedName("imageUrl") val imageUrl: String,
     @SerializedName("placeName") val placeName: String,
-    @SerializedName("likeNum") val likeNum: Int,
+
+    @SerializedName("isLike") val isLike: Int,
+
+    @SerializedName("likes") val likeNum: Int,
     @SerializedName("nickName") val nickName: String,
     @SerializedName("commentList") val commentList: ArrayList<CommentList>,
     @SerializedName("commentNum") val commentNum: Int

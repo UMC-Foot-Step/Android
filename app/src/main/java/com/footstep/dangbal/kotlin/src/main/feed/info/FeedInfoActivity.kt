@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.PopupMenu
 import android.widget.RadioGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -156,6 +157,15 @@ class FeedInfoActivity()
         */
         binding.galleryBtnLike.setOnClickListener {
             FeedInfoService(this).postPostLike(posting_id)
+
+            if(binding.galleryBtnLike.background == ContextCompat.getDrawable(baseContext, R.drawable.ic_postlike_btn_unselected))
+                binding.galleryBtnLike.background=
+                    ContextCompat.getDrawable(baseContext, R.drawable.ic_postlike_btn_selected)
+
+            else if(binding.galleryBtnLike.background == ContextCompat.getDrawable(baseContext, R.drawable.ic_postlike_btn_selected))
+                binding.galleryBtnLike.background=
+                    ContextCompat.getDrawable(baseContext, R.drawable.ic_postlike_btn_unselected)
+
         }
 
 
@@ -212,6 +222,10 @@ class FeedInfoActivity()
         binding.galleryinfoTvPostUsername.text = response.result.nickName
         binding.galleryinfoTvPostDes.text = response.result.content
 
+        if(response.result.isLike==1)
+            binding.galleryBtnLike.setBackgroundResource(R.drawable.ic_postlike_btn_selected)
+        else if(response.result.isLike==0)
+            binding.galleryBtnLike.setBackgroundResource(R.drawable.ic_postlike_btn_unselected)
         /*
             To Do 2. 리사이클러 뷰에 데이터 뿌리기
         */

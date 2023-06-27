@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.footstep.dangbal.kotlin.R
 import com.footstep.dangbal.kotlin.databinding.ItemMapgallerySubSectionBinding
 import com.footstep.dangbal.kotlin.src.main.gallery.models.PostList
 
@@ -25,6 +26,11 @@ class MapGalleryActivitySubAdapter(
                 galleryTvPostTitle.text = postList.title
                 galleryTvPostlikeCnt.text = postList.likes_cnt.toString()
                 galleryTvPostPosition.text = postList.placeName
+
+                if(postList.isLike==1)
+                    galleryBtnPostLike.setBackgroundResource(R.drawable.ic_postlike_btn_selected)
+                else if(postList.isLike==0)
+                    galleryBtnPostLike.setBackgroundResource(R.drawable.ic_postlike_btn_unselected)
             }
 
 

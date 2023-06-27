@@ -36,12 +36,13 @@
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginRight="4.3dp"
-        android:background="@color/not_visible"
+        android:background="@drawable/ic_postlike_btn_unselected"
         app:layout_constraintBottom_toBottomOf="@+id/galleryinfo_tv_day"
         app:layout_constraintEnd_toStartOf="@+id/galleryinfo_tv_like_cnt"
         app:layout_constraintTop_toTopOf="@+id/galleryinfo_tv_day"
-        app:srcCompat="@drawable/ic_postlike_btn_selected" />
-
+         />
+<!--app:srcCompat="@drawable/ic_postlike_btn_unselected"
+"@color/not_visible"-->
     <TextView
         android:id="@+id/galleryinfo_tv_like_cnt"
         android:layout_width="wrap_content"

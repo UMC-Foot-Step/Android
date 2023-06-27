@@ -31,6 +31,8 @@ class FeedInfoActivityAdapter(
             with(binding) {
                 galleryinfoTvCommentUsername.text = commentList.nickName
                 galleryinfoTvCommentDes.text = commentList.content
+
+
             }
 
 

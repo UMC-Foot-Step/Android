@@ -47,11 +47,11 @@
         android:id="@+id/gallery_btn_post_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        android:background="@drawable/ic_postlike_btn_unselected"
         android:layout_marginRight="4.3dp"
         app:layout_constraintBottom_toBottomOf="@+id/gallery_tv_post_title"
         app:layout_constraintEnd_toStartOf="@+id/gallery_tv_postlike_cnt"
-        app:srcCompat="@drawable/ic_postlike_btn_selected" />
+        />
 
     <TextView
         android:id="@+id/gallery_tv_postlike_cnt"

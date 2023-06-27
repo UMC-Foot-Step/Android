@@ -7,6 +7,8 @@ data class FeedList(
     @SerializedName("imageUrl") val imageUrl: String,
     @SerializedName("content") val content: String,
     @SerializedName("likes") val likes: Int,
+    @SerializedName("isLike") val isLike: Int,
+
     @SerializedName("placeName") val placeName: String,
     @SerializedName("postingId") val postingId: Int,
     @SerializedName("recordDate") val recordDate: String,
