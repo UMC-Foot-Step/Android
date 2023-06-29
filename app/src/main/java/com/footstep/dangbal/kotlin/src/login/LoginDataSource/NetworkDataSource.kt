@@ -2,8 +2,11 @@ package com.footstep.dangbal.kotlin.src.login.LoginDataSource
 
 import android.util.Log
 import com.footstep.dangbal.kotlin.config.ApplicationClass
+import com.footstep.dangbal.kotlin.src.login.DataFile.FindPasswordResponse
+import com.footstep.dangbal.kotlin.src.login.DataFile.Findpassword
 import com.footstep.dangbal.kotlin.src.login.DataFile.LoginResponse
 import com.footstep.dangbal.kotlin.src.login.DataFile.User
+import com.footstep.dangbal.kotlin.src.login.FindPasswordView
 import com.footstep.dangbal.kotlin.src.login.LoginView
 import com.footstep.dangbal.kotlin.src.login.TemporApi.RetrofitInterface
 import retrofit2.Call
@@ -60,6 +63,28 @@ class NetworkDataSource {
 
         })
 
+    }
+
+    fun findpassword(findpassword: Findpassword, findPasswordview: FindPasswordView){
+        val findservice = api.findpassword(findpassword)
+        Log.d("Tester", "findpassword: 여기까진 왔음")
+        findservice.enqueue(object :Callback<FindPasswordResponse>{
+            override fun onResponse(call: Call<FindPasswordResponse>, response: Response<FindPasswordResponse>) {
+                Log.d("Tester", "onResponse: 여기도 들림${response.isSuccessful}")
+                if(response.isSuccessful && response.code() == 200){
+                    val findpasswordresponse: FindPasswordResponse = response.body()!!
+                    Log.d("Tester", "onResponse: 거의 다옴 ${findpasswordresponse.result}")
+                    when(val code = findpasswordresponse.code){
+                        200->findPasswordview.onFindSuccess(code,findpasswordresponse.result)
+                        else -> findPasswordview.onFindFailure(response.message())
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<FindPasswordResponse>, t: Throwable) {
+                Log.d("Tester", "onFailure: 여기로 빠짐")
+            }
+        })
 
 
     }

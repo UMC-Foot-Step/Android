@@ -69,6 +69,13 @@ class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySig
             })
         }
 
+        with(binding){
+            signupCheckBack.setOnClickListener {
+                val intent = Intent(this@SignupCheckActivity,SignupActivity::class.java)
+                startActivity(intent)
+            }
+        }
+
     }//onCreate
 
     private fun checknext(){
