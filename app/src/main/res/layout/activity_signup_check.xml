@@ -59,7 +59,7 @@
             android:fontFamily="@font/noto_sans_extrabold"
             android:textStyle="normal"
             android:textSize="20sp"
-            android:hint="닉네임"
+            android:hint="닉네임-2글자 이상"
             android:inputType="text"
             android:textCursorDrawable="@color/orange"
             android:textSelectHandle="@color/orange"
