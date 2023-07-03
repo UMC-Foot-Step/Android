@@ -38,7 +38,10 @@ class FeedListFragmentAdapter(
                 feedlistTvCommentCnt.text = feedList.commentCount.toString()
                 feedlistTvUploadDate.text = feedList.recordDate.substring(0 until 4) + ". ".toString() + feedList.recordDate.substring(5 until 7) + ". " + feedList.recordDate.substring(8 until 10)
 
-
+                if(feedList.isLike==1)
+                    galleryBtnLike.setBackgroundResource(R.drawable.ic_postlike_btn_selected)
+                else if(feedList.isLike==0)
+                    galleryBtnLike.setBackgroundResource(R.drawable.ic_postlike_btn_unselected)
             }
 
 

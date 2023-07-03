@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.footstep.dangbal.kotlin.R
 import com.footstep.dangbal.kotlin.databinding.ItemGallerySubSectionBinding
 import com.footstep.dangbal.kotlin.src.main.gallery.models.PostList
 
@@ -29,6 +30,12 @@ class GalleryFragmentSubAdater(
                 galleryTvPostTitle.text = resultFeetStep.title
                 galleryTvPostlikeCnt.text = resultFeetStep.likes_cnt.toString()
                 galleryTvPostPosition.text = resultFeetStep.placeName
+
+                if(resultFeetStep.isLike==1)
+                    galleryBtnPostLike.setBackgroundResource(R.drawable.ic_postlike_btn_selected)
+                else if(resultFeetStep.isLike==0)
+                    galleryBtnPostLike.setBackgroundResource(R.drawable.ic_postlike_btn_unselected)
+
             }
 
             binding.root.setOnClickListener{

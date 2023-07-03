@@ -9,6 +9,9 @@ data class PostList(
     @SerializedName("recordDate") val recordDate: String,
     @SerializedName("imageUrl") val imageUrl: String,
     @SerializedName("title") val title: String ,
+
+    @SerializedName("isLike") val isLike: Int ,
+
     @SerializedName("likes") val likes_cnt: Int,
     @SerializedName("postingCount") val posting_cnt: Int,
     @SerializedName("postingId") val postingId: Int

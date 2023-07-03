@@ -14,6 +14,7 @@ import com.footstep.dangbal.kotlin.src.main.post.PostActivity
 
 
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
+    private var time: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,5 +109,15 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         Log.d("생명주기", "메인의 onResume()")
 
         super.onResume()
+    }
+
+    override fun onBackPressed() {
+        if (System.currentTimeMillis() - time >= 2000) {
+            time = System.currentTimeMillis()
+            showCustomToast("한번 더 누르면 종료됩니다")
+            //Toast.makeText(applicationContext, "한번더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+        } else if (System.currentTimeMillis() - time < 2000) {
+            finish()
+        }
     }
 }

@@ -5,6 +5,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -50,6 +51,12 @@ class GalleryInfoFragment (
         binding.galleryinfoTvPostUsername.text = resultPostInfo.nickName
         binding.galleryinfoTvPostDes.text = resultPostInfo.content
 
+        if(resultPostInfo.isLike==1)
+            binding.galleryBtnLike.setBackgroundResource(R.drawable.ic_postlike_btn_selected)
+        else if(resultPostInfo.isLike==0)
+            binding.galleryBtnLike.setBackgroundResource(R.drawable.ic_postlike_btn_unselected)
+
+
 
 
         // To DO 2. 발자취 게시글 댓글 리스트 정보 뿌리기
@@ -77,6 +84,12 @@ class GalleryInfoFragment (
                 To Do 3.1 좋아요 클릭 API 호출
             */
             GalleryInfoService(galleryInfoActivity).postPostLike(posting_id)
+
+            if(binding.galleryBtnLike.background == ContextCompat.getDrawable(galleryInfoActivity.baseContext, R.drawable.ic_postlike_btn_unselected))
+                binding.galleryBtnLike.background=ContextCompat.getDrawable(galleryInfoActivity.baseContext, R.drawable.ic_postlike_btn_selected)
+
+            else if(binding.galleryBtnLike.background == ContextCompat.getDrawable(galleryInfoActivity.baseContext, R.drawable.ic_postlike_btn_selected))
+                binding.galleryBtnLike.background=ContextCompat.getDrawable(galleryInfoActivity.baseContext, R.drawable.ic_postlike_btn_unselected)
         }
 
 

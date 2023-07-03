@@ -79,11 +79,11 @@
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginRight="4.3dp"
-        android:background="@color/not_visible"
+        android:background="@drawable/ic_postlike_btn_unselected"
         app:layout_constraintBottom_toBottomOf="@+id/galleryinfo_tv_day"
         app:layout_constraintEnd_toStartOf="@+id/galleryinfo_tv_like_cnt"
         app:layout_constraintTop_toTopOf="@+id/galleryinfo_tv_day"
-        app:srcCompat="@drawable/ic_postlike_btn_selected" />
+        />
 
     <TextView
         android:id="@+id/galleryinfo_tv_like_cnt"
@@ -201,20 +201,20 @@
 
     <TextView
         android:id="@+id/galleryinfo_tv_post_des"
-        android:layout_width="345dp"
+        android:layout_width="340dp"
         android:layout_height="wrap_content"
-        android:text="@string/galleryinfo_tv_post_des"
-        android:fontFamily="sans-serif-medium"
-        android:textStyle="normal"
-        android:textSize="14sp"
-        android:textColor="#000000"
-
-        android:maxLines="2"
-        android:ellipsize="end"
         android:layout_marginTop="6dp"
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/galleryinfo_tv_post_des"
+
+        android:textColor="#000000"
+        android:textSize="14sp"
+        android:textStyle="normal"
         app:layout_constraintStart_toStartOf="@+id/galleryinfo_tv_post_username"
         app:layout_constraintTop_toBottomOf="@+id/galleryinfo_tv_post_username" />
-
+<!--        android:maxLines="2"
+-->
 
     <EditText
         android:id="@+id/galleryinfo_et_comment"

@@ -37,12 +37,11 @@
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginRight="4.3dp"
-        android:background="@color/not_visible"
+        android:background="@drawable/ic_postlike_btn_selected"
         app:layout_constraintBottom_toTopOf="@+id/feedlist_iv_comment"
         app:layout_constraintEnd_toStartOf="@+id/feedlist_tv_like_cnt"
 
         app:layout_constraintTop_toBottomOf="@+id/feedlist_iv_feed_img"
-        app:srcCompat="@drawable/ic_postlike_btn_selected"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <TextView
