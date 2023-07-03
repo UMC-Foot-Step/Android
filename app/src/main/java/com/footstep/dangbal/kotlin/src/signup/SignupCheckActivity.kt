@@ -55,7 +55,7 @@ class SignupCheckActivity : BaseActivity<ActivitySignupCheckBinding>(ActivitySig
                 }
 
                 override fun afterTextChanged(p0: Editable?) {
-                    if(etNickname.length()>2){
+                    if(etNickname.length()>=2){
                         nicknamecheck = true
                         checknext()
                         SaveSignInNickname(etNickname.text.toString(),nicknamecheck)

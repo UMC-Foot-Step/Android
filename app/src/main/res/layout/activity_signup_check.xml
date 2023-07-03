@@ -12,12 +12,14 @@
         android:id="@+id/signupCheck_back"
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="-5dp"
         android:background="@drawable/back"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:backgroundTint="#727272"/>
+        app:layout_constraintStart_toStartOf="@id/signUp_guide_2"
+        app:layout_constraintHorizontal_bias="0.0"
+        android:backgroundTint="#727272"
+        />
 
     <TextView
         android:id="@+id/signUp_guide_2"
@@ -117,7 +119,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5015">
+        app:layout_constraintVertical_bias="0.5015"
+        android:orientation="horizontal">
 
 
     </LinearLayout>

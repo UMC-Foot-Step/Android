@@ -115,7 +115,6 @@ class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::infl
         if (System.currentTimeMillis() - time >= 2000) {
             time = System.currentTimeMillis()
             showCustomToast("한번 더 누르면 종료됩니다")
-            //Toast.makeText(applicationContext, "한번더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
         } else if (System.currentTimeMillis() - time < 2000) {
             finish()
         }

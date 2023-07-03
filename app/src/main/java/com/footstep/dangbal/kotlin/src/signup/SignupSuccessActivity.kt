@@ -36,7 +36,7 @@ class SignupSuccessActivity : BaseActivity<ActivitySignupSuccessBinding>(Activit
             }
 
             override fun onLoginFailure(message: String) {
-                Toast.makeText(this@SignupSuccessActivity,message.toString(), Toast.LENGTH_SHORT)
+                Toast.makeText(this@SignupSuccessActivity,"이메일 인증을 하고 눌러주세요", Toast.LENGTH_SHORT)
                     .show()
             }
 

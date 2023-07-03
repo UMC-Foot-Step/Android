@@ -53,7 +53,7 @@ class FindPasswordActivity : BaseActivity<ActivityFindPasswordBinding>(ActivityF
             }
 
             override fun afterTextChanged(p0: Editable?) {
-                if(binding.findIdNickname.length()>3){
+                if(binding.findIdNickname.length()>=2){
                     nickname_check = true
                     id_nickname_check()
 
@@ -77,6 +77,7 @@ class FindPasswordActivity : BaseActivity<ActivityFindPasswordBinding>(ActivityF
 
 
         binding.nextBtn.setOnClickListener {
+            showCustomToast("잠시만 기다려주세요")
             findpassword()
         }
     }//onCreate
