@@ -335,7 +335,8 @@ class PostActivity
 
     override suspend fun onPostPostInfoFailure(message: String) {
         withContext(Dispatchers.Main) {
-            showCustomToast("API 요청 실패, LogCat 확인")
+            // 필요시, 시간지연 확인하기
+            // showCustomToast("API 요청 실패, LogCat 확인")
         }
         Log.d("Whyfail", message)
     }
