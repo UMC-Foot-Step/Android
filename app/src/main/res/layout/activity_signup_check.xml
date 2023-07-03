@@ -8,6 +8,17 @@
     android:layout_height="match_parent"
     android:background="#ffffff">
 
+    <Button
+        android:id="@+id/signupCheck_back"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/back"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:backgroundTint="#727272"/>
+
     <TextView
         android:id="@+id/signUp_guide_2"
         android:layout_width="wrap_content"
@@ -48,7 +59,7 @@
             android:fontFamily="@font/noto_sans_extrabold"
             android:textStyle="normal"
             android:textSize="20sp"
-            android:hint="닉네임"
+            android:hint="닉네임-2글자 이상"
             android:inputType="text"
             android:textCursorDrawable="@color/orange"
             android:textSelectHandle="@color/orange"

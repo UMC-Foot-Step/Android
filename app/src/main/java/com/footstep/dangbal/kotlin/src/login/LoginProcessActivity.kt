@@ -74,10 +74,9 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
 
         })
 
-
-
-
-
+        binding.findPasswordBtn.setOnClickListener{
+            findpassword()
+        }
 
         // 로그인 버튼 입력 -> 성공한 여부는 나중에 추가할 예정
         binding.loginBtn.setOnClickListener{
@@ -155,6 +154,11 @@ class LoginProcessActivity : BaseActivity<ActivityLoginProcessBinding>(ActivityL
 
         startActivity(intent)
         finish()
+    }
+
+    private fun findpassword(){
+        val intent = Intent(this,FindPasswordActivity::class.java)
+        startActivity(intent)
     }
 
     private fun beforeStartActivity(){

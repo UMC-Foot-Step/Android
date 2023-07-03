@@ -33,7 +33,22 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:text="환영합니다!"/>
+        android:text="환영합니다!\n 이메일로 가서\n인증 버튼을 눌러주세요"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:fontFamily="@font/noto_sans"
+        android:gravity="center_horizontal"
+        android:text="인증이 활성화되고 나서\n로그인이 가능합니다"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signUp_txt" />
 
     <Button
         android:id="@+id/next_btn"

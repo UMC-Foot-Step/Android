@@ -62,6 +62,18 @@
             android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity
+            android:name="com.footstep.dangbal.kotlin.src.login.FindPasswordActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
+            android:name="com.footstep.dangbal.kotlin.src.login.FindSuccessActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity
             android:name="com.footstep.dangbal.kotlin.src.login.LoginSuccessActivity"
             android:exported="false"
             android:screenOrientation="portrait"

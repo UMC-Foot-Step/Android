@@ -1,5 +1,7 @@
 package com.footstep.dangbal.kotlin.src.login.TemporApi
 
+import com.footstep.dangbal.kotlin.src.login.DataFile.FindPasswordResponse
+import com.footstep.dangbal.kotlin.src.login.DataFile.Findpassword
 import com.footstep.dangbal.kotlin.src.login.DataFile.LoginResponse
 import com.footstep.dangbal.kotlin.src.login.DataFile.User
 import com.footstep.dangbal.kotlin.src.main.Example.models.SignUpResponse
@@ -61,6 +63,10 @@ interface RetrofitInterface {
         @Part file: MultipartBody.Part
     ): Call<ProfileResponse>
 
+    @POST("/find/password")
+    fun findpassword(
+        @Body findpassword: Findpassword
+    ): Call<FindPasswordResponse>
 
 
 
